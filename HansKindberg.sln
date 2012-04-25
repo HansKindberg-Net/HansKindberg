@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg", "HansKindberg\HansKindberg.csproj", "{9EC32668-00C5-4ED4-9FFA-711455182F4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{70B2BCA9-CC65-4F0E-8AF5-3C939FB06B7C}"
+	ProjectSection(SolutionItems) = preProject
+		Properties\SolutionInfo.cs = Properties\SolutionInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FEDBFF26-B54D-4D1E-88DA-EC94C473196C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web", "HansKindberg.Web\HansKindberg.Web.csproj", "{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Tests", "HansKindberg.Tests\HansKindberg.Tests.csproj", "{0D34101C-EC1A-46A1-92EF-40D84C9FFF32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C390D0-E6EB-4F5F-86D2-D43EF19203B9}"
+	ProjectSection(SolutionItems) = preProject
+		HansKindberg.snk = HansKindberg.snk
+		HansKindberg.vsmdi = HansKindberg.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Tests", "HansKindberg.Web.Tests\HansKindberg.Web.Tests.csproj", "{DBD64A10-7958-40E6-BAF2-51775AF1497E}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = HansKindberg.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EC32668-00C5-4ED4-9FFA-711455182F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EC32668-00C5-4ED4-9FFA-711455182F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EC32668-00C5-4ED4-9FFA-711455182F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EC32668-00C5-4ED4-9FFA-711455182F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D34101C-EC1A-46A1-92EF-40D84C9FFF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D34101C-EC1A-46A1-92EF-40D84C9FFF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D34101C-EC1A-46A1-92EF-40D84C9FFF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D34101C-EC1A-46A1-92EF-40D84C9FFF32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

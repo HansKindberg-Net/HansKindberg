@@ -1,0 +1,9 @@
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+[assembly: AssemblyDescription("Additions and extensions for System.Web 4.0. Versioning following .NET 4.0")]
+[assembly: AssemblyProduct("HansKindberg.Web")]
+[assembly: AssemblyTitle("HansKindberg.Web")]
+[assembly: Guid("5a73287f-309e-4338-88cf-a57f2eebf5c4")]
+[assembly: InternalsVisibleTo("HansKindberg.Web.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001007f298b05d9ada6ad823436c23957032c54b5404d6cad03997ba877faa7adcc9d08ce01bf84949acc9f1e74a7df14891e5510a1438b0b1f0980cf39fec99d5641f9a20290a2126d88bd4d092c9481b5d08372e73419ec5c84651a6a4b3bcfac2c37729fa041a840a2e08786d6ca96b78a20c0c54a0d3d08e99db484d3bcf938ee")]
