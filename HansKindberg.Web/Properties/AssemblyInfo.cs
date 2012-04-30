@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("Additions and extensions for System.Web 4.0. Versioning following .NET 4.0")]
+[assembly: AssemblyDescription("Additions and extensions for System.Web.dll .NET 3.5")]
 [assembly: AssemblyProduct("HansKindberg.Web")]
 [assembly: AssemblyTitle("HansKindberg.Web")]
 [assembly: Guid("5a73287f-309e-4338-88cf-a57f2eebf5c4")]

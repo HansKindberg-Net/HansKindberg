@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("Additions and extensions for System 4.0. Versioning following .NET 4.0")]
+[assembly: AssemblyDescription("Additions and extensions for System.dll .NET 3.5")]
 [assembly: AssemblyProduct("HansKindberg")]
 [assembly: AssemblyTitle("HansKindberg")]
 [assembly: Guid("e1df5495-e67e-44f7-9d9d-61a51ba2ec54")]
