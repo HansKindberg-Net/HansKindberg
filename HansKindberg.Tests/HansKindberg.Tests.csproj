@@ -56,9 +56,13 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CodeAnalysis\SolutionSuppressions.cs">
+      <Link>CodeAnalysis\SolutionSuppressions.cs</Link>
+    </Compile>
     <Compile Include="..\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +74,20 @@
     <CodeAnalysisDictionary Include="..\Dictionary.xml">
       <Link>Dictionary.xml</Link>
     </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HansKindberg\HansKindberg.csproj">
+      <Project>{9EC32668-00C5-4ED4-9FFA-711455182F4D}</Project>
+      <Name>HansKindberg</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CodeAnalysis\SolutionDictionary.xml">
+      <Link>CodeAnalysis\SolutionDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

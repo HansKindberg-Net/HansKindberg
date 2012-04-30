@@ -56,9 +56,13 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CodeAnalysis\SolutionSuppressions.cs">
+      <Link>CodeAnalysis\SolutionSuppressions.cs</Link>
+    </Compile>
     <Compile Include="..\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +73,15 @@
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\Dictionary.xml">
       <Link>Dictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CodeAnalysis\SolutionDictionary.xml">
+      <Link>CodeAnalysis\SolutionDictionary.xml</Link>
     </CodeAnalysisDictionary>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

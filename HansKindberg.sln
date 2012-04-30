@@ -21,7 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Tests", "HansK
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C390D0-E6EB-4F5F-86D2-D43EF19203B9}"
 	ProjectSection(SolutionItems) = preProject
-		Dictionary.xml = Dictionary.xml
 		HansKindberg.snk = HansKindberg.snk
 		HansKindberg.vsmdi = HansKindberg.vsmdi
 		Local.testsettings = Local.testsettings
@@ -29,6 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Tests", "HansKindberg.Web.Tests\HansKindberg.Web.Tests.csproj", "{DBD64A10-7958-40E6-BAF2-51775AF1497E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{605700B5-BF4C-40D2-B2AF-62E7CD59C6C9}"
+	ProjectSection(SolutionItems) = preProject
+		CodeAnalysis\SolutionDictionary.xml = CodeAnalysis\SolutionDictionary.xml
+		CodeAnalysis\SolutionSuppressions.cs = CodeAnalysis\SolutionSuppressions.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
