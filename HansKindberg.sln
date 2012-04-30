@@ -21,6 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Tests", "HansK
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C390D0-E6EB-4F5F-86D2-D43EF19203B9}"
 	ProjectSection(SolutionItems) = preProject
+		Dictionary.xml = Dictionary.xml
 		HansKindberg.snk = HansKindberg.snk
 		HansKindberg.vsmdi = HansKindberg.vsmdi
 		Local.testsettings = Local.testsettings
