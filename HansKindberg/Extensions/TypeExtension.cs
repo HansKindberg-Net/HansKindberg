@@ -42,7 +42,7 @@ namespace HansKindberg.Extensions
 
 		public static ConstructorInfo[] GetConstructors(this Type type, BindingFlags bindings, bool excludeParameterlessConstructors)
 		{
-			if (type == null)
+			if(type == null)
 				throw new ArgumentNullException("type");
 
 			return type.GetConstructors(bindings)

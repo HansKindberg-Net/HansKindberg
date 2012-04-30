@@ -30,7 +30,7 @@ namespace HansKindberg.Extensions
 
 		public static string FirstCharacterToUpper(this string value, CultureInfo culture)
 		{
-			if (value == null)
+			if(value == null)
 				throw new ArgumentNullException("value");
 
 			if(value.Length == 0)
