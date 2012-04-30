@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 	"Release"
 #endif
 )]
-[assembly: AssemblyFileVersion("4.0.2012.0425")]
-[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyInformationalVersion("1.0")]
+[assembly: AssemblyVersion("1.0.*")]
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
