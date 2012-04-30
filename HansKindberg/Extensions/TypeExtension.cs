@@ -9,7 +9,7 @@ namespace HansKindberg.Extensions
 	{
 		#region Fields
 
-		private const BindingFlags _defaultConstructorBindingFlags = BindingFlags.Instance | BindingFlags.Public;
+		private const BindingFlags _defaultConstructorBindings = BindingFlags.Instance | BindingFlags.Public;
 
 		#endregion
 
@@ -27,34 +27,37 @@ namespace HansKindberg.Extensions
 
 		public static ConstructorInfo GetConstructorWithMostParameters(this Type type, bool excludeParameterlessConstructor)
 		{
-			return type.GetConstructorWithMostParameters(_defaultConstructorBindingFlags, excludeParameterlessConstructor);
+			return type.GetConstructorWithMostParameters(_defaultConstructorBindings, excludeParameterlessConstructor);
 		}
 
-		public static ConstructorInfo GetConstructorWithMostParameters(this Type type, BindingFlags bindingFlags, bool excludeParameterlessConstructor)
+		public static ConstructorInfo GetConstructorWithMostParameters(this Type type, BindingFlags bindings, bool excludeParameterlessConstructor)
 		{
-			return type.GetConstructorsSortedByMostParametersFirst(bindingFlags, excludeParameterlessConstructor).FirstOrDefault();
+			return type.GetConstructorsSortedByMostParametersFirst(bindings, excludeParameterlessConstructor).FirstOrDefault();
 		}
 
 		public static ConstructorInfo[] GetConstructors(this Type type, bool excludeParameterlessConstructors)
 		{
-			return type.GetConstructors(_defaultConstructorBindingFlags, excludeParameterlessConstructors);
+			return type.GetConstructors(_defaultConstructorBindings, excludeParameterlessConstructors);
 		}
 
-		public static ConstructorInfo[] GetConstructors(this Type type, BindingFlags bindingFlags, bool excludeParameterlessConstructors)
+		public static ConstructorInfo[] GetConstructors(this Type type, BindingFlags bindings, bool excludeParameterlessConstructors)
 		{
-			return type.GetConstructors(bindingFlags)
+			if (type == null)
+				throw new ArgumentNullException("type");
+
+			return type.GetConstructors(bindings)
 				.Where(constructor => constructor.GetParameters().Length > 0 || !excludeParameterlessConstructors)
 				.ToArray();
 		}
 
 		public static ConstructorInfo[] GetConstructorsSortedByMostParametersFirst(this Type type, bool excludeParameterlessConstructors)
 		{
-			return type.GetConstructorsSortedByMostParametersFirst(_defaultConstructorBindingFlags, excludeParameterlessConstructors);
+			return type.GetConstructorsSortedByMostParametersFirst(_defaultConstructorBindings, excludeParameterlessConstructors);
 		}
 
-		public static ConstructorInfo[] GetConstructorsSortedByMostParametersFirst(this Type type, BindingFlags bindingFlags, bool excludeParameterlessConstructors)
+		public static ConstructorInfo[] GetConstructorsSortedByMostParametersFirst(this Type type, BindingFlags bindings, bool excludeParameterlessConstructors)
 		{
-			return type.GetConstructors(bindingFlags, excludeParameterlessConstructors)
+			return type.GetConstructors(bindings, excludeParameterlessConstructors)
 				.OrderByDescending(constructor => constructor.GetParameters().Length)
 				.ToArray();
 		}
@@ -66,7 +69,7 @@ namespace HansKindberg.Extensions
 			if(!type.IsGenericType)
 				return name;
 
-			name = name.Substring(0, name.IndexOf("`"));
+			name = name.Substring(0, name.IndexOf("`", StringComparison.Ordinal));
 
 			string genericArgumentValue = string.Empty;
 

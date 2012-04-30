@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace HansKindberg.Extensions
 {
@@ -6,30 +7,36 @@ namespace HansKindberg.Extensions
 	{
 		#region Methods
 
-		public static string FirstCharacterToLower(this string str)
+		public static string FirstCharacterToLower(this string value)
 		{
-			return str.FirstCharacterToLower(CultureInfo.CurrentCulture);
+			return value.FirstCharacterToLower(CultureInfo.CurrentCulture);
 		}
 
-		public static string FirstCharacterToLower(this string str, CultureInfo culture)
+		public static string FirstCharacterToLower(this string value, CultureInfo culture)
 		{
-			if(str == string.Empty)
-				return string.Empty;
+			if(value == null)
+				throw new ArgumentNullException("value");
 
-			return str.Substring(0, 1).ToLower(culture) + str.Remove(0, 1);
+			if(value.Length == 0)
+				return value;
+
+			return value.Substring(0, 1).ToLower(culture) + value.Remove(0, 1);
 		}
 
-		public static string FirstCharacterToUpper(this string str)
+		public static string FirstCharacterToUpper(this string value)
 		{
-			return str.FirstCharacterToUpper(CultureInfo.CurrentCulture);
+			return value.FirstCharacterToUpper(CultureInfo.CurrentCulture);
 		}
 
-		public static string FirstCharacterToUpper(this string str, CultureInfo culture)
+		public static string FirstCharacterToUpper(this string value, CultureInfo culture)
 		{
-			if(str == string.Empty)
-				return string.Empty;
+			if (value == null)
+				throw new ArgumentNullException("value");
 
-			return str.Substring(0, 1).ToUpper(culture) + str.Remove(0, 1);
+			if(value.Length == 0)
+				return value;
+
+			return value.Substring(0, 1).ToUpper(culture) + value.Remove(0, 1);
 		}
 
 		#endregion

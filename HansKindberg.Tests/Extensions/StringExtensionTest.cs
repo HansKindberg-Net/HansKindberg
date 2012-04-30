@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using HansKindberg.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,43 +11,49 @@ namespace HansKindberg.Tests.Extensions
 		#region Methods
 
 		[TestMethod]
-		public void FirstCharacterToLower_ShouldReturnAStringWithTheFirstCharacterAsLowerCase()
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToLower(System.String)")]
+		public void FirstCharacterToLower_ShouldReturnAStringWithTheFirstCharacterAsLowercase()
 		{
-			Assert.AreEqual("aAAA", "AAAA".FirstCharacterToLower());
+			Assert.AreEqual("tEST", "TEST".FirstCharacterToLower());
 		}
 
 		[TestMethod]
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToLower(System.String)")]
 		public void FirstCharacterToLower_ShouldReturnAnEmptyString_IfTheStringIsEmpty()
 		{
 			Assert.AreEqual(string.Empty, string.Empty.FirstCharacterToLower());
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NullReferenceException))]
-		public void FirstCharacterToLower_ShouldThrowANullReferenceException_IfTheStringIsNull()
+		[ExpectedException(typeof(ArgumentNullException))]
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToLower(System.String)")]
+		public void FirstCharacterToLower_ShouldThrowAnArgumentNullException_IfTheStringIsNull()
 		{
-			string str = null;
-			str.FirstCharacterToLower();
+			string value = null;
+			value.FirstCharacterToLower();
 		}
 
 		[TestMethod]
-		public void FirstCharacterToUpper_ShouldReturnAStringWithTheFirstCharacterAsUpperCase()
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToUpper(System.String)")]
+		public void FirstCharacterToUpper_ShouldReturnAStringWithTheFirstCharacterAsUppercase()
 		{
-			Assert.AreEqual("Aaaa", "aaaa".FirstCharacterToUpper());
+			Assert.AreEqual("Test", "test".FirstCharacterToUpper());
 		}
 
 		[TestMethod]
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToUpper(System.String)")]
 		public void FirstCharacterToUpper_ShouldReturnAnEmptyString_IfTheStringIsEmpty()
 		{
 			Assert.AreEqual(string.Empty, string.Empty.FirstCharacterToUpper());
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NullReferenceException))]
-		public void FirstCharacterToUpper_ShouldThrowANullReferenceException_IfTheStringIsNull()
+		[ExpectedException(typeof(ArgumentNullException))]
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToUpper(System.String)")]
+		public void FirstCharacterToUpper_ShouldThrowAnArgumentNullException_IfTheStringIsNull()
 		{
-			string str = null;
-			str.FirstCharacterToUpper();
+			string value = null;
+			value.FirstCharacterToUpper();
 		}
 
 		#endregion

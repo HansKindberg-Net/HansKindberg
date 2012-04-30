@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HansKindberg.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,23 +18,6 @@ namespace HansKindberg.Tests.Extensions
 
 		#region Methods
 
-		private ParameterInfo CreateParameterInfo()
-		{
-			return (ParameterInfo) Activator.CreateInstance(typeof(ParameterInfo), true);
-		}
-
-		private ParameterInfo[] CreateParameterInfoArray(byte length)
-		{
-			ParameterInfo[] parameterInfoArray = new ParameterInfo[length];
-
-			for(int i = 0; i < length; i++)
-			{
-				parameterInfoArray[i] = this.CreateParameterInfo();
-			}
-
-			return parameterInfoArray;
-		}
-
 		[TestMethod]
 		public void FriendlyFullName_Test()
 		{
@@ -46,97 +30,97 @@ namespace HansKindberg.Tests.Extensions
 		[TestMethod]
 		public void FriendlyName_Test()
 		{
-			foreach (KeyValuePair<Type, KeyValuePair<string, string>> keyValuePair in this._typesToTestDictionary)
+			foreach(KeyValuePair<Type, KeyValuePair<string, string>> keyValuePair in this._typesToTestDictionary)
 			{
 				Assert.AreEqual(keyValuePair.Value.Key, keyValuePair.Key.FriendlyName());
 			}
 		}
 
 		[TestMethod]
-		public void GetConstructorWithMostParameters_ShouldConsiderStaticConstructorAsNonPublic()
+		public void GetConstructorWithMostParameters_ShouldConsiderStaticConstructorAsNonpublic()
 		{
-			Assert.IsNull(typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructorWithMostParameters(BindingFlags.Public | BindingFlags.Static, false));
-			Assert.IsNotNull(typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructorWithMostParameters(BindingFlags.NonPublic | BindingFlags.Static, false));
+			Assert.IsNull(typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructorWithMostParameters(BindingFlags.Public | BindingFlags.Static, false));
+			Assert.IsNotNull(typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructorWithMostParameters(BindingFlags.NonPublic | BindingFlags.Static, false));
 		}
 
 		[TestMethod]
-		public void GetConstructorWithMostParameters_ShouldExcludeNonPublicConstructor_ByDefault()
+		public void GetConstructorWithMostParameters_ShouldExcludeNonpublicConstructor_ByDefault()
 		{
-			Assert.IsNull(typeof(TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass).GetConstructorWithMostParameters(false));
+			Assert.IsNull(typeof(TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass).GetConstructorWithMostParameters(false));
 		}
 
 		[TestMethod]
 		public void GetConstructorWithMostParameters_ShouldExcludeParameterlessConstructor_IfExcludeParameterlessConstructorIsSetToTrue()
 		{
-			Assert.IsNull(typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructorWithMostParameters(true));
+			Assert.IsNull(typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructorWithMostParameters(true));
 		}
 
 		[TestMethod]
 		public void GetConstructorWithMostParameters_ShouldExcludeStaticConstructor_ByDefault()
 		{
-			Assert.IsNull(typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructorWithMostParameters(false));
+			Assert.IsNull(typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructorWithMostParameters(false));
 		}
 
 		[TestMethod]
 		public void GetConstructorWithMostParameters_ShouldIncludeParameterlessConstructor_IfExcludeParameterlessConstructorIsSetToFalse()
 		{
-			Assert.IsNotNull(typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructorWithMostParameters(false));
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructorWithMostParameters(false).GetParameters().Length);
+			Assert.IsNotNull(typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructorWithMostParameters(false));
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructorWithMostParameters(false).GetParameters().Length);
 		}
 
 		[TestMethod]
 		public void GetConstructorWithMostParameters_ShouldReturnNull_IfNoConstructorFound()
 		{
-			Assert.IsNull(typeof(TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass).GetConstructorWithMostParameters(false));
+			Assert.IsNull(typeof(TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass).GetConstructorWithMostParameters(false));
 		}
 
 		[TestMethod]
 		public void GetConstructorWithMostParameters_ShouldReturnTheCorrectConstructor()
 		{
-			Assert.AreEqual(4, typeof(TypeExtensionTest_GetConstructors_TestClass).GetConstructorWithMostParameters(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, false).GetParameters().Length);
+			Assert.AreEqual(4, typeof(TypeExtensionTestGetConstructorsTestClass).GetConstructorWithMostParameters(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, false).GetParameters().Length);
 		}
 
 		[TestMethod]
-		public void GetConstructorsSortedByMostParametersFirst_ShouldConsiderStaticConstructorsAsNonPublic()
+		public void GetConstructorsSortedByMostParametersFirst_ShouldConsiderStaticConstructorsAsNonpublic()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructorsSortedByMostParametersFirst(BindingFlags.Public | BindingFlags.Static, false).Length);
-			Assert.AreEqual(1, typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructorsSortedByMostParametersFirst(BindingFlags.NonPublic | BindingFlags.Static, false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructorsSortedByMostParametersFirst(BindingFlags.Public | BindingFlags.Static, false).Length);
+			Assert.AreEqual(1, typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructorsSortedByMostParametersFirst(BindingFlags.NonPublic | BindingFlags.Static, false).Length);
 		}
 
 		[TestMethod]
-		public void GetConstructorsSortedByMostParametersFirst_ShouldExcludeNonPublicConstructors_ByDefault()
+		public void GetConstructorsSortedByMostParametersFirst_ShouldExcludeNonpublicConstructors_ByDefault()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructorsSortedByMostParametersFirst_ShouldExcludeParameterlessConstructors_IfExcludeParameterlessConstructorIsSetToTrue()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructorsSortedByMostParametersFirst(true).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructorsSortedByMostParametersFirst(true).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructorsSortedByMostParametersFirst_ShouldExcludeStaticConstructors_ByDefault()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructorsSortedByMostParametersFirst_ShouldIncludeParameterlessConstructors_IfExcludeParameterlessConstructorIsSetToFalse()
 		{
-			Assert.AreEqual(1, typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
+			Assert.AreEqual(1, typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructorsSortedByMostParametersFirst_ShouldReturnAnEmptyArray_IfNoConstructorsFound()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass).GetConstructorsSortedByMostParametersFirst(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructorsSortedByMostParametersFirst_ShouldSortCorrectly()
 		{
-			ConstructorInfo[] constructors = typeof(TypeExtensionTest_GetConstructors_TestClass).GetConstructorsSortedByMostParametersFirst(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, false);
+			ConstructorInfo[] constructors = typeof(TypeExtensionTestGetConstructorsTestClass).GetConstructorsSortedByMostParametersFirst(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, false);
 
 			Assert.AreEqual(4, constructors[0].GetParameters().Length);
 			Assert.AreEqual(4, constructors[1].GetParameters().Length);
@@ -151,40 +135,47 @@ namespace HansKindberg.Tests.Extensions
 		}
 
 		[TestMethod]
-		public void GetConstructors_ShouldConsiderStaticConstructorsAsNonPublic()
+		public void GetConstructors_ShouldConsiderStaticConstructorsAsNonpublic()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructors(BindingFlags.Public | BindingFlags.Static, false).Length);
-			Assert.AreEqual(1, typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructors(BindingFlags.NonPublic | BindingFlags.Static, false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructors(BindingFlags.Public | BindingFlags.Static, false).Length);
+			Assert.AreEqual(1, typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructors(BindingFlags.NonPublic | BindingFlags.Static, false).Length);
 		}
 
 		[TestMethod]
-		public void GetConstructors_ShouldExcludeNonPublicConstructors_ByDefault()
+		public void GetConstructors_ShouldExcludeNonpublicConstructors_ByDefault()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass).GetConstructors(false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass).GetConstructors(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructors_ShouldExcludeParameterlessConstructors_IfExcludeParameterlessConstructorIsSetToTrue()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructors(true).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructors(true).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructors_ShouldExcludeStaticConstructors_ByDefault()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_StaticConstructor_TestClass).GetConstructors(false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsStaticConstructorTestClass).GetConstructors(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructors_ShouldIncludeParameterlessConstructors_IfExcludeParameterlessConstructorIsSetToFalse()
 		{
-			Assert.AreEqual(1, typeof(TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass).GetConstructors(false).Length);
+			Assert.AreEqual(1, typeof(TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass).GetConstructors(false).Length);
 		}
 
 		[TestMethod]
 		public void GetConstructors_ShouldReturnAnEmptyArray_IfNoConstructorsFound()
 		{
-			Assert.AreEqual(0, typeof(TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass).GetConstructors(false).Length);
+			Assert.AreEqual(0, typeof(TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass).GetConstructors(false).Length);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GetConstructors_ShouldThrowAnArgumentNullException_IfTheTypeIsNull()
+		{
+			((Type) null).GetConstructors(BindingFlags.Instance | BindingFlags.Public, false);
 		}
 
 		[TestInitialize]
@@ -199,52 +190,99 @@ namespace HansKindberg.Tests.Extensions
 		#endregion
 	}
 
-	internal class TypeExtensionTest_GetConstructors_TestClass
+	[SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Scope = "type")]
+	internal class TypeExtensionTestGetConstructorsTestClass
 	{
+		#region Fields
+
+		[SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")] private readonly object _firstParameter;
+		[SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")] private readonly object _fourthParameter;
+		[SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")] private readonly object _secondParameter;
+		[SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")] private readonly object _thirdParameter;
+
+		#endregion
+
 		#region Constructors
 
-		static TypeExtensionTest_GetConstructors_TestClass() {}
-		public TypeExtensionTest_GetConstructors_TestClass() {}
-		public TypeExtensionTest_GetConstructors_TestClass(object firstParameter) {}
-		public TypeExtensionTest_GetConstructors_TestClass(string firstParameter) {}
-		public TypeExtensionTest_GetConstructors_TestClass(object firstParameter, object secondParameter) {}
-		public TypeExtensionTest_GetConstructors_TestClass(string firstParameter, string secondParameter) {}
-		public TypeExtensionTest_GetConstructors_TestClass(object firstParameter, object secondParameter, object thirdParameter) {}
-		public TypeExtensionTest_GetConstructors_TestClass(string firstParameter, string secondParameter, string thirdParameter) {}
-		private TypeExtensionTest_GetConstructors_TestClass(object firstParameter, object secondParameter, object thirdParameter, object fourthParameter) {}
-		protected TypeExtensionTest_GetConstructors_TestClass(string firstParameter, string secondParameter, string thirdParameter, string fourthParameter) {}
+		[SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline")]
+		static TypeExtensionTestGetConstructorsTestClass() {}
+
+		public TypeExtensionTestGetConstructorsTestClass() {}
+
+		public TypeExtensionTestGetConstructorsTestClass(object firstParameter)
+		{
+			this._firstParameter = firstParameter;
+		}
+
+		public TypeExtensionTestGetConstructorsTestClass(string firstParameter)
+		{
+			this._firstParameter = firstParameter;
+		}
+
+		public TypeExtensionTestGetConstructorsTestClass(object firstParameter, object secondParameter) : this(firstParameter)
+		{
+			this._secondParameter = secondParameter;
+		}
+
+		public TypeExtensionTestGetConstructorsTestClass(string firstParameter, string secondParameter) : this(firstParameter)
+		{
+			this._secondParameter = secondParameter;
+		}
+
+		public TypeExtensionTestGetConstructorsTestClass(object firstParameter, object secondParameter, object thirdParameter) : this(firstParameter, secondParameter)
+		{
+			this._thirdParameter = thirdParameter;
+		}
+
+		public TypeExtensionTestGetConstructorsTestClass(string firstParameter, string secondParameter, string thirdParameter) : this(firstParameter, secondParameter)
+		{
+			this._thirdParameter = thirdParameter;
+		}
+
+		private TypeExtensionTestGetConstructorsTestClass(object firstParameter, object secondParameter, object thirdParameter, object fourthParameter) : this(firstParameter, secondParameter, thirdParameter)
+		{
+			this._fourthParameter = fourthParameter;
+		}
+
+		protected TypeExtensionTestGetConstructorsTestClass(string firstParameter, string secondParameter, string thirdParameter, string fourthParameter) : this(firstParameter, secondParameter, thirdParameter)
+		{
+			this._fourthParameter = fourthParameter;
+		}
 
 		#endregion
 	}
 
-	internal class TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass
+	internal class TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass
 	{
 		#region Constructors
 
-		static TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass() {}
-		private TypeExtensionTest_GetConstructors_NoPublicConstructors_TestClass() {}
+		[SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline")]
+		static TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass() {}
+
+		private TypeExtensionTestGetConstructorsNoPublicConstructorsTestClass() {}
 
 		#endregion
 	}
 
-	internal class TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass
+	internal class TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass
 	{
 		#region Constructors
 
-		public TypeExtensionTest_GetConstructors_ParameterlessConstructors_TestClass() {}
+		public TypeExtensionTestGetConstructorsParameterlessConstructorsTestClass() {}
 
 		#endregion
 	}
 
-	internal class TypeExtensionTest_GetConstructors_StaticConstructor_TestClass
+	internal class TypeExtensionTestGetConstructorsStaticConstructorTestClass
 	{
 		#region Constructors
 
-		static TypeExtensionTest_GetConstructors_StaticConstructor_TestClass() {}
-		private TypeExtensionTest_GetConstructors_StaticConstructor_TestClass() {}
-
-		#endregion
+		[SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline")]
+		static TypeExtensionTestGetConstructorsStaticConstructorTestClass() {}
 
 		// To hide the public constructor.
+		private TypeExtensionTestGetConstructorsStaticConstructorTestClass() {}
+
+		#endregion
 	}
 }
