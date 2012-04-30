@@ -70,11 +70,6 @@
       <Link>HansKindberg.snk</Link>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="..\Dictionary.xml">
-      <Link>Dictionary.xml</Link>
-    </CodeAnalysisDictionary>
-  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />

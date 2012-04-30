@@ -71,11 +71,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\Dictionary.xml">
-      <Link>Dictionary.xml</Link>
-    </CodeAnalysisDictionary>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\HansKindberg\HansKindberg.csproj">
       <Project>{9EC32668-00C5-4ED4-9FFA-711455182F4D}</Project>
       <Name>HansKindberg</Name>
