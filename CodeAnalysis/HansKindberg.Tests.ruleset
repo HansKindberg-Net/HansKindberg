@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RuleSet
+	Name="Hans Kindberg - custom rules - for test projects"
+	Description=""
+	ToolsVersion="10.0"
+>
+	<IncludeAll Action="Error" />
+</RuleSet>
