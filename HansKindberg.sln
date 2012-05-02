@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 	ProjectSection(SolutionItems) = preProject
 		CodeAnalysis\HansKindberg.ruleset = CodeAnalysis\HansKindberg.ruleset
 		CodeAnalysis\HansKindberg.Tests.ruleset = CodeAnalysis\HansKindberg.Tests.ruleset
+		CodeAnalysis\Solution.ruleset = CodeAnalysis\Solution.ruleset
+		CodeAnalysis\Solution.Tests.ruleset = CodeAnalysis\Solution.Tests.ruleset
 		CodeAnalysis\SolutionDictionary.xml = CodeAnalysis\SolutionDictionary.xml
 		CodeAnalysis\SolutionSuppressions.cs = CodeAnalysis\SolutionSuppressions.cs
 	EndProjectSection
