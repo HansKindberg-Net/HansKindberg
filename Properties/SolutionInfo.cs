@@ -65,7 +65,7 @@ internal static class SolutionInfo
 	private const string _fileVersionRevision = "1";
 	private const string _majorVersion = "1";
 	private const string _minorVersion = "0";
-	private const string _revision = "1";
+	private const string _revision = "2";
 
 	#endregion
 }
