@@ -26,11 +26,46 @@ using System.Runtime.InteropServices;
 
 	http://en.wikipedia.org/wiki/Software_versioning#Designating_development_stage
 
-	The AssemblyFileVersion uses the format: major.minor.year.date
-*/
+	To get nuget pack to work for prereleases and AssemblyInformationalVersion you must follow the guidlines at http://semver.org/.
+	Examples:
+	1.0.0-alpha < 1.0.0-alpha.1 < 1.0.0-beta.2 < 1.0.0-beta.11 < 1.0.0-rc.1 < 1.0.0-rc.1+build.1 < 1.0.0 < 1.0.0+0.3.7 < 1.3.7+build < 1.3.7+build.2.b8f12d7 < 1.3.7+build.11.e0f985a
+	My examples:
+	1.0.0-alpha-1 = 1.0.0.1
+	1.0.0-alpha-2 = 1.0.0.2
+	1.0.1-beta-1 = 1.0.1.1
+	1.0.1-beta-2 = 1.0.1.2
+	1.0.2-rc-1 = 1.0.2.1
+	1.0.2-rc-2 = 1.0.2.2
+	1.0.3 = 1.0.3.1 or 1.0.3.2 etc. (when its the real release the version number will tell the exact version, no literal information added, in other words I dont use 1.0.3-r-1, 1.0.3-r-2 etc.)
 
-[assembly: AssemblyFileVersion("1.0.2012.0501")]
-//[assembly: AssemblyInformationalVersion("1.0")]
-[assembly: AssemblyVersion("1.0.0.1")]
+	If we sometime want to increment just the fileversion we do it by adding a filerevision at the end:
+	Version 1.0.0.1 has file version 1.0.0.11, if we want to fix without incrementing the version the file version becomes 1.0.0.12
+*/
+#pragma warning disable 436
+
+[assembly: AssemblyFileVersion(SolutionInfo.AssemblyFileVersion)]
+[assembly: AssemblyInformationalVersion(SolutionInfo.AssemblyInformationalVersion)]
+[assembly: AssemblyProduct(AssemblyInfo.AssemblyName + " " + SolutionInfo.AssemblyInformationalVersion)]
+[assembly: AssemblyTitle(AssemblyInfo.AssemblyName + " " + SolutionInfo.AssemblyInformationalVersion)]
+[assembly: AssemblyVersion(SolutionInfo.AssemblyVersion)]
+#pragma warning restore 436
+
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
+
+internal static class SolutionInfo
+{
+	#region Fields
+
+	internal const string AssemblyFileVersion = AssemblyVersion + _fileVersionRevision;
+	internal const string AssemblyInformationalVersion = _assemblyBaseVersion + "-alpha-" + _revision;
+	internal const string AssemblyVersion = _assemblyBaseVersion + "." + _revision;
+	private const string _assemblyBaseVersion = _majorVersion + "." + _minorVersion + "." + _buildNumber;
+	private const string _buildNumber = "0";
+	private const string _fileVersionRevision = "1";
+	private const string _majorVersion = "1";
+	private const string _minorVersion = "0";
+	private const string _revision = "1";
+
+	#endregion
+}
