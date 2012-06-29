@@ -62,9 +62,9 @@
     <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\CodeAnalysis\SolutionDictionary.xml">
+    <CodeAnalysisDictionary Include="..\CodeAnalysis\SolutionDictionary.xml">
       <Link>CodeAnalysis\SolutionDictionary.xml</Link>
-    </Content>
+    </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\HansKindberg.snk">
