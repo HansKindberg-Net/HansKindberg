@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 		CodeAnalysis\SolutionSuppressions.cs = CodeAnalysis\SolutionSuppressions.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml", "HansKindberg.Xml\HansKindberg.Xml.csproj", "{F00E8D75-404A-4287-BF42-A8A016D624E3}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = HansKindberg.vsmdi
@@ -62,6 +64,10 @@ Global
 		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBD64A10-7958-40E6-BAF2-51775AF1497E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00E8D75-404A-4287-BF42-A8A016D624E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00E8D75-404A-4287-BF42-A8A016D624E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00E8D75-404A-4287-BF42-A8A016D624E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00E8D75-404A-4287-BF42-A8A016D624E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
