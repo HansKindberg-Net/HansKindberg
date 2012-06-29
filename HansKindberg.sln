@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml", "HansKin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml.Tests", "HansKindberg.Xml.Tests\HansKindberg.Xml.Tests.csproj", "{EC5009C0-2DA7-4300-80BB-15788BB7EC82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.DirectoryServices", "HansKindberg.DirectoryServices\HansKindberg.DirectoryServices.csproj", "{6F724192-9159-4DE8-83F1-43245781D475}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = HansKindberg.vsmdi
@@ -74,6 +76,10 @@ Global
 		{EC5009C0-2DA7-4300-80BB-15788BB7EC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC5009C0-2DA7-4300-80BB-15788BB7EC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC5009C0-2DA7-4300-80BB-15788BB7EC82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F724192-9159-4DE8-83F1-43245781D475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F724192-9159-4DE8-83F1-43245781D475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F724192-9159-4DE8-83F1-43245781D475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F724192-9159-4DE8-83F1-43245781D475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
