@@ -60,6 +60,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IType.cs" />
+    <Compile Include="Net\Mail\ISmtpClient.cs" />
+    <Compile Include="Net\Mail\SmtpClientWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ConstructorInfoWrapper.cs" />
     <Compile Include="Reflection\IConstructorInfo.cs" />

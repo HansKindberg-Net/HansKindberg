@@ -72,6 +72,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\TypeExtensionTest.cs" />
+    <Compile Include="Net\Mail\SmtpClientWrapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ConstructorInfoWrapperTest.cs" />
     <Compile Include="Reflection\ParameterInfoWrapperTest.cs" />
