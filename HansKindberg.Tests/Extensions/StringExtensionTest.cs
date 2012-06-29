@@ -29,8 +29,7 @@ namespace HansKindberg.Tests.Extensions
 		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToLower(System.String)")]
 		public void FirstCharacterToLower_ShouldThrowAnArgumentNullException_IfTheStringIsNull()
 		{
-			string value = null;
-			value.FirstCharacterToLower();
+			((string) null).FirstCharacterToLower();
 		}
 
 		[TestMethod]
@@ -52,8 +51,27 @@ namespace HansKindberg.Tests.Extensions
 		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "HansKindberg.Extensions.StringExtension.FirstCharacterToUpper(System.String)")]
 		public void FirstCharacterToUpper_ShouldThrowAnArgumentNullException_IfTheStringIsNull()
 		{
-			string value = null;
-			value.FirstCharacterToUpper();
+			((string) null).FirstCharacterToUpper();
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Like_IfPatternIsNull_ShouldThrowAnArgumentNullException()
+		{
+			Assert.IsFalse(string.Empty.Like(null));
+		}
+
+		[TestMethod]
+		public void Like_IfValueIsEmptyAndPatternIsEmpty_ShouldReturnTrue()
+		{
+			Assert.IsTrue(string.Empty.Like(string.Empty));
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Like_IfValueIsNull_ShouldThrowAnArgumentNullException()
+		{
+			Assert.IsFalse(((string) null).Like(string.Empty));
 		}
 
 		#endregion
