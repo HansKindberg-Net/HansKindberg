@@ -17,9 +17,9 @@ namespace HansKindberg.Tests.Reflection
 		{
 			ConstructorInfo constructorInfo = CreateConstructorInfo();
 			Assert.IsNotNull(constructorInfo);
-			#pragma warning disable 184
+#pragma warning disable 184
 			Assert.IsFalse(constructorInfo is ConstructorInfoWrapper);
-			#pragma warning restore 184
+#pragma warning restore 184
 		}
 
 		[TestMethod]

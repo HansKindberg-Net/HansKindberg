@@ -61,9 +61,9 @@ namespace HansKindberg.Tests.Reflection
 		{
 			ParameterInfo parameterInfo = CreateParameterInfo();
 			Assert.IsNotNull(parameterInfo);
-			#pragma warning disable 184
+#pragma warning disable 184
 			Assert.IsFalse(parameterInfo is ParameterInfoWrapper);
-			#pragma warning restore 184
+#pragma warning restore 184
 		}
 
 		[TestMethod]
