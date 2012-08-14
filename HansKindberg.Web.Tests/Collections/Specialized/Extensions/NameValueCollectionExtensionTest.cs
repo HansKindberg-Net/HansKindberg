@@ -11,9 +11,20 @@ namespace HansKindberg.Web.Tests.Collections.Specialized.Extensions
 	{
 		#region Methods
 
-		private static void ToQueryStringTest(string expectedQueryString, NameValueCollection nameValueCollection)
+		private static void ToQueryStringTest(string expectedQueryString, NameValueCollection nameValueCollection, bool reverseTest = false)
 		{
 			Assert.AreEqual(expectedQueryString, nameValueCollection.ToQueryString());
+
+			if(!reverseTest)
+				return;
+
+			NameValueCollection parsedNameValueCollection = HttpUtility.ParseQueryString(expectedQueryString);
+			Assert.AreEqual(nameValueCollection.Count, parsedNameValueCollection.Count);
+			for(int i = 0; i < nameValueCollection.Count; i++)
+			{
+				Assert.AreEqual(nameValueCollection[i], parsedNameValueCollection[i]);
+				Assert.AreEqual(nameValueCollection.Keys[i], parsedNameValueCollection.Keys[i]);
+			}
 		}
 
 		[TestMethod]
@@ -27,15 +38,15 @@ namespace HansKindberg.Web.Tests.Collections.Specialized.Extensions
 		{
 			ToQueryStringTest(string.Empty, new NameValueCollection {{null, null}, {null, null}});
 
-			ToQueryStringTest("?,First,Second", new NameValueCollection {{null, null}, {null, string.Empty}, {null, "First"}, {null, "Second"}});
+			ToQueryStringTest("?,First,Second", new NameValueCollection {{null, null}, {null, string.Empty}, {null, "First"}, {null, "Second"}}, true);
 
-			ToQueryStringTest("?Test=+First,+Second+,++Third+++", new NameValueCollection {{"Test", " First"}, {"Test", " Second "}, {"Test", "  Third   "}});
+			ToQueryStringTest("?Test=+First,+Second+,++Third+++", new NameValueCollection {{"Test", " First"}, {"Test", " Second "}, {"Test", "  Third   "}}, true);
 
-			ToQueryStringTest("?FirstName=FirstValue&SecondName=SecondValue&ThirdName=ThirdValue", new NameValueCollection {{"FirstName", "FirstValue"}, {"SecondName", "SecondValue"}, {"ThirdName", "ThirdValue"}});
+			ToQueryStringTest("?FirstName=FirstValue&SecondName=SecondValue&ThirdName=ThirdValue", new NameValueCollection {{"FirstName", "FirstValue"}, {"SecondName", "SecondValue"}, {"ThirdName", "ThirdValue"}}, true);
 
-			ToQueryStringTest("?Test", new NameValueCollection {{null, "Test"}});
+			ToQueryStringTest("?Test", new NameValueCollection {{null, "Test"}}, true);
 
-			ToQueryStringTest("?FirstValue&=SecondValue", new NameValueCollection {{null, "FirstValue"}, {string.Empty, "SecondValue"}});
+			ToQueryStringTest("?FirstValue&=SecondValue", new NameValueCollection {{null, "FirstValue"}, {string.Empty, "SecondValue"}}, true);
 		}
 
 		[TestMethod]
