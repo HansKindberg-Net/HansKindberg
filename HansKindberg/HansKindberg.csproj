@@ -53,6 +53,11 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
+    <Compile Include="Connections\AuthenticationMethod.cs" />
+    <Compile Include="Connections\ConnectionStringParser.cs" />
+    <Compile Include="Connections\IConnectionStringParser.cs" />
+    <Compile Include="Connections\ISecureConnectionSettings.cs" />
+    <Compile Include="Connections\SecureConnectionSettings.cs" />
     <Compile Include="Extensions\StringExtension.cs">
       <SubType>Code</SubType>
     </Compile>
