@@ -44,6 +44,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CodeAnalysis\SolutionSuppressions.cs">
@@ -53,6 +54,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
+    <Compile Include="Collections\Specialized\Extensions\NameValueCollectionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

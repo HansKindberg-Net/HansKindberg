@@ -54,6 +54,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -68,6 +69,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
+    <Compile Include="Collections\Specialized\Extensions\NameValueCollectionExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +78,12 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HansKindberg.Web\HansKindberg.Web.csproj">
+      <Project>{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}</Project>
+      <Name>HansKindberg.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
   </ItemGroup>
