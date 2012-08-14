@@ -8,19 +8,19 @@ namespace HansKindberg.Xml.ShimTests
 		#region Methods
 
 		[TestMethod]
-		public void LoadXml_ShouldCallTheMethodOnTheWrappedXmlNode()
+		public void LoadXml_ShouldCallTheMethodOnTheWrappedXmlDocument()
 		{
 			Assert.Inconclusive("Fix this test with shim.");
 		}
 
 		[TestMethod]
-		public void Load_WithOneStringParameter_ShouldCallTheMethodOnTheWrappedXmlNode()
+		public void Load_WithOneStringParameter_ShouldCallTheMethodOnTheWrappedXmlDocument()
 		{
 			Assert.Inconclusive("Fix this test with shim.");
 		}
 
 		[TestMethod]
-		public void Save_WithOneStringParameter_ShouldCallTheMethodOnTheWrappedXmlNode()
+		public void Save_WithOneStringParameter_ShouldCallTheMethodOnTheWrappedXmlDocument()
 		{
 			Assert.Inconclusive("Fix this test with shim.");
 		}
