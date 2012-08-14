@@ -22,8 +22,7 @@ namespace HansKindberg.Connections
 		#region Constructors
 
 		public ConnectionStringParser() : this(DefaultTrim) {}
-
-		public ConnectionStringParser(bool trim) : this(trim, DefaultKeyValuePairDelimiter, DefaultKeyValueSeparator, StringComparer.OrdinalIgnoreCase) { }
+		public ConnectionStringParser(bool trim) : this(trim, DefaultKeyValuePairDelimiter, DefaultKeyValueSeparator, StringComparer.OrdinalIgnoreCase) {}
 
 		public ConnectionStringParser(bool trim, char keyValuePairDelimiter, char keyValueSeparator, StringComparer stringComparer)
 		{

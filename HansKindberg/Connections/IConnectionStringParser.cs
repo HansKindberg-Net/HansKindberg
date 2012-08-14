@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace HansKindberg.Connections
 {
 	public interface IConnectionStringParser
 	{
+		#region Methods
+
 		IDictionary<string, string> ToDictionary(string connectionString);
+
+		#endregion
 	}
 }
