@@ -14,6 +14,12 @@ namespace HansKindberg.Xml
 
 		#region Methods
 
+		[SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+		public static XmlDocumentWrapper FromXmlDocument(XmlDocument xmlDocument)
+		{
+			return xmlDocument;
+		}
+
 		public virtual void Load(string fileName)
 		{
 			this.WrappedXmlNode.Load(fileName);
@@ -27,6 +33,16 @@ namespace HansKindberg.Xml
 		public virtual void Save(string fileName)
 		{
 			this.WrappedXmlNode.Save(fileName);
+		}
+
+		#endregion
+
+		#region Implicit operator
+
+		[SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+		public static implicit operator XmlDocumentWrapper(XmlDocument xmlDocument)
+		{
+			return xmlDocument == null ? null : new XmlDocumentWrapper(xmlDocument);
 		}
 
 		#endregion

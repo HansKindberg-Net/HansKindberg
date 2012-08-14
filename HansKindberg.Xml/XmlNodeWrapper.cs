@@ -14,6 +14,26 @@ namespace HansKindberg.Xml
 		public XmlNodeWrapper(XmlNode xmlNode) : base(xmlNode) {}
 
 		#endregion
+
+		#region Methods
+
+		[SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+		public static XmlNodeWrapper FromXmlNode(XmlNode xmlNode)
+		{
+			return xmlNode;
+		}
+
+		#endregion
+
+		#region Implicit operator
+
+		[SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+		public static implicit operator XmlNodeWrapper(XmlNode xmlNode)
+		{
+			return xmlNode == null ? null : new XmlNodeWrapper(xmlNode);
+		}
+
+		#endregion
 	}
 
 	public class XmlNodeWrapper<TXmlNode> where TXmlNode : XmlNode
