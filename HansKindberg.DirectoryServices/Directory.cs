@@ -25,20 +25,17 @@ namespace HansKindberg.DirectoryServices
 
 		#endregion
 
-		#region Properties
+		#region Methods
 
 		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-		public virtual IDirectoryEntry Root
+		public virtual IDirectoryEntry GetRoot()
 		{
-			get
-			{
-				DirectoryEntry directoryEntry = new DirectoryEntry(this._connectionSettings.Path, this._connectionSettings.UserName, this._connectionSettings.Password);
+			DirectoryEntry directoryEntry = new DirectoryEntry(this._connectionSettings.Path, this._connectionSettings.UserName, this._connectionSettings.Password);
 
-				if(this._connectionSettings.AuthenticationTypes.HasValue)
-					directoryEntry.AuthenticationType = this._connectionSettings.AuthenticationTypes.Value;
+			if(this._connectionSettings.AuthenticationTypes.HasValue)
+				directoryEntry.AuthenticationType = this._connectionSettings.AuthenticationTypes.Value;
 
-				return new DirectoryEntryWrapper(directoryEntry);
-			}
+			return new DirectoryEntryWrapper(directoryEntry);
 		}
 
 		#endregion
