@@ -68,7 +68,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
-    <Compile Include="Connections\AuthenticationMethodTest.cs" />
+    <Compile Include="Collections\Generic\Extensions\DictionaryExtensionTest.cs" />
     <Compile Include="Connections\ConnectionStringParserTest.cs" />
     <Compile Include="Connections\IConnectionStringParserTest.cs" />
     <Compile Include="Connections\ISecureConnectionSettingsTest.cs" />

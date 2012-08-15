@@ -49,6 +49,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.DirectoryServices" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -63,6 +64,8 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
+    <Compile Include="DirectoryEntryWrapperTest.cs" />
+    <Compile Include="IDirectoryEntryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +80,16 @@
     <None Include="..\HansKindberg.snk">
       <Link>HansKindberg.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HansKindberg.DirectoryServices\HansKindberg.DirectoryServices.csproj">
+      <Project>{6F724192-9159-4DE8-83F1-43245781D475}</Project>
+      <Name>HansKindberg.DirectoryServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HansKindberg\HansKindberg.csproj">
+      <Project>{9EC32668-00C5-4ED4-9FFA-711455182F4D}</Project>
+      <Name>HansKindberg</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

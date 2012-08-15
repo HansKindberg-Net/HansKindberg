@@ -6,6 +6,7 @@ namespace HansKindberg.Connections
 	{
 		#region Methods
 
+		string ToConnectionString(IDictionary<string, string> connectionStringParameters);
 		IDictionary<string, string> ToDictionary(string connectionString);
 
 		#endregion

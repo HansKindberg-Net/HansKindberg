@@ -4,7 +4,6 @@ namespace HansKindberg.Connections
 	{
 		#region Properties
 
-		AuthenticationMethod? AuthenticationMethod { get; }
 		string Password { get; }
 		string UserName { get; }
 

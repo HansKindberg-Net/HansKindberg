@@ -69,10 +69,10 @@ namespace HansKindberg.Connections
 			if(keyValuePairString == null)
 				throw new ArgumentNullException("keyValuePairString");
 
-			string[] keyValueArray = keyValuePairString.Split(new[] {this.KeyValueSeparator}, StringSplitOptions.None);
+			string[] keyValueArray = keyValuePairString.Split(new[] {this.KeyValueSeparator}, 2, StringSplitOptions.None);
 
-			if(keyValueArray.Length != 2)
-				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Each keyvaluepair must contain exactly one separator, '{0}'.", this.KeyValueSeparator), "keyValuePairString");
+			if(keyValueArray.Length < 2)
+				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Each keyvaluepair must contain at least one separator, '{0}'.", this.KeyValueSeparator), "keyValuePairString");
 
 			string key = this.Trim ? keyValueArray[0].Trim() : keyValueArray[0];
 			if(string.IsNullOrEmpty(key))
@@ -89,6 +89,24 @@ namespace HansKindberg.Connections
 				throw new ArgumentNullException("connectionString");
 
 			return connectionString.Split(new[] {this.KeyValuePairDelimiter}, StringSplitOptions.RemoveEmptyEntries);
+		}
+
+		public virtual string ToConnectionString(IDictionary<string, string> connectionStringParameters)
+		{
+			if(connectionStringParameters == null)
+				throw new ArgumentNullException("connectionStringParameters");
+
+			string connectionString = string.Empty;
+
+			foreach(string key in connectionStringParameters.Keys)
+			{
+				if(!string.IsNullOrEmpty(connectionString))
+					connectionString += this.KeyValuePairDelimiter;
+
+				connectionString += key + this.KeyValueSeparator + connectionStringParameters[key];
+			}
+
+			return connectionString;
 		}
 
 		public virtual IDictionary<string, string> ToDictionary(string connectionString)

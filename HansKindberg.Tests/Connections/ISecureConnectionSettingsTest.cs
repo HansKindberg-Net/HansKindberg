@@ -12,15 +12,6 @@ namespace HansKindberg.Tests.Connections
 		#region Methods
 
 		[TestMethod]
-		public void AuthenticationMethod_ShouldBeAbleToMock()
-		{
-			const AuthenticationMethod testAuthenticationMethod = AuthenticationMethod.Credentials;
-			Mock<ISecureConnectionSettings> secureConnectionSettingsMock = new Mock<ISecureConnectionSettings>();
-			secureConnectionSettingsMock.Setup(secureConnectionSettings => secureConnectionSettings.AuthenticationMethod).Returns(testAuthenticationMethod);
-			Assert.AreEqual(testAuthenticationMethod, secureConnectionSettingsMock.Object.AuthenticationMethod);
-		}
-
-		[TestMethod]
 		public void Password_ShouldBeAbleToMock()
 		{
 			const string testPassword = "Test";

@@ -55,6 +55,13 @@ namespace HansKindberg.Tests.Connections
 		}
 
 		[TestMethod]
+		public void ToDictionary_IfTheConnectionStringContainsAValueWithEqualSigns_ShouldReturnADictionaryWithAKeyValuePairWithThatValue()
+		{
+			Assert.AreEqual("First=Second=Third", new ConnectionStringParser(true).ToDictionary("FirstKey=First=Second=Third")["FirstKey"]);
+			Assert.AreEqual("  First  =  Second  =  Third  ", new ConnectionStringParser(false).ToDictionary("  FirstKey  =  First  =  Second  =  Third  ")["  FirstKey  "]);
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
 		public void ToDictionary_IfTheStringComparerIsCaseInsensitiveAndTheConnectionStringContainsDuplicateKeys_ShouldThrowAnArgumentException()
 		{
@@ -62,10 +69,27 @@ namespace HansKindberg.Tests.Connections
 		}
 
 		[TestMethod]
+		public void ToDictionary_IfTheStringComparerIsCaseInsensitive_ShouldReturnADictionaryWhereTheValueCanBeFoundIndependentOfCase()
+		{
+			Assert.AreEqual("FirstValue", new ConnectionStringParser(DateTime.Now.Second%2 == 0, ';', '=', StringComparer.OrdinalIgnoreCase).ToDictionary("FIRSTKEY=FirstValue")["firstkey"]);
+			Assert.AreEqual("  FirstValue  ", new ConnectionStringParser(false, ';', '=', StringComparer.OrdinalIgnoreCase).ToDictionary("  FIRSTKEY  =  FirstValue  ")["  firstkey  "]);
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
 		public void ToDictionary_IfTheStringComparerIsCaseSensitiveAndTheConnectionStringContainsDuplicateKeys_ShouldThrowAnArgumentException()
 		{
 			new ConnectionStringParser(DateTime.Now.Second%2 == 0, ';', '=', StringComparer.OrdinalIgnoreCase).ToDictionary("FirstKey=FirstValue;FirstKey=SecondValue");
+		}
+
+		[TestMethod]
+		public void ToDictionary_IfTheStringComparerIsCaseSensitive_ShouldReturnADictionaryWhereTheValueCanBeFoundOnlyDependantOfCase()
+		{
+			Assert.AreEqual("FirstValue", new ConnectionStringParser(DateTime.Now.Second%2 == 0, ';', '=', StringComparer.Ordinal).ToDictionary("FIRSTKEY=FirstValue")["FIRSTKEY"]);
+			Assert.IsFalse(new ConnectionStringParser(DateTime.Now.Second%2 == 0, ';', '=', StringComparer.Ordinal).ToDictionary("FIRSTKEY=FirstValue").ContainsKey("firstkey"));
+
+			Assert.AreEqual("  FirstValue  ", new ConnectionStringParser(false, ';', '=', StringComparer.Ordinal).ToDictionary("  FIRSTKEY  =  FirstValue  ")["  FIRSTKEY  "]);
+			Assert.IsFalse(new ConnectionStringParser(false, ';', '=', StringComparer.Ordinal).ToDictionary("  FIRSTKEY  =  FirstValue  ").ContainsKey("  firstkey  "));
 		}
 
 		[TestMethod]
@@ -107,7 +131,7 @@ namespace HansKindberg.Tests.Connections
 				exceptionMessage = argumentException.Message;
 			}
 
-			Assert.AreEqual("Each keyvaluepair must contain exactly one separator, '='." + Environment.NewLine + "Parameter name: keyValuePairString", exceptionMessage);
+			Assert.AreEqual("Each keyvaluepair must contain at least one separator, '='." + Environment.NewLine + "Parameter name: keyValuePairString", exceptionMessage);
 			Thread.CurrentThread.CurrentUICulture = currentUiCulture;
 		}
 
