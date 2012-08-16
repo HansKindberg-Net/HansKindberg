@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HansKindberg.Connections
 {
-	public abstract class ConnectionSettings
+	public abstract class ConnectionSettings : IConnectionSettings
 	{
 		#region Constructors
 

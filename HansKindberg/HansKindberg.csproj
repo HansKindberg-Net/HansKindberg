@@ -57,6 +57,7 @@
     <Compile Include="Connections\ConnectionSettings.cs" />
     <Compile Include="Connections\ConnectionSettingsFactory.cs" />
     <Compile Include="Connections\ConnectionStringParser.cs" />
+    <Compile Include="Connections\IConnectionSettings.cs" />
     <Compile Include="Connections\IConnectionSettingsFactory.cs" />
     <Compile Include="Connections\IConnectionStringParser.cs" />
     <Compile Include="Connections\ISecureConnectionSettings.cs" />
