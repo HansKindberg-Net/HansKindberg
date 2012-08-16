@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace HansKindberg.DirectoryServices
 {
@@ -9,6 +8,7 @@ namespace HansKindberg.DirectoryServices
 
 		IDirectoryEntries Children { get; }
 		IDirectoryEntry Parent { get; }
+		string Path { get; set; }
 		IPropertyCollection Properties { get; }
 
 		#endregion

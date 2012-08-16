@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.DirectoryServices;
-using System.Globalization;
-using HansKindberg.Connections;
-using HansKindberg.DirectoryServices.Connections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HansKindberg.DirectoryServices.Tests
@@ -19,7 +14,7 @@ namespace HansKindberg.DirectoryServices.Tests
 		[SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "HansKindberg.DirectoryServices.DirectoryEntryWrapper")]
 		public void Constructor_IfTheDirectoryEntryParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
-			using(new DirectoryEntryWrapper(null)){}
+			using(new DirectoryEntryWrapper(null)) {}
 		}
 
 		[TestMethod]
@@ -30,7 +25,7 @@ namespace HansKindberg.DirectoryServices.Tests
 
 			try
 			{
-				using(new DirectoryEntryWrapper(null)){}
+				using(new DirectoryEntryWrapper(null)) {}
 			}
 			catch(ArgumentNullException argumentNullException)
 			{

@@ -78,6 +78,7 @@
     <Compile Include="TypeWrapper.cs" />
     <Compile Include="Validation\IValidationResult.cs" />
     <Compile Include="Validation\ValidationResult.cs" />
+    <Compile Include="ValueContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\HansKindberg.snk">

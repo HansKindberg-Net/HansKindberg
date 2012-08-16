@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
-using System.Linq;
 
 namespace HansKindberg.DirectoryServices
 {
@@ -37,6 +35,12 @@ namespace HansKindberg.DirectoryServices
 		public virtual IDirectoryEntry Parent
 		{
 			get { return (DirectoryEntryWrapper) this._directoryEntry.Parent; }
+		}
+
+		public virtual string Path
+		{
+			get { return this._directoryEntry.Path; }
+			set { this._directoryEntry.Path = value; }
 		}
 
 		public virtual IPropertyCollection Properties
