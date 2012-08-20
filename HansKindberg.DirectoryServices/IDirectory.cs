@@ -6,6 +6,12 @@ namespace HansKindberg.DirectoryServices
 {
 	public interface IDirectory
 	{
+		#region Properties
+
+		string Path { get; }
+
+		#endregion
+
 		#region Methods
 
 		IEnumerable<ISearchResult> FindAll();

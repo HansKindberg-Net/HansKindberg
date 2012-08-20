@@ -13,6 +13,7 @@ namespace HansKindberg.DirectoryServices
 
 		private readonly ILdapConnectionSettings _connectionSettings;
 		private readonly IDirectorySearcherOptions _directorySearcherOptions;
+		private string _path;
 
 		#endregion
 
@@ -27,6 +28,28 @@ namespace HansKindberg.DirectoryServices
 
 			this._connectionSettings = connectionSettings;
 			this._directorySearcherOptions = directorySearcherOptions;
+		}
+
+		#endregion
+
+		#region Properties
+
+		public virtual string Path
+		{
+			get
+			{
+				if(this._path == null)
+				{
+					using(IDirectoryEntry directoryEntry = this.GetRoot())
+					{
+						// ReSharper disable AssignNullToNotNullAttribute
+						this._path = directoryEntry.Path.Replace(directoryEntry.Properties["distinguishedName"].Value as string, string.Empty);
+						// ReSharper restore AssignNullToNotNullAttribute
+					}
+				}
+
+				return this._path;
+			}
 		}
 
 		#endregion
