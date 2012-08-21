@@ -8,7 +8,8 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Properties
 
-		string Path { get; }
+		[SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
+		string HostUrl { get; }
 
 		#endregion
 
@@ -47,6 +48,7 @@ namespace HansKindberg.DirectoryServices
 		ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope);
 		ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions);
 		IDirectoryEntry GetDirectoryEntry(string path);
+		string GetPath(string distinguishedName);
 
 		[SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
 		IDirectoryEntry GetRoot();

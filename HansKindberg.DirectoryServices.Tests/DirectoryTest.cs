@@ -1,5 +1,7 @@
 ﻿using System.DirectoryServices;
+using HansKindberg.DirectoryServices.Connections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace HansKindberg.DirectoryServices.Tests
 {
@@ -34,6 +36,19 @@ namespace HansKindberg.DirectoryServices.Tests
 				Assert.AreEqual(SearchScope.Subtree, directorySearcher.SearchScope);
 				Assert.IsNotNull(directorySearcher.SearchRoot);
 			}
+		}
+
+		[TestMethod]
+		public void HostUrl_ShouldAlwaysReturnAStringWithATrailingSlash()
+		{
+			Mock<IConnectionSettings> connectionSettingsMock = new Mock<IConnectionSettings>();
+			connectionSettingsMock.Setup(connectionSettings => connectionSettings.Scheme).Returns(Scheme.LDAP);
+
+			Assert.AreEqual("LDAP://", new Directory(connectionSettingsMock.Object).HostUrl);
+
+			connectionSettingsMock.Setup(connectionSettings => connectionSettings.Host).Returns("testhost");
+
+			Assert.AreEqual("LDAP://testhost/", new Directory(connectionSettingsMock.Object).HostUrl);
 		}
 
 		#endregion

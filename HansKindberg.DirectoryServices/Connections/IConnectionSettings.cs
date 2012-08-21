@@ -8,7 +8,10 @@ namespace HansKindberg.DirectoryServices.Connections
 		#region Properties
 
 		AuthenticationTypes? AuthenticationTypes { get; }
-		string Path { get; }
+		string DistinguishedName { get; }
+		string Host { get; }
+		int? Port { get; }
+		Scheme Scheme { get; }
 
 		#endregion
 	}

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
+using System.Globalization;
 using System.Linq;
 using HansKindberg.DirectoryServices.Connections;
 
@@ -13,7 +14,8 @@ namespace HansKindberg.DirectoryServices
 
 		private readonly IConnectionSettings _connectionSettings;
 		private readonly IDirectorySearcherOptions _directorySearcherOptions;
-		private string _path;
+		private readonly string _hostUrl;
+		private readonly string _rootPath;
 
 		#endregion
 
@@ -28,28 +30,29 @@ namespace HansKindberg.DirectoryServices
 
 			this._connectionSettings = connectionSettings;
 			this._directorySearcherOptions = directorySearcherOptions;
+
+			string hostUrl = connectionSettings.Scheme.ToString() + "://" + connectionSettings.Host;
+			if(connectionSettings.Port != null)
+				hostUrl += ":" + connectionSettings.Port.Value.ToString(CultureInfo.InvariantCulture);
+			if(!hostUrl.EndsWith("/", StringComparison.Ordinal))
+				hostUrl += "/";
+
+			this._hostUrl = hostUrl;
+			this._rootPath = hostUrl + connectionSettings.DistinguishedName;
 		}
 
 		#endregion
 
 		#region Properties
 
-		public virtual string Path
+		public virtual string HostUrl
 		{
-			get
-			{
-				if(this._path == null)
-				{
-					using(IDirectoryEntry directoryEntry = this.GetRoot())
-					{
-						// ReSharper disable AssignNullToNotNullAttribute
-						this._path = directoryEntry.Path.Replace(directoryEntry.Properties["distinguishedName"].Value as string, string.Empty);
-						// ReSharper restore AssignNullToNotNullAttribute
-					}
-				}
+			get { return this._hostUrl; }
+		}
 
-				return this._path;
-			}
+		protected internal virtual string RootPath
+		{
+			get { return this._rootPath; }
 		}
 
 		#endregion
@@ -284,7 +287,7 @@ namespace HansKindberg.DirectoryServices
 		[SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
 		protected internal virtual DirectoryEntry GetConcreteRoot()
 		{
-			return this.GetConcreteDirectoryEntry(this._connectionSettings.Path);
+			return this.GetConcreteDirectoryEntry(this.RootPath);
 		}
 
 		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
@@ -293,10 +296,15 @@ namespace HansKindberg.DirectoryServices
 			return new DirectoryEntryWrapper(this.GetConcreteDirectoryEntry(path));
 		}
 
+		public virtual string GetPath(string distinguishedName)
+		{
+			return this.HostUrl + distinguishedName;
+		}
+
 		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
 		public virtual IDirectoryEntry GetRoot()
 		{
-			return this.GetDirectoryEntry(this._connectionSettings.Path);
+			return this.GetDirectoryEntry(this.RootPath);
 		}
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
