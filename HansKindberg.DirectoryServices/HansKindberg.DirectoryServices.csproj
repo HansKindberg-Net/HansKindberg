@@ -71,6 +71,7 @@
     <Compile Include="PropertyCollectionWrapper.cs" />
     <Compile Include="PropertyValueCollectionWrapper.cs" />
     <Compile Include="ResultPropertyCollectionWrapper.cs" />
+    <Compile Include="Scheme.cs" />
     <Compile Include="SearchResultWrapper.cs" />
   </ItemGroup>
   <ItemGroup>

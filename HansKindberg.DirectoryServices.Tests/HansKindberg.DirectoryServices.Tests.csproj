@@ -68,6 +68,7 @@
     <Compile Include="DirectoryTest.cs" />
     <Compile Include="IDirectoryEntryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchemeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />

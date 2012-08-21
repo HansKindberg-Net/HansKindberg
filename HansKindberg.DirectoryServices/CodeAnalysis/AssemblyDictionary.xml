@@ -1,3 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Dictionary>
+	<Acronyms>
+		<CasingExceptions>
+			<Acronym>IIS</Acronym>
+			<Acronym>LDAPS</Acronym>
+			<Acronym>LDAP</Acronym>
+		</CasingExceptions>
+	</Acronyms>
 </Dictionary>
