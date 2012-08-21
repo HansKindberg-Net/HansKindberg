@@ -3,7 +3,7 @@ using HansKindberg.Connections;
 
 namespace HansKindberg.DirectoryServices.Connections
 {
-	public interface ILdapConnectionSettings : ISecureConnectionSettings
+	public interface IConnectionSettings : ISecureConnectionSettings
 	{
 		#region Properties
 

@@ -11,7 +11,7 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Fields
 
-		private readonly ILdapConnectionSettings _connectionSettings;
+		private readonly IConnectionSettings _connectionSettings;
 		private readonly IDirectorySearcherOptions _directorySearcherOptions;
 		private string _path;
 
@@ -19,9 +19,9 @@ namespace HansKindberg.DirectoryServices
 
 		#region Constructors
 
-		public Directory(ILdapConnectionSettings connectionSettings) : this(connectionSettings, null) {}
+		public Directory(IConnectionSettings connectionSettings) : this(connectionSettings, null) {}
 
-		public Directory(ILdapConnectionSettings connectionSettings, IDirectorySearcherOptions directorySearcherOptions)
+		public Directory(IConnectionSettings connectionSettings, IDirectorySearcherOptions directorySearcherOptions)
 		{
 			if(connectionSettings == null)
 				throw new ArgumentNullException("connectionSettings");

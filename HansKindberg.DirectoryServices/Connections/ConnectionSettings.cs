@@ -5,7 +5,7 @@ using HansKindberg.Connections;
 
 namespace HansKindberg.DirectoryServices.Connections
 {
-	public class LdapConnectionSettings : SecureConnectionSettings, ILdapConnectionSettings
+	public class ConnectionSettings : SecureConnectionSettings, IConnectionSettings
 	{
 		#region Fields
 
