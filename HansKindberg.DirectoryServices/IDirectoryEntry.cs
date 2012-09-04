@@ -16,6 +16,7 @@ namespace HansKindberg.DirectoryServices
 		#region Methods
 
 		void CommitChanges();
+		void DeleteTree();
 		object Invoke(string methodName, params object[] arguments);
 
 		#endregion

@@ -57,6 +57,11 @@ namespace HansKindberg.DirectoryServices
 			this._directoryEntry.CommitChanges();
 		}
 
+		public virtual void DeleteTree()
+		{
+			this._directoryEntry.DeleteTree();
+		}
+
 		[SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "This is a wrapper.")]
 		[SuppressMessage("Microsoft.Usage", "CA1816:CallGCSuppressFinalizeCorrectly", Justification = "This is a wrapper.")]
 		public virtual void Dispose()
