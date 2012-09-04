@@ -52,6 +52,11 @@ namespace HansKindberg.DirectoryServices
 
 		#region Methods
 
+		public virtual void CommitChanges()
+		{
+			this._directoryEntry.CommitChanges();
+		}
+
 		[SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "This is a wrapper.")]
 		[SuppressMessage("Microsoft.Usage", "CA1816:CallGCSuppressFinalizeCorrectly", Justification = "This is a wrapper.")]
 		public virtual void Dispose()
@@ -62,6 +67,11 @@ namespace HansKindberg.DirectoryServices
 		public static DirectoryEntryWrapper FromDirectoryEntry(DirectoryEntry directoryEntry)
 		{
 			return directoryEntry;
+		}
+
+		public virtual object Invoke(string methodName, params object[] arguments)
+		{
+			return this._directoryEntry.Invoke(methodName, arguments);
 		}
 
 		#endregion
