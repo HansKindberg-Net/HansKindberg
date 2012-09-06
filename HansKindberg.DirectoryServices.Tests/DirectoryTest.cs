@@ -18,7 +18,7 @@ namespace HansKindberg.DirectoryServices.Tests
 				Assert.IsNotNull(directorySearcher.Filter);
 				Assert.AreEqual(0, directorySearcher.PropertiesToLoad.Count);
 				Assert.AreEqual(SearchScope.Subtree, directorySearcher.SearchScope);
-				Assert.IsNotNull(directorySearcher.SearchRoot);
+				// Assert.IsNotNull(directorySearcher.SearchRoot); // This only works when the computer you run the unit tests on is on a domain.
 			}
 
 			using(DirectorySearcher directorySearcher = new DirectorySearcher((DirectoryEntry) null))
@@ -26,7 +26,7 @@ namespace HansKindberg.DirectoryServices.Tests
 				Assert.IsNotNull(directorySearcher.Filter);
 				Assert.AreEqual(0, directorySearcher.PropertiesToLoad.Count);
 				Assert.AreEqual(SearchScope.Subtree, directorySearcher.SearchScope);
-				Assert.IsNotNull(directorySearcher.SearchRoot);
+				// Assert.IsNotNull(directorySearcher.SearchRoot); // This only works when the computer you run the unit tests on is on a domain.
 			}
 
 			using(DirectorySearcher directorySearcher = new DirectorySearcher((string) null))
@@ -34,7 +34,7 @@ namespace HansKindberg.DirectoryServices.Tests
 				Assert.IsNull(directorySearcher.Filter);
 				Assert.AreEqual(0, directorySearcher.PropertiesToLoad.Count);
 				Assert.AreEqual(SearchScope.Subtree, directorySearcher.SearchScope);
-				Assert.IsNotNull(directorySearcher.SearchRoot);
+				// Assert.IsNotNull(directorySearcher.SearchRoot); // This only works when the computer you run the unit tests on is on a domain.
 			}
 		}
 
