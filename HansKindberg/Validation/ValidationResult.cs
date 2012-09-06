@@ -9,28 +9,6 @@ namespace HansKindberg.Validation
 		#region Fields
 
 		private IList<Exception> _exceptions;
-		private bool _isValid;
-
-		#endregion
-
-		#region Constructors
-
-		public ValidationResult() : this(true, new List<Exception>()) {}
-
-		public ValidationResult(IValidationResult validationResultToCopy)
-		{
-			if(validationResultToCopy == null)
-				throw new ArgumentNullException("validationResultToCopy");
-
-			this._exceptions = validationResultToCopy.Exceptions;
-			this._isValid = validationResultToCopy.IsValid;
-		}
-
-		public ValidationResult(bool isValid, IList<Exception> exceptions)
-		{
-			this._exceptions = exceptions;
-			this._isValid = isValid;
-		}
 
 		#endregion
 
@@ -43,8 +21,7 @@ namespace HansKindberg.Validation
 
 		public virtual bool IsValid
 		{
-			get { return this._isValid; }
-			set { this._isValid = value; }
+			get { return !this.Exceptions.Any(); }
 		}
 
 		#endregion
@@ -72,32 +49,9 @@ namespace HansKindberg.Validation
 
 	public class ValidationResult<TValidatedObject> : ValidationResult, IValidationResult<TValidatedObject>
 	{
-		#region Fields
-
-		private TValidatedObject _validatedObject;
-
-		#endregion
-
-		#region Constructors
-
-		public ValidationResult() {}
-		public ValidationResult(IValidationResult validationResultToCopy) : base(validationResultToCopy) {}
-		public ValidationResult(bool isValid, IList<Exception> exceptions) : base(isValid, exceptions) {}
-
-		public ValidationResult(bool isValid, IList<Exception> exceptions, TValidatedObject validatedObject) : base(isValid, exceptions)
-		{
-			this._validatedObject = validatedObject;
-		}
-
-		#endregion
-
 		#region Properties
 
-		public virtual TValidatedObject ValidatedObject
-		{
-			get { return this._validatedObject; }
-			set { this._validatedObject = value; }
-		}
+		public virtual TValidatedObject ValidatedObject { get; set; }
 
 		#endregion
 	}

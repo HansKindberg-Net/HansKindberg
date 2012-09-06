@@ -8,7 +8,7 @@ namespace HansKindberg.Validation
 		#region Properties
 
 		IList<Exception> Exceptions { get; }
-		bool IsValid { get; set; }
+		bool IsValid { get; }
 
 		#endregion
 
