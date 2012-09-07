@@ -8,7 +8,16 @@ namespace HansKindberg.Validation
 	{
 		#region Fields
 
-		private IList<Exception> _exceptions;
+		private readonly List<Exception> _exceptions;
+
+		#endregion
+
+		#region Constructors
+
+		public ValidationResult()
+		{
+			this._exceptions = new List<Exception>();
+		}
 
 		#endregion
 
@@ -16,7 +25,7 @@ namespace HansKindberg.Validation
 
 		public virtual IList<Exception> Exceptions
 		{
-			get { return this._exceptions ?? (this._exceptions = new List<Exception>()); }
+			get { return this._exceptions; }
 		}
 
 		public virtual bool IsValid
