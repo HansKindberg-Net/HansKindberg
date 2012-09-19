@@ -7,4 +7,3 @@ release/
 testresults/
 *.suo
 *.user
-NuGet.config
