@@ -10,14 +10,30 @@ namespace HansKindberg.Collections.Specialized.Extensions
 {
 	public static class NameValueCollectionExtension
 	{
+		#region Fields
+
+		private const bool _omitLeadingQuestionMarkDefault = false;
+
+		#endregion
+
 		#region Methods
 
 		public static string ToQueryString(this NameValueCollection nameValueCollection)
 		{
-			return nameValueCollection.ToQueryStringInternal(null);
+			return nameValueCollection.ToQueryString(_omitLeadingQuestionMarkDefault);
+		}
+
+		public static string ToQueryString(this NameValueCollection nameValueCollection, bool omitLeadingQuestionMark)
+		{
+			return nameValueCollection.ToQueryStringInternal(omitLeadingQuestionMark, null);
 		}
 
 		public static string ToQueryString(this NameValueCollection nameValueCollection, Encoding encoding)
+		{
+			return nameValueCollection.ToQueryString(_omitLeadingQuestionMarkDefault, encoding);
+		}
+
+		public static string ToQueryString(this NameValueCollection nameValueCollection, bool omitLeadingQuestionMark, Encoding encoding)
 		{
 			if(nameValueCollection == null)
 				throw new ArgumentNullException("nameValueCollection");
@@ -25,10 +41,10 @@ namespace HansKindberg.Collections.Specialized.Extensions
 			if(encoding == null)
 				throw new ArgumentNullException("encoding");
 
-			return nameValueCollection.ToQueryStringInternal(encoding);
+			return nameValueCollection.ToQueryStringInternal(omitLeadingQuestionMark, encoding);
 		}
 
-		private static string ToQueryStringInternal(this NameValueCollection nameValueCollection, Encoding encoding)
+		private static string ToQueryStringInternal(this NameValueCollection nameValueCollection, bool omitLeadingQuestionMark, Encoding encoding)
 		{
 			if(nameValueCollection == null)
 				throw new ArgumentNullException("nameValueCollection");
@@ -59,7 +75,7 @@ namespace HansKindberg.Collections.Specialized.Extensions
 				}
 			}
 
-			return string.IsNullOrEmpty(queryString) ? string.Empty : "?" + queryString;
+			return string.IsNullOrEmpty(queryString) ? string.Empty : (omitLeadingQuestionMark ? string.Empty : "?") + queryString;
 		}
 
 		#endregion

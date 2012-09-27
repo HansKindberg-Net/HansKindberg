@@ -34,6 +34,27 @@ namespace HansKindberg.Web.Tests.Collections.Specialized.Extensions
 		}
 
 		[TestMethod]
+		public void ToQueryString_IfTheNameValueCollectionIsNotEmptyAndIfTheOmitLeadingQuestionMarkParameterIsFalse_ShouldReturnAStringWithoutALeadingQuestionMark()
+		{
+			NameValueCollection nameValueCollection = new NameValueCollection {{"Test", "Test"}};
+			Assert.IsTrue(nameValueCollection.ToQueryString(false).StartsWith("?", StringComparison.OrdinalIgnoreCase));
+		}
+
+		[TestMethod]
+		public void ToQueryString_IfTheNameValueCollectionIsNotEmptyAndIfTheOmitLeadingQuestionMarkParameterIsTrue_ShouldReturnAStringWithoutALeadingQuestionMark()
+		{
+			NameValueCollection nameValueCollection = new NameValueCollection {{"Test", "Test"}};
+			Assert.IsTrue(nameValueCollection.ToQueryString(true).StartsWith("T", StringComparison.OrdinalIgnoreCase));
+		}
+
+		[TestMethod]
+		public void ToQueryString_IfTheNameValueCollectionIsNotEmpty_ShouldIncludeALeadingQuestionMarkByDefault()
+		{
+			NameValueCollection nameValueCollection = new NameValueCollection {{"Test", "Test"}};
+			Assert.IsTrue(nameValueCollection.ToQueryString().StartsWith("?", StringComparison.OrdinalIgnoreCase));
+		}
+
+		[TestMethod]
 		public void ToQueryString_IfTheNameValueCollectionIsNotEmpty_ShouldReturnAQueryString()
 		{
 			ToQueryStringTest(string.Empty, new NameValueCollection {{null, null}, {null, null}});
