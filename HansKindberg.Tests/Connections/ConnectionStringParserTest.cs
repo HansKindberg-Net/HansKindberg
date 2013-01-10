@@ -83,7 +83,7 @@ namespace HansKindberg.Tests.Connections
 		}
 
 		[TestMethod]
-		public void ToDictionary_IfTheStringComparerIsCaseSensitive_ShouldReturnADictionaryWhereTheValueCanBeFoundOnlyDependantOfCase()
+		public void ToDictionary_IfTheStringComparerIsCaseSensitive_ShouldReturnADictionaryWhereTheValueCanBeFoundOnlyDependentOfCase()
 		{
 			Assert.AreEqual("FirstValue", new ConnectionStringParser(DateTime.Now.Second%2 == 0, ';', '=', StringComparer.Ordinal).ToDictionary("FIRSTKEY=FirstValue")["FIRSTKEY"]);
 			Assert.IsFalse(new ConnectionStringParser(DateTime.Now.Second%2 == 0, ';', '=', StringComparer.Ordinal).ToDictionary("FIRSTKEY=FirstValue").ContainsKey("firstkey"));
