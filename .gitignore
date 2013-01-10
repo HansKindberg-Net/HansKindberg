@@ -1,6 +1,7 @@
 _ReSharper*/
 bin/
 debug/
+.nuget/NuGet.exe
 obj/
 packages/
 release/
