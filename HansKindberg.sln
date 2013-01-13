@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg", "HansKindberg\HansKindberg.csproj", "{9EC32668-00C5-4ED4-9FFA-711455182F4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{70B2BCA9-CC65-4F0E-8AF5-3C939FB06B7C}"
@@ -49,6 +49,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml.ShimTests", "HansKindberg.Xml.ShimTests\HansKindberg.Xml.ShimTests.csproj", "{C5E80FE1-FBFE-4FB4-8DF8-CFAAE398BD7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.DirectoryServices.ShimTests", "HansKindberg.DirectoryServices.ShimTests\HansKindberg.DirectoryServices.ShimTests.csproj", "{BC8244C8-DC5A-4681-AC79-8CE35964241C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.ShimTests", "HansKindberg.ShimTests\HansKindberg.ShimTests.csproj", "{CA4AE5A7-BE9E-4762-BEA6-527CB93EBFD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.ShimTests", "HansKindberg.Web.ShimTests\HansKindberg.Web.ShimTests.csproj", "{C63360A3-A614-47E3-AA67-7977A50460DE}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -99,6 +103,14 @@ Global
 		{BC8244C8-DC5A-4681-AC79-8CE35964241C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC8244C8-DC5A-4681-AC79-8CE35964241C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC8244C8-DC5A-4681-AC79-8CE35964241C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4AE5A7-BE9E-4762-BEA6-527CB93EBFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4AE5A7-BE9E-4762-BEA6-527CB93EBFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4AE5A7-BE9E-4762-BEA6-527CB93EBFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4AE5A7-BE9E-4762-BEA6-527CB93EBFD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63360A3-A614-47E3-AA67-7977A50460DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63360A3-A614-47E3-AA67-7977A50460DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63360A3-A614-47E3-AA67-7977A50460DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63360A3-A614-47E3-AA67-7977A50460DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
