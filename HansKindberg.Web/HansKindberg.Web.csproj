@@ -61,6 +61,7 @@
     <None Include="..\HansKindberg.snk">
       <Link>HansKindberg.snk</Link>
     </None>
+    <None Include="HansKindberg.Web.nuspec" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

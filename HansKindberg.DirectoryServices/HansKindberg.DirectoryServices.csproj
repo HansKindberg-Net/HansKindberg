@@ -86,6 +86,7 @@
     <None Include="..\HansKindberg.snk">
       <Link>HansKindberg.snk</Link>
     </None>
+    <None Include="HansKindberg.DirectoryServices.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HansKindberg\HansKindberg.csproj">
