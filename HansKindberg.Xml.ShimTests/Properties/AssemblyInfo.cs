@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("Tests for XXX")]
+[assembly: AssemblyDescription("Shimtests for HansKindberg.Xml")]
 [assembly: Guid("143a7059-19df-4553-a0f5-5ec4a7e624f7")]
 // ReSharper disable CheckNamespace
 internal static class AssemblyInfo
