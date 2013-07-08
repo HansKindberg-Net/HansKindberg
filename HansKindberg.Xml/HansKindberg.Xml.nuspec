@@ -20,8 +20,5 @@
 			<copyright>Copyright 2013</copyright>
 			<tags>Tag1 Tag2</tags>
 		-->
-		<dependencies>
-			<dependency id="HansKindberg" version="$version$" />
-		</dependencies>
 	</metadata>
 </package>
