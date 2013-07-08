@@ -22,10 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C390D0-E6EB-4F5F-86D2-D43EF19203B9}"
 	ProjectSection(SolutionItems) = preProject
 		HansKindberg.snk = HansKindberg.snk
-		HansKindberg.vsmdi = HansKindberg.vsmdi
-		Local.testsettings = Local.testsettings
 		README.md = README.md
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Tests", "HansKindberg.Web.Tests\HansKindberg.Web.Tests.csproj", "{DBD64A10-7958-40E6-BAF2-51775AF1497E}"
@@ -55,9 +52,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.ShimTests", "HansKindberg.Web.ShimTests\HansKindberg.Web.ShimTests.csproj", "{C63360A3-A614-47E3-AA67-7977A50460DE}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = HansKindberg.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
