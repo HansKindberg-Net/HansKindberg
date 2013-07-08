@@ -1,168 +1,179 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 
 namespace HansKindberg.Net.Mail
 {
-	public class SmtpClientWrapper : ISmtpClient
-	{
-		#region Fields
+    public class SmtpClientWrapper : SmtpClientWrapper<SmtpClient>
+    {
+        #region Constructors
 
-		private readonly SmtpClient _smtpClient;
+        public SmtpClientWrapper(SmtpClient smtpClient) : base(smtpClient) {}
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Methods
 
-		public SmtpClientWrapper(SmtpClient smtpClient)
-		{
-			if(smtpClient == null)
-				throw new ArgumentNullException("smtpClient");
+        public static SmtpClientWrapper FromSmtpClient(SmtpClient smtpClient)
+        {
+            return smtpClient;
+        }
 
-			this._smtpClient = smtpClient;
-		}
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public static SmtpClient ToSmtpClient(SmtpClientWrapper smtpClientWrapper)
+        {
+            return smtpClientWrapper == null ? null : smtpClientWrapper.SmtpClient;
+        }
 
-		#endregion
+        #endregion
 
-		#region Events
+        #region Implicit operator
 
-		public virtual event SendCompletedEventHandler SendCompleted
-		{
-			add { this._smtpClient.SendCompleted += value; }
-			remove { this._smtpClient.SendCompleted -= value; }
-		}
+        public static implicit operator SmtpClientWrapper(SmtpClient smtpClient)
+        {
+            return smtpClient == null ? null : new SmtpClientWrapper(smtpClient);
+        }
 
-		#endregion
+        public static implicit operator SmtpClient(SmtpClientWrapper smtpClientWrapper)
+        {
+            return smtpClientWrapper == null ? null : smtpClientWrapper.SmtpClient;
+        }
 
-		#region Properties
+        #endregion
+    }
 
-		public virtual X509CertificateCollection ClientCertificates
-		{
-			get { return this._smtpClient.ClientCertificates; }
-		}
+    public abstract class SmtpClientWrapper<TSmtpClient> : ISmtpClient where TSmtpClient : SmtpClient
+    {
+        #region Fields
 
-		public virtual ICredentialsByHost Credentials
-		{
-			get { return this._smtpClient.Credentials; }
-			set { this._smtpClient.Credentials = value; }
-		}
+        private readonly TSmtpClient _smtpClient;
 
-		public virtual SmtpDeliveryMethod DeliveryMethod
-		{
-			get { return this._smtpClient.DeliveryMethod; }
-			set { this._smtpClient.DeliveryMethod = value; }
-		}
+        #endregion
 
-		public virtual bool EnableSsl
-		{
-			get { return this._smtpClient.EnableSsl; }
-			set { this._smtpClient.EnableSsl = value; }
-		}
+        #region Constructors
 
-		public virtual string Host
-		{
-			get { return this._smtpClient.Host; }
-			set { this._smtpClient.Host = value; }
-		}
+        protected SmtpClientWrapper(TSmtpClient smtpClient)
+        {
+            if(smtpClient == null)
+                throw new ArgumentNullException("smtpClient");
 
-		public virtual string PickupDirectoryLocation
-		{
-			get { return this._smtpClient.PickupDirectoryLocation; }
-			set { this._smtpClient.PickupDirectoryLocation = value; }
-		}
+            this._smtpClient = smtpClient;
+        }
 
-		public virtual int Port
-		{
-			get { return this._smtpClient.Port; }
-			set { this._smtpClient.Port = value; }
-		}
+        #endregion
 
-		public virtual ServicePoint ServicePoint
-		{
-			get { return this._smtpClient.ServicePoint; }
-		}
+        #region Events
 
-		public virtual string TargetName
-		{
-			get { return this._smtpClient.TargetName; }
-			set { this._smtpClient.TargetName = value; }
-		}
+        public virtual event SendCompletedEventHandler SendCompleted
+        {
+            add { this.SmtpClient.SendCompleted += value; }
+            remove { this.SmtpClient.SendCompleted -= value; }
+        }
 
-		public virtual int Timeout
-		{
-			get { return this._smtpClient.Timeout; }
-			set { this._smtpClient.Timeout = value; }
-		}
+        #endregion
 
-		public virtual bool UseDefaultCredentials
-		{
-			get { return this._smtpClient.UseDefaultCredentials; }
-			set { this._smtpClient.UseDefaultCredentials = value; }
-		}
+        #region Properties
 
-		#endregion
+        public virtual X509CertificateCollection ClientCertificates
+        {
+            get { return this.SmtpClient.ClientCertificates; }
+        }
 
-		#region Methods
+        public virtual ICredentialsByHost Credentials
+        {
+            get { return this.SmtpClient.Credentials; }
+            set { this.SmtpClient.Credentials = value; }
+        }
 
-		public static SmtpClientWrapper FromSmtpClient(SmtpClient smtpClient)
-		{
-			return smtpClient;
-		}
+        public virtual SmtpDeliveryMethod DeliveryMethod
+        {
+            get { return this.SmtpClient.DeliveryMethod; }
+            set { this.SmtpClient.DeliveryMethod = value; }
+        }
 
-		public virtual void Send(MailMessage message)
-		{
-			this._smtpClient.Send(message);
-		}
+        public virtual bool EnableSsl
+        {
+            get { return this.SmtpClient.EnableSsl; }
+            set { this.SmtpClient.EnableSsl = value; }
+        }
 
-		public virtual void Send(string from, string recipients, string subject, string body)
-		{
-			this._smtpClient.Send(from, recipients, subject, body);
-		}
+        public virtual string Host
+        {
+            get { return this.SmtpClient.Host; }
+            set { this.SmtpClient.Host = value; }
+        }
 
-		public virtual void SendAsync(MailMessage message, object userToken)
-		{
-			this._smtpClient.SendAsync(message, userToken);
-		}
+        public virtual string PickupDirectoryLocation
+        {
+            get { return this.SmtpClient.PickupDirectoryLocation; }
+            set { this.SmtpClient.PickupDirectoryLocation = value; }
+        }
 
-		public virtual void SendAsync(string from, string recipients, string subject, string body, object userToken)
-		{
-			this._smtpClient.SendAsync(from, recipients, subject, body, userToken);
-		}
+        public virtual int Port
+        {
+            get { return this.SmtpClient.Port; }
+            set { this.SmtpClient.Port = value; }
+        }
 
-		public virtual void SendAsyncCancel()
-		{
-			this._smtpClient.SendAsyncCancel();
-		}
+        public virtual ServicePoint ServicePoint
+        {
+            get { return this.SmtpClient.ServicePoint; }
+        }
 
-		public static SmtpClient ToSmtpClient(ISmtpClient smtpClient)
-		{
-			if(smtpClient == null)
-				return null;
+        protected internal virtual TSmtpClient SmtpClient
+        {
+            get { return this._smtpClient; }
+        }
 
-			return new SmtpClient
-				{
-					Credentials = smtpClient.Credentials,
-					DeliveryMethod = smtpClient.DeliveryMethod,
-					EnableSsl = smtpClient.EnableSsl,
-					Host = smtpClient.Host,
-					PickupDirectoryLocation = smtpClient.PickupDirectoryLocation,
-					Port = smtpClient.Port,
-					TargetName = smtpClient.TargetName,
-					Timeout = smtpClient.Timeout,
-					UseDefaultCredentials = smtpClient.UseDefaultCredentials
-				};
-		}
+        public virtual string TargetName
+        {
+            get { return this.SmtpClient.TargetName; }
+            set { this.SmtpClient.TargetName = value; }
+        }
 
-		#endregion
+        public virtual int Timeout
+        {
+            get { return this.SmtpClient.Timeout; }
+            set { this.SmtpClient.Timeout = value; }
+        }
 
-		#region Implicit operator
+        public virtual bool UseDefaultCredentials
+        {
+            get { return this.SmtpClient.UseDefaultCredentials; }
+            set { this.SmtpClient.UseDefaultCredentials = value; }
+        }
 
-		public static implicit operator SmtpClientWrapper(SmtpClient smtpClient)
-		{
-			return smtpClient == null ? null : new SmtpClientWrapper(smtpClient);
-		}
+        #endregion
 
-		#endregion
-	}
+        #region Methods
+
+        public virtual void Send(MailMessage message)
+        {
+            this.SmtpClient.Send(message);
+        }
+
+        public virtual void Send(string from, string recipients, string subject, string body)
+        {
+            this.SmtpClient.Send(from, recipients, subject, body);
+        }
+
+        public virtual void SendAsync(MailMessage message, object userToken)
+        {
+            this.SmtpClient.SendAsync(message, userToken);
+        }
+
+        public virtual void SendAsync(string from, string recipients, string subject, string body, object userToken)
+        {
+            this.SmtpClient.SendAsync(from, recipients, subject, body, userToken);
+        }
+
+        public virtual void SendAsyncCancel()
+        {
+            this.SmtpClient.SendAsyncCancel();
+        }
+
+        #endregion
+    }
 }
