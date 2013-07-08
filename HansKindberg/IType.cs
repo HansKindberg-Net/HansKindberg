@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HansKindberg.Reflection;
 
 namespace HansKindberg
 {
+	[Obsolete("Reminder: Maybe this interface is \"overkill\" (see TypeWrapper). Maybe we can handle it with extensions instead, because both Type and ConstructorInfo are abstract classes that should be able to mock. So maybe we should try to remove this bit by bit.")]
 	public interface IType
 	{
 		#region Properties

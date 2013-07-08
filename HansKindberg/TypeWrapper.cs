@@ -7,6 +7,7 @@ using HansKindberg.Reflection;
 
 namespace HansKindberg
 {
+	[Obsolete("Reminder: Maybe this class is \"overkill\". Maybe we can handle it with extensions instead, because both Type and ConstructorInfo are abstract classes that should be able to mock. So maybe we should try to remove this bit by bit.")]
 	public class TypeWrapper : IType
 	{
 		#region Fields
