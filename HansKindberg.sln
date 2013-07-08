@@ -51,6 +51,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.ShimTests", "H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.ShimTests", "HansKindberg.Web.ShimTests\HansKindberg.Web.ShimTests.csproj", "{C63360A3-A614-47E3-AA67-7977A50460DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.IntegrationTests", "HansKindberg.IntegrationTests\HansKindberg.IntegrationTests.csproj", "{BC95F192-A13F-463A-8948-A66E53F864BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.IntegrationTests", "HansKindberg.Web.IntegrationTests\HansKindberg.Web.IntegrationTests.csproj", "{6A05301C-18E2-4604-AC25-6213BEB4EC2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.DirectoryServices.IntegrationTests", "HansKindberg.DirectoryServices.IntegrationTests\HansKindberg.DirectoryServices.IntegrationTests.csproj", "{EDE4357F-3CC4-48E4-B26C-2C9B75BA79A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml.IntegrationTests", "HansKindberg.Xml.IntegrationTests\HansKindberg.Xml.IntegrationTests.csproj", "{63390486-9824-4DD0-9A5E-1074E0414F91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +113,22 @@ Global
 		{C63360A3-A614-47E3-AA67-7977A50460DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C63360A3-A614-47E3-AA67-7977A50460DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C63360A3-A614-47E3-AA67-7977A50460DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC95F192-A13F-463A-8948-A66E53F864BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC95F192-A13F-463A-8948-A66E53F864BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC95F192-A13F-463A-8948-A66E53F864BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC95F192-A13F-463A-8948-A66E53F864BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A05301C-18E2-4604-AC25-6213BEB4EC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A05301C-18E2-4604-AC25-6213BEB4EC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A05301C-18E2-4604-AC25-6213BEB4EC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A05301C-18E2-4604-AC25-6213BEB4EC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDE4357F-3CC4-48E4-B26C-2C9B75BA79A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE4357F-3CC4-48E4-B26C-2C9B75BA79A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE4357F-3CC4-48E4-B26C-2C9B75BA79A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE4357F-3CC4-48E4-B26C-2C9B75BA79A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63390486-9824-4DD0-9A5E-1074E0414F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63390486-9824-4DD0-9A5E-1074E0414F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63390486-9824-4DD0-9A5E-1074E0414F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63390486-9824-4DD0-9A5E-1074E0414F91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
