@@ -28,17 +28,17 @@ namespace HansKindberg.Connections
 
 		public virtual TConnectionSettings Create<TConnectionSettings>(string connectionString) where TConnectionSettings : IConnectionSettings, new()
 		{
-			return (TConnectionSettings)this.Create(typeof(TConnectionSettings), connectionString);
+			return (TConnectionSettings) this.Create(typeof(TConnectionSettings), connectionString);
 		}
 
 		public virtual TConnectionSettings Create<TConnectionSettings>(string connectionString, bool throwExceptionIfThereAreInvalidConnectionsStringParameterKeys) where TConnectionSettings : IConnectionSettings, new()
 		{
-			return (TConnectionSettings)this.Create(typeof(TConnectionSettings), connectionString, throwExceptionIfThereAreInvalidConnectionsStringParameterKeys);
+			return (TConnectionSettings) this.Create(typeof(TConnectionSettings), connectionString, throwExceptionIfThereAreInvalidConnectionsStringParameterKeys);
 		}
 
 		public virtual TConnectionSettings Create<TConnectionSettings>(string connectionString, IConnectionStringParser connectionStringParser, bool throwExceptionIfThereAreInvalidConnectionsStringParameterKeys) where TConnectionSettings : IConnectionSettings, new()
 		{
-			return (TConnectionSettings)this.Create(typeof(TConnectionSettings), connectionString, connectionStringParser, throwExceptionIfThereAreInvalidConnectionsStringParameterKeys);
+			return (TConnectionSettings) this.Create(typeof(TConnectionSettings), connectionString, connectionStringParser, throwExceptionIfThereAreInvalidConnectionsStringParameterKeys);
 		}
 
 		public virtual IConnectionSettings Create(Type connectionSettingsType, string connectionString)
@@ -63,13 +63,13 @@ namespace HansKindberg.Connections
 			if(constructor == null)
 				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The connection settings type \"{0}\" must have a public parameterless constructor.", connectionSettingsType.FullName));
 
-			if (connectionString == null)
+			if(connectionString == null)
 				throw new ArgumentNullException("connectionString");
 
-			if (connectionStringParser == null)
+			if(connectionStringParser == null)
 				throw new ArgumentNullException("connectionStringParser");
 
-			IConnectionSettings connectionSettings = (IConnectionSettings)constructor.Invoke(new object[0]);
+			IConnectionSettings connectionSettings = (IConnectionSettings) constructor.Invoke(new object[0]);
 
 			connectionSettings.Initialize(connectionStringParser.ToDictionary(connectionString), throwExceptionIfThereAreInvalidConnectionsStringParameterKeys);
 

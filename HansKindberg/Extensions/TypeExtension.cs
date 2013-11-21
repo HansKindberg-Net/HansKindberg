@@ -46,8 +46,8 @@ namespace HansKindberg.Extensions
 				throw new ArgumentNullException("type");
 
 			return type.GetConstructors(bindings)
-				.Where(constructor => constructor.GetParameters().Length > 0 || !excludeParameterlessConstructors)
-				.ToArray();
+			           .Where(constructor => constructor.GetParameters().Length > 0 || !excludeParameterlessConstructors)
+			           .ToArray();
 		}
 
 		public static ConstructorInfo[] GetConstructorsSortedByMostParametersFirst(this Type type, bool excludeParameterlessConstructors)
@@ -58,8 +58,8 @@ namespace HansKindberg.Extensions
 		public static ConstructorInfo[] GetConstructorsSortedByMostParametersFirst(this Type type, BindingFlags bindings, bool excludeParameterlessConstructors)
 		{
 			return type.GetConstructors(bindings, excludeParameterlessConstructors)
-				.OrderByDescending(constructor => constructor.GetParameters().Length)
-				.ToArray();
+			           .OrderByDescending(constructor => constructor.GetParameters().Length)
+			           .ToArray();
 		}
 
 		private static string GetFriendlyName(this Type type, Expression<Func<Type, string>> expression)
