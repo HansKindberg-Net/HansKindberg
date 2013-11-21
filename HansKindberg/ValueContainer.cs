@@ -1,29 +1,14 @@
-﻿namespace HansKindberg
+﻿using System;
+
+namespace HansKindberg
 {
-	public class ValueContainer<TValue>
+	[Obsolete("This class has been renamed. Use HansKindberg.LazyInitialization<T> instead.", false)]
+	public class ValueContainer<TValue> : LazyInitialization<TValue>
 	{
-		#region Fields
-
-		private TValue _value;
-
-		#endregion
-
 		#region Constructors
 
-		public ValueContainer(TValue value)
-		{
-			this._value = value;
-		}
-
-		#endregion
-
-		#region Properties
-
-		public virtual TValue Value
-		{
-			get { return this._value; }
-			set { this._value = value; }
-		}
+		public ValueContainer() {}
+		public ValueContainer(TValue value) : base(value) {}
 
 		#endregion
 	}

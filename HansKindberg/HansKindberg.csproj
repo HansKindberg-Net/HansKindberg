@@ -62,6 +62,7 @@
     <Compile Include="Connections\IConnectionStringParser.cs" />
     <Compile Include="Connections\ISecureConnectionSettings.cs" />
     <Compile Include="Connections\SecureConnectionSettings.cs" />
+    <Compile Include="ValueContainer.cs" />
     <Compile Include="Extensions\StringExtension.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -88,7 +89,7 @@
     <Compile Include="TypeWrapper.cs" />
     <Compile Include="Validation\IValidationResult.cs" />
     <Compile Include="Validation\ValidationResult.cs" />
-    <Compile Include="ValueContainer.cs" />
+    <Compile Include="LazyInitialization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\HansKindberg.snk">
