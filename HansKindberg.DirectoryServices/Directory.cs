@@ -61,7 +61,7 @@ namespace HansKindberg.DirectoryServices
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
 		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-		protected internal virtual DirectorySearcher CreateDirectorySearcher(LazyInitialization<IDirectoryEntry> searchRoot, LazyInitialization<string> filter, LazyInitialization<IEnumerable<string>> propertiesToLoad, LazyInitialization<SearchScope> scope, LazyInitialization<IDirectorySearcherOptions> directorySearcherOptions)
+		protected internal virtual DirectorySearcher CreateDirectorySearcher(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
 		{
 			DirectorySearcher directorySearcher = new DirectorySearcher();
 
@@ -98,81 +98,81 @@ namespace HansKindberg.DirectoryServices
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(null, null, null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(null, null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), null, null, null, null);
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(string filter)
 		{
-			return this.FindAll(null, new LazyInitialization<string>(filter), null, null, null);
+			return this.FindAll(null, new ValueContainer<string>(filter), null, null, null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), null, null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(string filter, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(null, new LazyInitialization<string>(filter), null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(null, new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), null, null, null);
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad)
 		{
-			return this.FindAll(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, null);
+			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, null);
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
 		{
-			return this.FindAll(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), null);
+			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), null);
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
 		}
 
 		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindAll(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		protected internal virtual IEnumerable<ISearchResult> FindAll(LazyInitialization<IDirectoryEntry> searchRoot, LazyInitialization<string> filter, LazyInitialization<IEnumerable<string>> propertiesToLoad, LazyInitialization<SearchScope> scope, LazyInitialization<IDirectorySearcherOptions> directorySearcherOptions)
+		protected internal virtual IEnumerable<ISearchResult> FindAll(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
 		{
 			List<ISearchResult> searchResultList = new List<ISearchResult>();
 
@@ -191,81 +191,81 @@ namespace HansKindberg.DirectoryServices
 
 		public virtual ISearchResult FindOne(IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(null, null, null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(null, null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), null, null, null, null);
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, null);
 		}
 
 		public virtual ISearchResult FindOne(string filter)
 		{
-			return this.FindOne(null, new LazyInitialization<string>(filter), null, null, null);
+			return this.FindOne(null, new ValueContainer<string>(filter), null, null, null);
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), null, null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(string filter, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(null, new LazyInitialization<string>(filter), null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(null, new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), null, null, null);
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, null);
 		}
 
 		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad)
 		{
-			return this.FindOne(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, null);
+			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), null, null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, null);
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
 		}
 
 		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
 		{
-			return this.FindOne(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), null);
+			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), null, new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(null, new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), null);
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
 		}
 
 		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
 		{
-			return this.FindOne(new LazyInitialization<IDirectoryEntry>(searchRoot), new LazyInitialization<string>(filter), new LazyInitialization<IEnumerable<string>>(propertiesToLoad), new LazyInitialization<SearchScope>(scope), new LazyInitialization<IDirectorySearcherOptions>(directorySearcherOptions));
+			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
 		}
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		protected internal virtual ISearchResult FindOne(LazyInitialization<IDirectoryEntry> searchRoot, LazyInitialization<string> filter, LazyInitialization<IEnumerable<string>> propertiesToLoad, LazyInitialization<SearchScope> scope, LazyInitialization<IDirectorySearcherOptions> directorySearcherOptions)
+		protected internal virtual ISearchResult FindOne(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
 		{
 			using(DirectorySearcher directorySearcher = this.CreateDirectorySearcher(searchRoot, filter, propertiesToLoad, scope, directorySearcherOptions))
 			{
@@ -309,7 +309,7 @@ namespace HansKindberg.DirectoryServices
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
 		[SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-		protected internal virtual void SetDirectorySearcherOptions(DirectorySearcher directorySearcher, IDirectorySearcherOptions directorySearcherOptions, LazyInitialization<string> filter, LazyInitialization<IEnumerable<string>> propertiesToLoad, LazyInitialization<SearchScope> scope)
+		protected internal virtual void SetDirectorySearcherOptions(DirectorySearcher directorySearcher, IDirectorySearcherOptions directorySearcherOptions, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope)
 		{
 			if(directorySearcher == null)
 				throw new ArgumentNullException("directorySearcher");

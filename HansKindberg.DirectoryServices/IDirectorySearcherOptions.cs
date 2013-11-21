@@ -10,17 +10,17 @@ namespace HansKindberg.DirectoryServices
 		#region Properties
 
 		bool? Asynchronous { get; }
-		LazyInitialization<string> AttributeScopeQuery { get; }
+		ValueContainer<string> AttributeScopeQuery { get; }
 		bool? CacheResults { get; }
 		TimeSpan? ClientTimeout { get; }
 		DereferenceAlias? DereferenceAlias { get; }
-		LazyInitialization<DirectorySynchronization> DirectorySynchronization { get; }
+		ValueContainer<DirectorySynchronization> DirectorySynchronization { get; }
 		ExtendedDN? ExtendedDistinguishedName { get; }
-		LazyInitialization<string> Filter { get; }
+		ValueContainer<string> Filter { get; }
 		int? PageSize { get; }
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		LazyInitialization<IEnumerable<string>> PropertiesToLoad { get; }
+		ValueContainer<IEnumerable<string>> PropertiesToLoad { get; }
 
 		bool? PropertyNamesOnly { get; }
 		ReferralChasingOption? ReferralChasing { get; }
@@ -29,9 +29,9 @@ namespace HansKindberg.DirectoryServices
 		TimeSpan? ServerPageTimeLimit { get; }
 		TimeSpan? ServerTimeLimit { get; }
 		int? SizeLimit { get; }
-		LazyInitialization<SortOption> Sort { get; }
+		ValueContainer<SortOption> Sort { get; }
 		bool? Tombstone { get; }
-		LazyInitialization<DirectoryVirtualListView> VirtualListView { get; }
+		ValueContainer<DirectoryVirtualListView> VirtualListView { get; }
 
 		#endregion
 	}
