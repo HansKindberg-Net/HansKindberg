@@ -46,15 +46,20 @@
     <AssemblyOriginatorKeyFile>..\HansKindberg.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net20\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET35\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -70,6 +75,12 @@
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Collections\Specialized\Extensions\NameValueCollectionExtensionTest.cs" />
+    <Compile Include="Configuration\HtmlTransformerElementCollectionTest.cs" />
+    <Compile Include="Configuration\HtmlTransformerElementTest.cs" />
+    <Compile Include="Configuration\HtmlTransformerSectionTest.cs" />
+    <Compile Include="Configuration\Mocks\AnotherHtmlTransformer.cs" />
+    <Compile Include="Configuration\Mocks\HtmlTransformer.cs" />
+    <Compile Include="Configuration\WebSectionGroupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +90,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HansKindberg.Configuration\HansKindberg.Configuration.csproj">
+      <Project>{93689a20-d134-4d0f-bd01-877624f97586}</Project>
+      <Name>HansKindberg.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HansKindberg.Web\HansKindberg.Web.csproj">
       <Project>{051C140D-E4CB-4E97-A5AB-E957BAFD72BB}</Project>
       <Name>HansKindberg.Web</Name>

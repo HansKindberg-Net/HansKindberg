@@ -77,6 +77,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\TypeExtensionTest.cs" />
+    <Compile Include="IO\CapturableStreamTest.cs" />
+    <Compile Include="IO\StreamEventArgsTest.cs" />
+    <Compile Include="IO\StreamTransformingEventArgsTest.cs" />
+    <Compile Include="IO\StreamWriteEventArgsTest.cs" />
+    <Compile Include="IO\StreamWriteTransformingEventArgsTest.cs" />
+    <Compile Include="IO\TransformableStreamTest.cs" />
     <Compile Include="Net\Mail\SmtpClientWrapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ConstructorInfoWrapperTest.cs" />

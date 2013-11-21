@@ -1,8 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Dictionary>
+	<Acronyms>
+		<CasingExceptions>
+			<Acronym>Io</Acronym><!-- Inversion of (Inversion of Control) -->
+		</CasingExceptions>
+	</Acronyms>
 	<Words>
 		<Recognized>
-			<Word>Kindberg</Word>
+			<Word>capturable</Word>
+			<Word>kindberg</Word>
 		</Recognized>
 	</Words>
 </Dictionary>
