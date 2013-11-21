@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("Integration tests for HansKindberg.Web.")]
+[assembly: AssemblyDescription("Integration-tests for HansKindberg.Web.")]
 [assembly: Guid("d999ae62-37e0-41f9-9149-8d59a8202ffd")]
 // ReSharper disable CheckNamespace
 internal static class AssemblyInfo
