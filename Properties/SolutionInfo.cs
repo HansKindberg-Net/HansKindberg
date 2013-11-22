@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Hans Kindberg - open source")]
@@ -50,7 +49,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion(SolutionInfo.AssemblyVersion)]
 #pragma warning restore 436
 
-[assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
 
 internal static class SolutionInfo

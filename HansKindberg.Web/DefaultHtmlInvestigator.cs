@@ -8,7 +8,7 @@ namespace HansKindberg.Web
 	{
 		#region Methods
 
-		public virtual bool IsHtmlRequest(HttpContextBase httpContext)
+		public virtual bool IsHtmlResponse(HttpContextBase httpContext)
 		{
 			if(httpContext == null)
 				throw new ArgumentNullException("httpContext");

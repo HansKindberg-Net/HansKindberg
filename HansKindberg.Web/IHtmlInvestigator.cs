@@ -6,7 +6,7 @@ namespace HansKindberg.Web
 	{
 		#region Methods
 
-		bool IsHtmlRequest(HttpContextBase httpContext);
+		bool IsHtmlResponse(HttpContextBase httpContext);
 
 		#endregion
 	}

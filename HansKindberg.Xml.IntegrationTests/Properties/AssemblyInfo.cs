@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("Integration-tests for HansKindberg.Xml.")]
+[assembly: CLSCompliant(true)]
 [assembly: Guid("c228b3a7-add4-4bd6-8dd5-53d285e4e063")]
 // ReSharper disable CheckNamespace
 internal static class AssemblyInfo

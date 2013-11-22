@@ -74,7 +74,7 @@ namespace HansKindberg.Web.HtmlTransforming
 			if(httpApplication == null)
 				throw new ArgumentNullException("httpApplication");
 
-			if(!this.HtmlInvestigator.IsHtmlRequest(httpApplication.Context))
+			if(!this.HtmlInvestigator.IsHtmlResponse(httpApplication.Context))
 				return;
 
 			TransformableStream transformableStream = new TransformableStream(httpApplication.Response.Filter, httpApplication.Response.ContentEncoding);

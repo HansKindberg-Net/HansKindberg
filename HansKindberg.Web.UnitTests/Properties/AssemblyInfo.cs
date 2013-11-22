@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("Unit-tests for HansKindberg.Web.")]
+[assembly: CLSCompliant(true)]
 [assembly: Guid("331191f3-56b9-4f90-ab92-5bff11446ee5")]
 // ReSharper disable CheckNamespace
 internal static class AssemblyInfo
