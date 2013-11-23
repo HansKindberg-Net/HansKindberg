@@ -1,4 +1,5 @@
 using HansKindberg.IoC;
+using HansKindberg.Web.HtmlTransforming;
 using HansKindberg.Web.Samples.MvpApplication.Business.Mvp.IoC.StructureMap.Binder;
 using StructureMap;
 using WebFormsMvp.Binder;
@@ -19,8 +20,12 @@ namespace HansKindberg.Web.Samples.MvpApplication.Business
 		public static void Bootstrap()
 		{
 			new Bootstrapper().BootstrapStructureMap();
-			PresenterBinder.Factory = new PresenterFactory(ObjectFactory.Container);
-			ServiceLocator.Instance = new StructureMapServiceLocator(ObjectFactory.Container);
+
+			IContainer container = ObjectFactory.Container;
+
+			HtmlTransformingInitializer.Instance = container.GetInstance<IHtmlTransformingInitializer>();
+			PresenterBinder.Factory = new PresenterFactory(container);
+			ServiceLocator.Instance = new StructureMapServiceLocator(container);
 		}
 
 		public void BootstrapStructureMap()

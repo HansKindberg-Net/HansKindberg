@@ -44,6 +44,10 @@
     <CodeAnalysisRuleSet>..\CodeAnalysis\Solution.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
@@ -75,9 +79,10 @@
     </CodeAnalysisDictionary>
     <Content Include="Global.asax" />
     <Content Include="Index.aspx" />
-    <Content Include="Views\HtmlTransforming\AllHtmlTransforming.aspx" />
-    <Content Include="Views\HtmlTransforming\NoHtmlTransforming.aspx" />
-    <Content Include="Views\HtmlTransforming\SomeHtmlTransforming.aspx" />
+    <Content Include="Views\HtmlTransforming\Clear\Index.aspx" />
+    <Content Include="Views\HtmlTransforming\Index.aspx" />
+    <Content Include="Views\HtmlTransforming\Remove\Index.aspx" />
+    <Content Include="Views\Shared\Navigation\Index.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +99,9 @@
     <Compile Include="Business\Mvp\Presenters\Presenter.cs" />
     <Compile Include="Business\Mvp\Views\IView.cs" />
     <Compile Include="Business\Registry.cs" />
+    <Compile Include="Business\Web\HtmlTransforming\FirstHtmlTransformer.cs" />
+    <Compile Include="Business\Web\HtmlTransforming\SecondHtmlTransformer.cs" />
+    <Compile Include="Business\Web\HtmlTransforming\ThirdHtmlTransformer.cs" />
     <Compile Include="Business\Web\Mvp\UI\Views\MasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -117,32 +125,34 @@
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\HtmlTransformingModel.cs" />
     <Compile Include="Models\LayoutModel.cs" />
+    <Compile Include="Models\NavigationModel.cs" />
+    <Compile Include="Presenters\NavigationPresenter.cs" />
     <Compile Include="Presenters\HomePresenter.cs" />
     <Compile Include="Presenters\HtmlTransformingPresenter.cs" />
     <Compile Include="Presenters\LayoutPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Home\IHomeView.cs" />
-    <Compile Include="Views\HtmlTransforming\AllHtmlTransforming.aspx.cs">
-      <DependentUpon>AllHtmlTransforming.aspx</DependentUpon>
+    <Compile Include="Views\HtmlTransforming\Clear\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\HtmlTransforming\AllHtmlTransforming.aspx.designer.cs">
-      <DependentUpon>AllHtmlTransforming.aspx</DependentUpon>
+    <Compile Include="Views\HtmlTransforming\Clear\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\HtmlTransforming\IHtmlTransformingView.cs" />
-    <Compile Include="Views\HtmlTransforming\NoHtmlTransforming.aspx.cs">
-      <DependentUpon>NoHtmlTransforming.aspx</DependentUpon>
+    <Compile Include="Views\HtmlTransforming\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\HtmlTransforming\NoHtmlTransforming.aspx.designer.cs">
-      <DependentUpon>NoHtmlTransforming.aspx</DependentUpon>
+    <Compile Include="Views\HtmlTransforming\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\HtmlTransforming\SomeHtmlTransforming.aspx.cs">
-      <DependentUpon>SomeHtmlTransforming.aspx</DependentUpon>
+    <Compile Include="Views\HtmlTransforming\Remove\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\HtmlTransforming\SomeHtmlTransforming.aspx.designer.cs">
-      <DependentUpon>SomeHtmlTransforming.aspx</DependentUpon>
+    <Compile Include="Views\HtmlTransforming\Remove\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\Shared\ILayoutView.cs" />
@@ -152,6 +162,14 @@
     </Compile>
     <Compile Include="Views\Shared\Layout.master.designer.cs">
       <DependentUpon>Layout.master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Navigation\INavigationView.cs" />
+    <Compile Include="Views\Shared\Navigation\Index.ascx.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\Navigation\Index.ascx.designer.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

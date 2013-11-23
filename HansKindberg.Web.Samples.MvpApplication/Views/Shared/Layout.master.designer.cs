@@ -13,30 +13,30 @@ namespace HansKindberg.Web.Samples.MvpApplication.Views.Shared {
     public partial class Layout {
         
         /// <summary>
-        /// htmlPlaceHolder control.
+        /// TitleContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder htmlPlaceHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder TitleContent;
         
         /// <summary>
-        /// titleContent control.
+        /// HeadingContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder titleContent;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadingContent;
         
         /// <summary>
-        /// mainContent control.
+        /// MainContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder mainContent;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
     }
 }

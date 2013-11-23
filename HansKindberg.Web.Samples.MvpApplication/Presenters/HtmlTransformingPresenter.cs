@@ -14,16 +14,21 @@ namespace HansKindberg.Web.Samples.MvpApplication.Presenters
 		public HtmlTransformingPresenter(IHtmlTransformingView view, IModelFactory modelFactory) : base(view, modelFactory)
 		{
 			this.View.Load += this.OnViewLoad;
+			this.View.PreRender += this.OnViewPreRender;
 		}
 
 		#endregion
 
 		#region Eventhandlers
 
-		[SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
 		protected internal virtual void OnViewLoad(object sender, EventArgs e)
 		{
 			this.View.Model = this.ModelFactory.Create<HtmlTransformingModel>();
+		}
+
+		protected internal virtual void OnViewPreRender(object sender, EventArgs e)
+		{
+			this.View.HtmlTransformersControl.DataBind();
 		}
 
 		#endregion

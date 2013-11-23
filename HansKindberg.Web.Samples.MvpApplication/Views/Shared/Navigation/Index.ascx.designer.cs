@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HansKindberg.Web.Samples.MvpApplication.Views.HtmlTransforming
+namespace HansKindberg.Web.Samples.MvpApplication.Views.Shared.Navigation
 {
 
 
-	public partial class AllHtmlTransforming
+	public partial class Index
 	{
 	}
 }

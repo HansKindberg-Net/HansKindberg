@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using HansKindberg.Web.Samples.MvpApplication.Business.Mvp.Models;
 using HansKindberg.Web.Samples.MvpApplication.Business.Mvp.Presenters;
 using HansKindberg.Web.Samples.MvpApplication.Models;
-using HansKindberg.Web.Samples.MvpApplication.Views.Home;
+using HansKindberg.Web.Samples.MvpApplication.Views.Shared.Navigation;
 
 namespace HansKindberg.Web.Samples.MvpApplication.Presenters
 {
-	public class HomePresenter : Presenter<IHomeView>
+	public class NavigationPresenter : Presenter<INavigationView>
 	{
 		#region Constructors
 
-		public HomePresenter(IHomeView view, IModelFactory modelFactory) : base(view, modelFactory)
+		public NavigationPresenter(INavigationView view, IModelFactory modelFactory) : base(view, modelFactory)
 		{
 			this.View.Load += this.OnViewLoad;
+			this.View.PreRender += this.OnViewPreRender;
 		}
 
 		#endregion
@@ -22,8 +22,10 @@ namespace HansKindberg.Web.Samples.MvpApplication.Presenters
 
 		protected internal virtual void OnViewLoad(object sender, EventArgs e)
 		{
-			this.View.Model = this.ModelFactory.Create<HomeModel>();
+			this.View.Model = this.ModelFactory.Create<NavigationModel>();
 		}
+
+		protected internal virtual void OnViewPreRender(object sender, EventArgs e) {}
 
 		#endregion
 	}
