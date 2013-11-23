@@ -42,28 +42,31 @@ namespace HansKindberg.Web.IoC.StructureMap.ShimTests
 					Registry.Register(initializer);
 				});
 
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpApplicationState>());
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpApplicationStateBase>());
+				IContainer container = ObjectFactory.Container;
 
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpContext>());
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpContextBase>());
+				Assert.IsNotNull(container.GetInstance<HttpApplicationState>());
+				Assert.IsNotNull(container.GetInstance<HttpApplicationStateBase>());
 
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpRequest>());
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpRequestBase>());
+				Assert.IsNotNull(container.GetInstance<HttpContext>());
+				Assert.IsNotNull(container.GetInstance<HttpContextBase>());
 
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpResponse>());
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpResponseBase>());
+				Assert.IsNotNull(container.GetInstance<HttpRequest>());
+				Assert.IsNotNull(container.GetInstance<HttpRequestBase>());
 
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpServerUtility>());
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpServerUtilityBase>());
+				Assert.IsNotNull(container.GetInstance<HttpResponse>());
+				Assert.IsNotNull(container.GetInstance<HttpResponseBase>());
 
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpSessionState>());
-				Assert.IsNotNull(ObjectFactory.GetInstance<HttpSessionStateBase>());
+				Assert.IsNotNull(container.GetInstance<HttpServerUtility>());
+				Assert.IsNotNull(container.GetInstance<HttpServerUtilityBase>());
 
-				Assert.IsTrue(ObjectFactory.GetInstance<IHtmlDocumentFactory>() is DefaultHtmlDocumentFactory);
-				Assert.IsTrue(ObjectFactory.GetInstance<IHtmlInvestigator>() is DefaultHtmlInvestigator);
-				Assert.IsTrue(ObjectFactory.GetInstance<IHtmlTransformerFactory>() is DefaultHtmlTransformerFactory);
-				Assert.IsTrue(ObjectFactory.GetInstance<IHtmlTransformingContext>() is DefaultHtmlTransformingContext);
+				Assert.IsNotNull(container.GetInstance<HttpSessionState>());
+				Assert.IsNotNull(container.GetInstance<HttpSessionStateBase>());
+
+				Assert.IsTrue(container.GetInstance<IHtmlDocumentFactory>() is DefaultHtmlDocumentFactory);
+				Assert.IsTrue(container.GetInstance<IHtmlInvestigator>() is DefaultHtmlInvestigator);
+				Assert.IsTrue(container.GetInstance<IHtmlTransformerFactory>() is DefaultHtmlTransformerFactory);
+				Assert.IsTrue(container.GetInstance<IHtmlTransformingContext>() is DefaultHtmlTransformingContext);
+				Assert.IsTrue(container.GetInstance<IHtmlTransformingInitializer>() is DefaultHtmlTransformingInitializer);
 
 				TestHelper.ClearStructureMap();
 				TestHelper.AssertStructureMapIsCleared();

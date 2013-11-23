@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Web;
 using System.Web.SessionState;
 using HansKindberg.Web.HtmlTransforming;
@@ -20,6 +21,7 @@ namespace HansKindberg.Web.IoC.StructureMap
 
 		#region Methods
 
+		[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
 		public static void Register(IRegistry registry)
 		{
 			if(registry == null)
@@ -42,6 +44,7 @@ namespace HansKindberg.Web.IoC.StructureMap
 			registry.For<IHtmlInvestigator>().Singleton().Use<DefaultHtmlInvestigator>();
 			registry.For<IHtmlTransformerFactory>().Singleton().Use<DefaultHtmlTransformerFactory>();
 			registry.For<IHtmlTransformingContext>().Singleton().Use<DefaultHtmlTransformingContext>();
+			registry.For<IHtmlTransformingInitializer>().Singleton().Use<DefaultHtmlTransformingInitializer>();
 		}
 
 		#endregion

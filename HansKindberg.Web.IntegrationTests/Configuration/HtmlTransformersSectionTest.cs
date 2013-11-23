@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
@@ -44,9 +45,7 @@ namespace HansKindberg.Web.IntegrationTests.Configuration
 		}
 
 		[TestMethod]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "type")]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "virtualPathProvider")]
+		[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
 		public void ConfigurationManager_GetHtmlTransformersSection_HtmlTransformers_ShouldDependOnLocations()
 		{
 			string physicalDirectoryPath = AppDomain.CurrentDomain.BaseDirectory;
