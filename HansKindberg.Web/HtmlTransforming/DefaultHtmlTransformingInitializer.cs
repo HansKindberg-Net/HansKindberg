@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using HansKindberg.IO;
 using HtmlAgilityPack;
@@ -77,22 +79,30 @@ namespace HansKindberg.Web.HtmlTransforming
 			if(!this.HtmlInvestigator.IsHtmlResponse(httpApplication.Context))
 				return;
 
+			IEnumerable<IHtmlTransformer> htmlTransformers = this.HtmlTransformingContext.GetTransformers().ToArray();
+
+			if(!htmlTransformers.Any())
+				return;
+
 			TransformableStream transformableStream = new TransformableStream(httpApplication.Response.Filter, httpApplication.Response.ContentEncoding);
-			transformableStream.Transform += this.OnTransform;
+			transformableStream.Transform += (sender, streamTransformingEventArgs) => this.OnTransform(streamTransformingEventArgs, htmlTransformers);
 
 			httpApplication.Response.Filter = transformableStream;
 		}
 
-		protected internal virtual void OnTransform(object sender, StreamTransformingEventArgs streamTransformingEventArgs)
+		protected internal virtual void OnTransform(StreamTransformingEventArgs streamTransformingEventArgs, IEnumerable<IHtmlTransformer> htmlTransformers)
 		{
 			if(streamTransformingEventArgs == null)
 				throw new ArgumentNullException("streamTransformingEventArgs");
+
+			if(htmlTransformers == null)
+				throw new ArgumentNullException("htmlTransformers");
 
 			HtmlDocument htmlDocument = this.HtmlDocumentFactory.Create();
 			htmlDocument.LoadHtml(streamTransformingEventArgs.Content);
 			HtmlNode htmlNode = htmlDocument.DocumentNode;
 
-			foreach(var htmlTransformer in this.HtmlTransformingContext.GetTransformers())
+			foreach(var htmlTransformer in htmlTransformers)
 			{
 				htmlTransformer.Transform(htmlNode);
 			}

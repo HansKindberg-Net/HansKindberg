@@ -4,7 +4,7 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server"><p>This is a sample for the HansKindberg.Web.HtmlTransforming namespace.</p>
 	<p>In web.config the html-transformers have been cleared for this location path.</p>
 	<h2>Html-transforming result</h2>
-	<div id="html-transforming-result" class="alert alert-info" />
+	<div id="html-transforming-result" class="alert alert-info"></div>
 	<h2>Active html-transformers</h2>
 	<div class="alert alert-info x-scroll">
 		<p><strong>On this page the following html-transformers are executed:</strong></p>
