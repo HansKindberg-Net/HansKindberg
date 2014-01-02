@@ -69,6 +69,9 @@
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Collections\Generic\Extensions\DictionaryExtensionTest.cs" />
+    <Compile Include="Collections\Generic\TreeFactoryTest.cs" />
+    <Compile Include="Collections\Generic\TreeNodeCollectionTest.cs" />
+    <Compile Include="Collections\Generic\TreeNodeTest.cs" />
     <Compile Include="Connections\ConnectionStringParserTest.cs" />
     <Compile Include="Connections\IConnectionStringParserTest.cs" />
     <Compile Include="Connections\ISecureConnectionSettingsTest.cs" />
