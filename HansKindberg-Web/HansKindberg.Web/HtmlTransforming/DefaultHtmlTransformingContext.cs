@@ -14,6 +14,7 @@ namespace HansKindberg.Web.HtmlTransforming
 		private readonly IConfigurationManager _configurationManager;
 		private readonly IHtmlTransformerFactory _htmlTransformerFactory;
 		private const string _htmlTransformersSectionName = WebSectionGroup.DefaultSectionGroupName + "/" + HtmlTransformersSection.DefaultSectionName;
+		private readonly object _lockObject = new object();
 
 		#endregion
 
@@ -56,9 +57,12 @@ namespace HansKindberg.Web.HtmlTransforming
 
 		public virtual IEnumerable<IHtmlTransformer> GetTransformers()
 		{
-			HtmlTransformersSection htmlTransformersSection = (HtmlTransformersSection) this.ConfigurationManager.GetSection(this.HtmlTransformersSectionName) ?? new HtmlTransformersSection();
+			lock(this._lockObject)
+			{
+				HtmlTransformersSection htmlTransformersSection = (HtmlTransformersSection) this.ConfigurationManager.GetSection(this.HtmlTransformersSectionName) ?? new HtmlTransformersSection();
 
-			return htmlTransformersSection.HtmlTransformers.Select(htmlTransformerElement => this.HtmlTransformerFactory.Create(htmlTransformerElement.Type));
+				return htmlTransformersSection.HtmlTransformers.Select(htmlTransformerElement => this.HtmlTransformerFactory.Create(htmlTransformerElement.Type));
+			}
 		}
 
 		#endregion
