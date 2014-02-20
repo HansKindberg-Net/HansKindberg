@@ -105,6 +105,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml.ShimTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Xml.UnitTests", "HansKindberg-Xml\HansKindberg.Xml.UnitTests\HansKindberg.Xml.UnitTests.csproj", "{EC5009C0-2DA7-4300-80BB-15788BB7EC82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Samples.MvpApplication.WebAndLoadTests", "HansKindberg-Web-Samples\HansKindberg.Web.Samples.MvpApplication.WebAndLoadTests\HansKindberg.Web.Samples.MvpApplication.WebAndLoadTests.csproj", "{F5AFF7D8-28C5-42CB-BE11-FD1B75C02513}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2C89F759-0E14-43D3-8289-545DE041FA6A}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +230,10 @@ Global
 		{EC5009C0-2DA7-4300-80BB-15788BB7EC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC5009C0-2DA7-4300-80BB-15788BB7EC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC5009C0-2DA7-4300-80BB-15788BB7EC82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5AFF7D8-28C5-42CB-BE11-FD1B75C02513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5AFF7D8-28C5-42CB-BE11-FD1B75C02513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5AFF7D8-28C5-42CB-BE11-FD1B75C02513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5AFF7D8-28C5-42CB-BE11-FD1B75C02513}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -252,6 +263,8 @@ Global
 		{F9D3D2E5-F20B-48FF-8687-723D39F062DC} = {245EF7C0-5F08-4BF8-A973-23119002A465}
 		{8EC23CA0-158E-4AA9-B7A5-B53D4FD98D94} = {245EF7C0-5F08-4BF8-A973-23119002A465}
 		{A9943FC5-8F92-4E29-B021-CED9B5AC1A41} = {FB5A0AB2-7ECB-4CE3-9196-64D1DCAE3420}
+		{F5AFF7D8-28C5-42CB-BE11-FD1B75C02513} = {FB5A0AB2-7ECB-4CE3-9196-64D1DCAE3420}
+		{2C89F759-0E14-43D3-8289-545DE041FA6A} = {FB5A0AB2-7ECB-4CE3-9196-64D1DCAE3420}
 		{F00E8D75-404A-4287-BF42-A8A016D624E3} = {3CC3858C-E5AB-4E12-8DB4-70ABADED96C6}
 		{63390486-9824-4DD0-9A5E-1074E0414F91} = {3CC3858C-E5AB-4E12-8DB4-70ABADED96C6}
 		{C5E80FE1-FBFE-4FB4-8DF8-CFAAE398BD7E} = {3CC3858C-E5AB-4E12-8DB4-70ABADED96C6}

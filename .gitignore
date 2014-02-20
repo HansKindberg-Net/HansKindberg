@@ -8,6 +8,7 @@ release/
 testresults/
 *.suo
 *.user
+*.webtestresult
 .nuget/NuGet.exe
 
 !packages/repositories.config
