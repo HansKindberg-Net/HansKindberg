@@ -44,8 +44,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyFileVersion(SolutionInfo.AssemblyFileVersion)]
 [assembly: AssemblyInformationalVersion(SolutionInfo.AssemblyInformationalVersion)]
-[assembly: AssemblyProduct(AssemblyInfo.AssemblyName + " " + SolutionInfo.AssemblyInformationalVersion)]
-[assembly: AssemblyTitle(AssemblyInfo.AssemblyName + " " + SolutionInfo.AssemblyInformationalVersion)]
+[assembly: AssemblyProduct(AssemblyInfo.AssemblyName)]
+[assembly: AssemblyTitle(AssemblyInfo.AssemblyName)]
 [assembly: AssemblyVersion(SolutionInfo.AssemblyVersion)]
 #pragma warning restore 436
 
@@ -56,7 +56,7 @@ internal static class SolutionInfo
 	// When you increase the majorversion: minorversion = 0, buildnumber = 0, revision = 0, fileversionrevision = 0
 	// When you increase the minorversion: buildnumber = 0, revision = 0, fileversionrevision = 0
 	// When you increase the buildnumber: revision = 0, fileversionrevision = 0
-	// Else - foreach change: revision++, fileersionrevision++
+	// Else - foreach change: revision++, fileversionrevision++
 	// Else - foreach small fix: fileversionrevision++
 	// Note: fileversionrevision should not be less than revision
 
@@ -67,10 +67,10 @@ internal static class SolutionInfo
 	internal const string AssemblyVersion = _assemblyBaseVersion + "." + _revision;
 	private const string _assemblyBaseVersion = _majorVersion + "." + _minorVersion + "." + _buildNumber;
 	private const string _buildNumber = "0";
-	private const string _fileVersionRevision = "5";
+	private const string _fileVersionRevision = "6";
 	private const string _majorVersion = "1";
 	private const string _minorVersion = "0";
-	private const string _revision = "5";
+	private const string _revision = "6";
 
 	#endregion
 }
