@@ -330,9 +330,9 @@ namespace HansKindberg.UnitTests.IO
 			streamMock.SetupProperty(stream => stream.Position, 0);
 			streamMock.VerifySet(stream => stream.Position = It.IsAny<long>(), Times.Never());
 			CapturableStream capturableStream = new CapturableStream(streamMock.Object, Mock.Of<Encoding>())
-				{
-					Position = randomPosition
-				};
+			{
+				Position = randomPosition
+			};
 			Assert.AreEqual(randomPosition, capturableStream.Position);
 			streamMock.VerifySet(stream => stream.Position = It.IsAny<long>(), Times.Once());
 		}

@@ -150,10 +150,10 @@ namespace HansKindberg.Configuration.UnitTests
 			ConfigurationProperty secondConfigurationProperty = new ConfigurationProperty("First", typeof(string));
 
 			ConfigurationPropertyCollection configurationPropertyCollection = new ConfigurationPropertyCollection
-				{
-					firstConfigurationProperty,
-					secondConfigurationProperty
-				};
+			{
+				firstConfigurationProperty,
+				secondConfigurationProperty
+			};
 
 			Assert.AreEqual(1, configurationPropertyCollection.Count);
 			Assert.AreEqual(firstConfigurationProperty, configurationPropertyCollection.Cast<ConfigurationProperty>().First());
@@ -164,9 +164,9 @@ namespace HansKindberg.Configuration.UnitTests
 		public void Prerequisite_ConfigurationPropertyCollection_Contains_IsCaseSensitive()
 		{
 			ConfigurationPropertyCollection configurationPropertyCollection = new ConfigurationPropertyCollection
-				{
-					new ConfigurationProperty("First", typeof(object)),
-				};
+			{
+				new ConfigurationProperty("First", typeof(object)),
+			};
 
 			Assert.IsTrue(configurationPropertyCollection.Contains("First"));
 			Assert.IsFalse(configurationPropertyCollection.Contains("first"));

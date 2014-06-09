@@ -24,14 +24,14 @@ namespace HansKindberg.Web.IoC.StructureMap.ShimTests
 			using(ShimsContext.Create())
 			{
 				ShimHttpContext.CurrentGet = () => new ShimHttpContext
-					{
-						ApplicationGet = () => new ShimHttpApplicationState(),
-						ItemsGet = () => new Hashtable(),
-						RequestGet = () => new ShimHttpRequest(),
-						ResponseGet = () => new ShimHttpResponse(),
-						ServerGet = () => new ShimHttpServerUtility(),
-						SessionGet = () => new ShimHttpSessionState()
-					};
+				{
+					ApplicationGet = () => new ShimHttpApplicationState(),
+					ItemsGet = () => new Hashtable(),
+					RequestGet = () => new ShimHttpRequest(),
+					ResponseGet = () => new ShimHttpResponse(),
+					ServerGet = () => new ShimHttpServerUtility(),
+					SessionGet = () => new ShimHttpSessionState()
+				};
 
 				TestHelper.ClearStructureMap();
 				TestHelper.AssertStructureMapIsCleared();

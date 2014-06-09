@@ -55,9 +55,9 @@ namespace HansKindberg.UnitTests.IO
 		public void TransformedContent_Set_ShouldBeAbleToSetToNull()
 		{
 			StreamTransformingEventArgs streamTransformingEventArgs = new StreamTransformingEventArgs("Test", Mock.Of<Encoding>())
-				{
-					TransformedContent = null
-				};
+			{
+				TransformedContent = null
+			};
 			Assert.IsNull(streamTransformingEventArgs.TransformedContent);
 		}
 
@@ -66,9 +66,9 @@ namespace HansKindberg.UnitTests.IO
 		{
 			const string transformedContent = "Transformed content";
 			StreamTransformingEventArgs streamTransformingEventArgs = new StreamTransformingEventArgs("Test", Mock.Of<Encoding>())
-				{
-					TransformedContent = transformedContent
-				};
+			{
+				TransformedContent = transformedContent
+			};
 			Assert.AreEqual(transformedContent, streamTransformingEventArgs.TransformedContent);
 		}
 

@@ -291,10 +291,10 @@ namespace HansKindberg.UnitTests.Net.Mail
 
 			SmtpClient smtpClient = new SmtpClient();
 			SmtpClientWrapper smtpClientWrapper = new SmtpClientWrapper(smtpClient)
-				{
-					DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
-					PickupDirectoryLocation = _pickupDirectoryLocation
-				};
+			{
+				DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+				PickupDirectoryLocation = _pickupDirectoryLocation
+			};
 
 			smtpClientWrapper.SendCompleted += delegate { sendCompletedIsCalled = true; };
 
@@ -312,10 +312,10 @@ namespace HansKindberg.UnitTests.Net.Mail
 
 			SmtpClient smtpClient = new SmtpClient();
 			SmtpClientWrapper smtpClientWrapper = new SmtpClientWrapper(smtpClient)
-				{
-					DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
-					PickupDirectoryLocation = AppDomain.CurrentDomain.BaseDirectory
-				};
+			{
+				DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+				PickupDirectoryLocation = AppDomain.CurrentDomain.BaseDirectory
+			};
 
 			smtpClientWrapper.SendCompleted += delegate { sendCompletedIsCalled = true; };
 

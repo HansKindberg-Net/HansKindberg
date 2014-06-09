@@ -47,16 +47,16 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			Type type = typeof(HtmlTransformer);
 
 			HtmlTransformerElement firstHtmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = name,
-					Type = type
-				};
+			{
+				Name = name,
+				Type = type
+			};
 
 			HtmlTransformerElement secondHtmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = name,
-					Type = type
-				};
+			{
+				Name = name,
+				Type = type
+			};
 
 			Assert.AreEqual(firstHtmlTransformerElement, secondHtmlTransformerElement);
 			Assert.IsTrue(firstHtmlTransformerElement.Equals(secondHtmlTransformerElement));
@@ -68,16 +68,16 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			Type type = typeof(HtmlTransformer);
 
 			HtmlTransformerElement firstHtmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = "Test",
-					Type = type
-				};
+			{
+				Name = "Test",
+				Type = type
+			};
 
 			HtmlTransformerElement secondHtmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = "test",
-					Type = type
-				};
+			{
+				Name = "test",
+				Type = type
+			};
 
 			Assert.AreNotEqual(firstHtmlTransformerElement, secondHtmlTransformerElement);
 			Assert.IsFalse(firstHtmlTransformerElement.Equals(secondHtmlTransformerElement));
@@ -95,9 +95,9 @@ namespace HansKindberg.Web.UnitTests.Configuration
 		{
 			// ReSharper disable ObjectCreationAsStatement
 			new HtmlTransformerElement
-				{
-					Name = string.Empty
-				};
+			{
+				Name = string.Empty
+			};
 			// ReSharper restore ObjectCreationAsStatement
 		}
 
@@ -152,9 +152,9 @@ namespace HansKindberg.Web.UnitTests.Configuration
 		{
 			const string name = "Test";
 			HtmlTransformerElement htmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = name
-				};
+			{
+				Name = name
+			};
 			Assert.AreEqual(name, htmlTransformerElement.Name);
 		}
 
@@ -172,9 +172,9 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			Type type = typeof(object);
 
 			HtmlTransformerElement htmlTransformerElement = new HtmlTransformerElement
-				{
-					Type = type
-				};
+			{
+				Type = type
+			};
 
 			Assert.AreEqual(type, htmlTransformerElement.Type);
 		}
@@ -188,9 +188,9 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			{
 				// ReSharper disable ObjectCreationAsStatement
 				new HtmlTransformerElement
-					{
-						Type = null
-					};
+				{
+					Type = null
+				};
 				// ReSharper restore ObjectCreationAsStatement
 			}
 			catch(ConfigurationErrorsException configurationErrorsException)
@@ -212,9 +212,9 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			Type type = Mock.Of<IHtmlTransformer>().GetType();
 
 			HtmlTransformerElement htmlTransformerElement = new HtmlTransformerElement
-				{
-					Type = type
-				};
+			{
+				Type = type
+			};
 
 			Assert.AreEqual(type, htmlTransformerElement.Type);
 		}

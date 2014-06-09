@@ -22,13 +22,13 @@ namespace HansKindberg.ShimTests.Net.Mail
 				X509CertificateCollection clientCertificates = new X509CertificateCollection();
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
+				{
+					ClientCertificatesGet = delegate
 					{
-						ClientCertificatesGet = delegate
-						{
-							clientCertificatesGetIsCalled = true;
-							return clientCertificates;
-						}
-					};
+						clientCertificatesGetIsCalled = true;
+						return clientCertificates;
+					}
+				};
 
 				Assert.IsFalse(clientCertificatesGetIsCalled);
 
@@ -45,9 +45,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 				bool sendAsyncCancelIsCalled = false;
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendAsyncCancel = delegate { sendAsyncCancelIsCalled = true; }
-					};
+				{
+					SendAsyncCancel = delegate { sendAsyncCancelIsCalled = true; }
+				};
 
 				Assert.IsFalse(sendAsyncCancelIsCalled);
 
@@ -64,9 +64,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 				bool sendAsyncIsCalled = false;
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendAsyncStringStringStringStringObject = delegate { sendAsyncIsCalled = true; }
-					};
+				{
+					SendAsyncStringStringStringStringObject = delegate { sendAsyncIsCalled = true; }
+				};
 
 				Assert.IsFalse(sendAsyncIsCalled);
 
@@ -83,9 +83,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 				bool sendAsyncIsCalled = false;
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendAsyncMailMessageObject = delegate { sendAsyncIsCalled = true; }
-					};
+				{
+					SendAsyncMailMessageObject = delegate { sendAsyncIsCalled = true; }
+				};
 
 				Assert.IsFalse(sendAsyncIsCalled);
 
@@ -101,9 +101,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 			{
 				bool invoked = false;
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendCompletedAddSendCompletedEventHandler = delegate { invoked = true; }
-					};
+				{
+					SendCompletedAddSendCompletedEventHandler = delegate { invoked = true; }
+				};
 				new SmtpClientWrapper(shimSmtpClient.Instance).SendCompleted += ((sender, args) => { });
 				Assert.IsTrue(invoked);
 			}
@@ -116,9 +116,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 			{
 				bool invoked = false;
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendCompletedRemoveSendCompletedEventHandler = delegate { invoked = true; }
-					};
+				{
+					SendCompletedRemoveSendCompletedEventHandler = delegate { invoked = true; }
+				};
 				new SmtpClientWrapper(shimSmtpClient.Instance).SendCompleted -= ((sender, args) => { });
 				Assert.IsTrue(invoked);
 			}
@@ -132,9 +132,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 				bool sendIsCalled = false;
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendStringStringStringString = delegate { sendIsCalled = true; }
-					};
+				{
+					SendStringStringStringString = delegate { sendIsCalled = true; }
+				};
 
 				Assert.IsFalse(sendIsCalled);
 
@@ -151,9 +151,9 @@ namespace HansKindberg.ShimTests.Net.Mail
 				bool sendIsCalled = false;
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
-					{
-						SendMailMessage = delegate { sendIsCalled = true; }
-					};
+				{
+					SendMailMessage = delegate { sendIsCalled = true; }
+				};
 
 				Assert.IsFalse(sendIsCalled);
 
@@ -171,13 +171,13 @@ namespace HansKindberg.ShimTests.Net.Mail
 				ServicePoint servicePoint = new ShimServicePoint().Instance;
 
 				ShimSmtpClient shimSmtpClient = new ShimSmtpClient()
+				{
+					ServicePointGet = delegate
 					{
-						ServicePointGet = delegate
-						{
-							servicePointGetIsCalled = true;
-							return servicePoint;
-						}
-					};
+						servicePointGetIsCalled = true;
+						return servicePoint;
+					}
+				};
 
 				Assert.IsFalse(servicePointGetIsCalled);
 

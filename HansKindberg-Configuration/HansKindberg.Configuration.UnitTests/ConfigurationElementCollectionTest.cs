@@ -25,11 +25,11 @@ namespace HansKindberg.Configuration.UnitTests
 		public void Clear_ShouldClearTheCollection()
 		{
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock
-				{
-					new ConfigurationElementMock {Name = "1"},
-					new ConfigurationElementMock {Name = "2"},
-					new ConfigurationElementMock {Name = "3"}
-				};
+			{
+				new ConfigurationElementMock {Name = "1"},
+				new ConfigurationElementMock {Name = "2"},
+				new ConfigurationElementMock {Name = "3"}
+			};
 			Assert.AreEqual(3, configurationElementCollection.Count);
 			configurationElementCollection.Clear();
 			Assert.AreEqual(0, configurationElementCollection.Count);
@@ -40,9 +40,9 @@ namespace HansKindberg.Configuration.UnitTests
 		{
 			ConfigurationElementMock configurationElement = new ConfigurationElementMock();
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock
-				{
-					configurationElement
-				};
+			{
+				configurationElement
+			};
 			Assert.IsTrue(configurationElementCollection.Contains(configurationElement));
 		}
 
@@ -62,11 +62,11 @@ namespace HansKindberg.Configuration.UnitTests
 			ConfigurationElementMock thirdConfigurationElement = new ConfigurationElementMock {Name = "3"};
 
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock
-				{
-					firstConfigurationElement,
-					secondConfigurationElement,
-					thirdConfigurationElement
-				};
+			{
+				firstConfigurationElement,
+				secondConfigurationElement,
+				thirdConfigurationElement
+			};
 
 			ConfigurationElementMock[] array = new ConfigurationElementMock[10];
 			configurationElementCollection.CopyTo(array, 0);
@@ -116,11 +116,11 @@ namespace HansKindberg.Configuration.UnitTests
 		public void GetEnumerator_ShouldReturnAGenericEnumerator()
 		{
 			List<ConfigurationElementMock> list = new List<ConfigurationElementMock>
-				{
-					new ConfigurationElementMock(),
-					new ConfigurationElementMock(),
-					new ConfigurationElementMock()
-				};
+			{
+				new ConfigurationElementMock(),
+				new ConfigurationElementMock(),
+				new ConfigurationElementMock()
+			};
 
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock();
 
@@ -148,9 +148,9 @@ namespace HansKindberg.Configuration.UnitTests
 			ConfigurationElementMock configurationElement = new ConfigurationElementMock {Name = "1"};
 
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock
-				{
-					configurationElement
-				};
+			{
+				configurationElement
+			};
 
 			Assert.AreEqual(0, configurationElementCollection.IndexOf(configurationElement));
 			Assert.AreEqual(-1, configurationElementCollection.IndexOf(new ConfigurationElementMock {Name = "2"}));
@@ -172,11 +172,11 @@ namespace HansKindberg.Configuration.UnitTests
 			ConfigurationElementMock thirdConfigurationElement = new ConfigurationElementMock {Name = "3"};
 
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock
-				{
-					firstConfigurationElement,
-					secondConfigurationElement,
-					thirdConfigurationElement
-				};
+			{
+				firstConfigurationElement,
+				secondConfigurationElement,
+				thirdConfigurationElement
+			};
 
 			Assert.AreEqual(firstConfigurationElement, configurationElementCollection[0]);
 			Assert.AreEqual(secondConfigurationElement, configurationElementCollection[1]);
@@ -223,11 +223,11 @@ namespace HansKindberg.Configuration.UnitTests
 			ConfigurationElementMock thirdConfigurationElement = new ConfigurationElementMock {Name = "3"};
 
 			ConfigurationElementCollectionMock configurationElementCollection = new ConfigurationElementCollectionMock
-				{
-					firstConfigurationElement,
-					secondConfigurationElement,
-					thirdConfigurationElement
-				};
+			{
+				firstConfigurationElement,
+				secondConfigurationElement,
+				thirdConfigurationElement
+			};
 
 			Assert.AreEqual(3, configurationElementCollection.Count);
 

@@ -27,22 +27,22 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			Type type = typeof(HtmlTransformer);
 
 			HtmlTransformerElement firstHtmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = name,
-					Type = type
-				};
+			{
+				Name = name,
+				Type = type
+			};
 
 			HtmlTransformerElement secondHtmlTransformerElement = new HtmlTransformerElement
-				{
-					Name = name,
-					Type = type
-				};
+			{
+				Name = name,
+				Type = type
+			};
 
 			HtmlTransformerElementCollection htmlTransformerElementCollection = new HtmlTransformerElementCollection
-				{
-					firstHtmlTransformerElement,
-					secondHtmlTransformerElement
-				};
+			{
+				firstHtmlTransformerElement,
+				secondHtmlTransformerElement
+			};
 
 			Assert.AreEqual(1, htmlTransformerElementCollection.Count);
 			Assert.IsTrue(ReferenceEquals(secondHtmlTransformerElement, htmlTransformerElementCollection[0]));
@@ -58,10 +58,10 @@ namespace HansKindberg.Web.UnitTests.Configuration
 			{
 				// ReSharper disable ObjectCreationAsStatement
 				new HtmlTransformerElementCollection
-					{
-						new HtmlTransformerElement {Name = name, Type = typeof(HtmlTransformer)},
-						new HtmlTransformerElement {Name = name, Type = typeof(AnotherHtmlTransformer)},
-					};
+				{
+					new HtmlTransformerElement {Name = name, Type = typeof(HtmlTransformer)},
+					new HtmlTransformerElement {Name = name, Type = typeof(AnotherHtmlTransformer)},
+				};
 				// ReSharper restore ObjectCreationAsStatement
 			}
 			catch(ConfigurationErrorsException configurationErrorsException)

@@ -136,9 +136,9 @@ namespace HansKindberg.UnitTests.IO
 		{
 			int transformedCount = (DateTime.Now.Millisecond + 1)*-1;
 			StreamWriteTransformingEventArgs streamWriteTransformingEventArgs = new StreamWriteTransformingEventArgs(new byte[0], 0, 0, Mock.Of<Encoding>())
-				{
-					TransformedCount = transformedCount
-				};
+			{
+				TransformedCount = transformedCount
+			};
 			Assert.AreEqual(transformedCount, streamWriteTransformingEventArgs.TransformedCount);
 			Assert.IsTrue(transformedCount < 0);
 		}
@@ -148,9 +148,9 @@ namespace HansKindberg.UnitTests.IO
 		{
 			int transformedCount = DateTime.Now.Millisecond;
 			StreamWriteTransformingEventArgs streamWriteTransformingEventArgs = new StreamWriteTransformingEventArgs(new byte[0], 0, 0, Mock.Of<Encoding>())
-				{
-					TransformedCount = transformedCount
-				};
+			{
+				TransformedCount = transformedCount
+			};
 			Assert.AreEqual(transformedCount, streamWriteTransformingEventArgs.TransformedCount);
 		}
 
@@ -159,9 +159,9 @@ namespace HansKindberg.UnitTests.IO
 		{
 			int transformedOffset = (DateTime.Now.Millisecond + 1)*-1;
 			StreamWriteTransformingEventArgs streamWriteTransformingEventArgs = new StreamWriteTransformingEventArgs(new byte[0], 0, 0, Mock.Of<Encoding>())
-				{
-					TransformedOffset = transformedOffset
-				};
+			{
+				TransformedOffset = transformedOffset
+			};
 			Assert.AreEqual(transformedOffset, streamWriteTransformingEventArgs.TransformedOffset);
 			Assert.IsTrue(transformedOffset < 0);
 		}
@@ -171,9 +171,9 @@ namespace HansKindberg.UnitTests.IO
 		{
 			int transformedOffset = DateTime.Now.Millisecond;
 			StreamWriteTransformingEventArgs streamWriteTransformingEventArgs = new StreamWriteTransformingEventArgs(new byte[0], 0, 0, Mock.Of<Encoding>())
-				{
-					TransformedOffset = transformedOffset
-				};
+			{
+				TransformedOffset = transformedOffset
+			};
 			Assert.AreEqual(transformedOffset, streamWriteTransformingEventArgs.TransformedOffset);
 		}
 

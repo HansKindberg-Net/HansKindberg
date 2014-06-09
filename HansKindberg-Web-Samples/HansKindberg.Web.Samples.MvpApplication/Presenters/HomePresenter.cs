@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using HansKindberg.Web.Samples.MvpApplication.Business.Mvp.Models;
 using HansKindberg.Web.Samples.MvpApplication.Business.Mvp.Presenters;
 using HansKindberg.Web.Samples.MvpApplication.Models;

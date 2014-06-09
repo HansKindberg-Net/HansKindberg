@@ -67,12 +67,12 @@ namespace HansKindberg.Xml.Extensions
 				StringBuilder stringBuilder = new StringBuilder();
 
 				XmlWriterSettings xmlWriterSettings = new XmlWriterSettings
-					{
-						Indent = true,
-						IndentChars = indent ? "\t" : "",
-						NewLineChars = newLine ? Environment.NewLine : "",
-						OmitXmlDeclaration = omitXmlDeclarations
-					};
+				{
+					Indent = true,
+					IndentChars = indent ? "\t" : "",
+					NewLineChars = newLine ? Environment.NewLine : "",
+					OmitXmlDeclaration = omitXmlDeclarations
+				};
 
 				XmlSerializerNamespaces xmlSerializerNamespaces = new XmlSerializerNamespaces();
 				if(omitXmlDeclarations)

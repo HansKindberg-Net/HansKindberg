@@ -13,7 +13,7 @@ namespace HansKindberg.Web.Samples.MvpApplication.Business.Web.HtmlTransforming
 			if(htmlNode == null)
 				throw new ArgumentNullException("htmlNode");
 
-			foreach (var child in htmlNode.SelectNodes("//div[@id='html-transforming-result']") ?? new HtmlNodeCollection(null))
+			foreach(var child in htmlNode.SelectNodes("//div[@id='html-transforming-result']") ?? new HtmlNodeCollection(null))
 			{
 				child.AppendChild(HtmlNode.CreateNode("<p>This text is added by the second html-transformer.</p>"));
 			}

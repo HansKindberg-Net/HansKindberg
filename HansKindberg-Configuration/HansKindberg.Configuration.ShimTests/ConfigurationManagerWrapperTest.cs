@@ -19,9 +19,9 @@ namespace HansKindberg.Configuration.ShimTests
 			{
 				bool appSettingsIsCalled = false;
 				var shimAppSettings = new NameValueCollection
-					{
-						{"TestName", "TestValue"}
-					};
+				{
+					{"TestName", "TestValue"}
+				};
 
 				ShimConfigurationManager.AppSettingsGet = delegate
 				{
@@ -47,9 +47,9 @@ namespace HansKindberg.Configuration.ShimTests
 			{
 				bool connectionStringsIsCalled = false;
 				var shimConnectionStrings = new ConnectionStringSettingsCollection
-					{
-						new ConnectionStringSettings("ConnectionName", "ConnectionStringValue")
-					};
+				{
+					new ConnectionStringSettings("ConnectionName", "ConnectionStringValue")
+				};
 
 				ShimConfigurationManager.ConnectionStringsGet = delegate
 				{

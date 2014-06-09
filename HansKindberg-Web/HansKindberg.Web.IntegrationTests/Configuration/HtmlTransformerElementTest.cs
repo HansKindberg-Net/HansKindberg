@@ -125,9 +125,9 @@ namespace HansKindberg.Web.IntegrationTests.Configuration
 		private static System.Configuration.Configuration CreateConfiguration(string configurationFileNameIdentity)
 		{
 			ConfigurationFileMap configurationFileMap = new ConfigurationFileMap
-				{
-					MachineConfigFilename = string.Format(CultureInfo.InvariantCulture, @"{0}\Configuration\Test-configurations\HtmlTransformerElementTest.{1}.Web.config", AppDomain.CurrentDomain.BaseDirectory, configurationFileNameIdentity)
-				};
+			{
+				MachineConfigFilename = string.Format(CultureInfo.InvariantCulture, @"{0}\Configuration\Test-configurations\HtmlTransformerElementTest.{1}.Web.config", AppDomain.CurrentDomain.BaseDirectory, configurationFileNameIdentity)
+			};
 
 			return ConfigurationManager.OpenMappedMachineConfiguration(configurationFileMap);
 		}
