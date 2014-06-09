@@ -1,93 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProductVersion>8.0.30703</ProductVersion>
-		<SchemaVersion>2.0</SchemaVersion>
-		<ProjectGuid>{6F724192-9159-4DE8-83F1-43245781D475}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>HansKindberg.DirectoryServices</RootNamespace>
-		<AssemblyName>HansKindberg.DirectoryServices</AssemblyName>
-		<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-		<FileAlignment>512</FileAlignment>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<OutputPath>..\..\bin\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<RunCodeAnalysis>true</RunCodeAnalysis>
-		<CodeAnalysisRuleSet>..\..\CodeAnalysis\Solution.ruleset</CodeAnalysisRuleSet>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
-		<OutputPath>..\..\bin\Release\</OutputPath>
-		<DefineConstants>TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<RunCodeAnalysis>true</RunCodeAnalysis>
-		<CodeAnalysisRuleSet>..\..\CodeAnalysis\Solution.ruleset</CodeAnalysisRuleSet>
-	</PropertyGroup>
-	<PropertyGroup>
-		<SignAssembly>true</SignAssembly>
-	</PropertyGroup>
-	<PropertyGroup>
-		<AssemblyOriginatorKeyFile>..\..\Signing\HansKindberg.snk</AssemblyOriginatorKeyFile>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\HansKindberg\HansKindberg\HansKindberg.csproj">
-			<Project>{9ec32668-00c5-4ed4-9ffa-711455182f4d}</Project>
-			<Name>HansKindberg %28HansKindberg\HansKindberg%29</Name>
-		</ProjectReference>
-		<Reference Include="System" />
-		<Reference Include="System.Core" />
-		<Reference Include="System.DirectoryServices" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="..\..\CodeAnalysis\SolutionSuppressions.cs">
-			<Link>CodeAnalysis\SolutionSuppressions.cs</Link>
-		</Compile>
-		<Compile Include="..\..\Properties\SolutionInfo.cs">
-			<Link>Properties\SolutionInfo.cs</Link>
-		</Compile>
-		<Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
-		<Compile Include="Connections\IConnectionSettings.cs" />
-		<Compile Include="Connections\ConnectionSettings.cs" />
-		<Compile Include="Directory.cs" />
-		<Compile Include="DirectoryEntriesWrapper.cs" />
-		<Compile Include="DirectoryEntryWrapper.cs" />
-		<Compile Include="DirectorySearcherOptions.cs" />
-		<Compile Include="IDirectory.cs" />
-		<Compile Include="IDirectoryEntries.cs" />
-		<Compile Include="IDirectoryEntry.cs" />
-		<Compile Include="IDirectorySearcherOptions.cs" />
-		<Compile Include="IPropertyCollection.cs" />
-		<Compile Include="IPropertyValueCollection.cs" />
-		<Compile Include="IResultPropertyCollection.cs" />
-		<Compile Include="ISearchResult.cs" />
-		<Compile Include="Properties\AssemblyInfo.cs" />
-		<Compile Include="PropertyCollectionWrapper.cs" />
-		<Compile Include="PropertyValueCollectionWrapper.cs" />
-		<Compile Include="ResultPropertyCollectionWrapper.cs" />
-		<Compile Include="Scheme.cs" />
-		<Compile Include="SearchResultWrapper.cs" />
-		<CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
-		<CodeAnalysisDictionary Include="..\..\CodeAnalysis\SolutionDictionary.xml">
-			<Link>CodeAnalysis\SolutionDictionary.xml</Link>
-		</CodeAnalysisDictionary>
-		<None Include="..\..\Signing\HansKindberg.snk">
-			<Link>HansKindberg.snk</Link>
-		</None>
-		<None Include="HansKindberg.DirectoryServices.nuspec" />
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-	<PropertyGroup>
-		<PostBuildEvent>"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectPath)" -Properties Configuration=$(ConfigurationName)</PostBuildEvent>
-	</PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6F724192-9159-4DE8-83F1-43245781D475}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HansKindberg.DirectoryServices</RootNamespace>
+    <AssemblyName>HansKindberg.DirectoryServices</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\CodeAnalysis\Solution.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\CodeAnalysis\Solution.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\Signing\HansKindberg.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HansKindberg-Abstractions\HansKindberg.Abstractions\HansKindberg.Abstractions.csproj">
+      <Project>{0df6ae5f-343d-4834-81db-1a9c8a5bc4ea}</Project>
+      <Name>HansKindberg.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HansKindberg\HansKindberg\HansKindberg.csproj">
+      <Project>{9ec32668-00c5-4ed4-9ffa-711455182f4d}</Project>
+      <Name>HansKindberg %28HansKindberg\HansKindberg%29</Name>
+    </ProjectReference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CodeAnalysis\SolutionSuppressions.cs">
+      <Link>CodeAnalysis\SolutionSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Properties\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
+    <Compile Include="Connections\IConnectionSettings.cs" />
+    <Compile Include="Connections\ConnectionSettings.cs" />
+    <Compile Include="Directory.cs" />
+    <Compile Include="DirectoryEntriesWrapper.cs" />
+    <Compile Include="DirectoryEntryWrapper.cs" />
+    <Compile Include="DirectorySearcherOptions.cs" />
+    <Compile Include="IDirectory.cs" />
+    <Compile Include="IDirectoryEntries.cs" />
+    <Compile Include="IDirectoryEntry.cs" />
+    <Compile Include="IDirectorySearcherOptions.cs" />
+    <Compile Include="IPropertyCollection.cs" />
+    <Compile Include="IPropertyValueCollection.cs" />
+    <Compile Include="IResultPropertyCollection.cs" />
+    <Compile Include="ISearchResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyCollectionWrapper.cs" />
+    <Compile Include="PropertyValueCollectionWrapper.cs" />
+    <Compile Include="ResultPropertyCollectionWrapper.cs" />
+    <Compile Include="Scheme.cs" />
+    <Compile Include="SearchResultWrapper.cs" />
+    <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
+    <CodeAnalysisDictionary Include="..\..\CodeAnalysis\SolutionDictionary.xml">
+      <Link>CodeAnalysis\SolutionDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+    <None Include="..\..\Signing\HansKindberg.snk">
+      <Link>HansKindberg.snk</Link>
+    </None>
+    <None Include="HansKindberg.DirectoryServices.nuspec" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir).nuget\NuGet.exe" pack "$(ProjectPath)" -Properties Configuration=$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

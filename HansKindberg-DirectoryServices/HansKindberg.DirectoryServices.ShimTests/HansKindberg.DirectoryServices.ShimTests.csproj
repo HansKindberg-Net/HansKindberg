@@ -43,6 +43,10 @@
     <AssemblyOriginatorKeyFile>..\..\Signing\HansKindberg.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\HansKindberg-Abstractions\HansKindberg.Abstractions\HansKindberg.Abstractions.csproj">
+      <Project>{0df6ae5f-343d-4834-81db-1a9c8a5bc4ea}</Project>
+      <Name>HansKindberg.Abstractions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\HansKindberg\HansKindberg\HansKindberg.csproj">
       <Project>{9ec32668-00c5-4ed4-9ffa-711455182f4d}</Project>
       <Name>HansKindberg %28HansKindberg\HansKindberg%29</Name>
