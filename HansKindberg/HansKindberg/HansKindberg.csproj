@@ -53,6 +53,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
+    <Compile Include="Collections\Generic\DictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\EnumerableWrapper.cs" />
     <Compile Include="Collections\Generic\EnumeratorWrapper.cs" />
     <Compile Include="Collections\Generic\IReadOnlyCollection.cs" />
