@@ -29,7 +29,7 @@ namespace HansKindberg.Collections.Generic
 
 		#region Properties
 
-		public virtual EnumerableWrapper<TElement> EnumerableWrapper
+		protected internal virtual EnumerableWrapper<TElement> EnumerableWrapper
 		{
 			get { return this._enumerableWrapper; }
 		}

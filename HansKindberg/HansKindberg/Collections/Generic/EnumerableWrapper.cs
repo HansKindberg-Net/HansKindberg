@@ -29,7 +29,7 @@ namespace HansKindberg.Collections.Generic
 
 		#region Properties
 
-		public virtual Func<object, T> ElementWrapper
+		protected internal virtual Func<object, T> ElementWrapper
 		{
 			get { return this._elementWrapper; }
 		}

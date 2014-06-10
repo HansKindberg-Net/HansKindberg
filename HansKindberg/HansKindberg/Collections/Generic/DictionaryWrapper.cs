@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using HansKindberg.Abstractions;
 
 namespace HansKindberg.Collections.Generic
 {
 	[SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This is a wrapper.")]
-	public class DictionaryWrapper<TKey, TValue> : Wrapper<IDictionary>, IReadOnlyDictionary<TKey, TValue>
+	public class DictionaryWrapper<TKey, TValue> : Wrapper<IDictionary<TKey, TValue>>, IReadOnlyDictionary<TKey, TValue>
 	{
 		#region Constructors
 
-		public DictionaryWrapper(IDictionary dictionary) : base(dictionary, "dictionary") {}
+		public DictionaryWrapper(IDictionary<TKey, TValue> dictionary) : this(dictionary, "dictionary") {}
+		protected DictionaryWrapper(IDictionary<TKey, TValue> dictionary, string dictionaryParameterName) : base(dictionary, dictionaryParameterName) {}
 
 		#endregion
 
@@ -24,17 +24,17 @@ namespace HansKindberg.Collections.Generic
 
 		public virtual TValue this[TKey key]
 		{
-			get { return (TValue) this.WrappedInstance[key]; }
+			get { return this.WrappedInstance[key]; }
 		}
 
 		public virtual IEnumerable<TKey> Keys
 		{
-			get { return this.WrappedInstance.Keys.Cast<TKey>(); }
+			get { return this.WrappedInstance.Keys; }
 		}
 
 		public virtual IEnumerable<TValue> Values
 		{
-			get { return this.WrappedInstance.Values.Cast<TValue>(); }
+			get { return this.WrappedInstance.Values; }
 		}
 
 		#endregion
@@ -43,7 +43,7 @@ namespace HansKindberg.Collections.Generic
 
 		public virtual bool ContainsKey(TKey key)
 		{
-			return this.WrappedInstance.Contains(key);
+			return this.WrappedInstance.ContainsKey(key);
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -53,19 +53,12 @@ namespace HansKindberg.Collections.Generic
 
 		public virtual IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
-			return this.WrappedInstance.Cast<DictionaryEntry>().ToDictionary(keyValuePair => (TKey) keyValuePair.Key, keyValuePair => (TValue) keyValuePair.Value).GetEnumerator();
+			return this.WrappedInstance.GetEnumerator();
 		}
 
 		public virtual bool TryGetValue(TKey key, out TValue value)
 		{
-			if(!this.ContainsKey(key))
-			{
-				value = default(TValue);
-				return false;
-			}
-
-			value = this[key];
-			return true;
+			return this.WrappedInstance.TryGetValue(key, out value);
 		}
 
 		#endregion

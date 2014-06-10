@@ -1,7 +1,5 @@
 ﻿using System.DirectoryServices;
-using HansKindberg.DirectoryServices.Connections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace HansKindberg.DirectoryServices.UnitTests
 {
@@ -9,6 +7,18 @@ namespace HansKindberg.DirectoryServices.UnitTests
 	public class DirectoryTest
 	{
 		#region Methods
+
+		[TestMethod]
+		public void DefaultSearchFilter_ShouldReturnObjectClassWildcardByDefault()
+		{
+			Assert.AreEqual("(objectClass=*)", new Directory().DefaultSearchFilter);
+		}
+
+		[TestMethod]
+		public void DefaultSearchScope_ShouldReturnSubtreeByDefault()
+		{
+			Assert.AreEqual(SearchScope.Subtree, new Directory().DefaultSearchScope);
+		}
 
 		[TestMethod]
 		public void DirectorySearcherPrerequisiteTest()
@@ -36,19 +46,6 @@ namespace HansKindberg.DirectoryServices.UnitTests
 				Assert.AreEqual(SearchScope.Subtree, directorySearcher.SearchScope);
 				// Assert.IsNotNull(directorySearcher.SearchRoot); // This only works when the computer you run the unit tests on is on a domain.
 			}
-		}
-
-		[TestMethod]
-		public void HostUrl_ShouldAlwaysReturnAStringWithATrailingSlash()
-		{
-			Mock<IConnectionSettings> connectionSettingsMock = new Mock<IConnectionSettings>();
-			connectionSettingsMock.Setup(connectionSettings => connectionSettings.Scheme).Returns(Scheme.LDAP);
-
-			Assert.AreEqual("LDAP://", new Directory(connectionSettingsMock.Object).HostUrl);
-
-			connectionSettingsMock.Setup(connectionSettings => connectionSettings.Host).Returns("testhost");
-
-			Assert.AreEqual("LDAP://testhost/", new Directory(connectionSettingsMock.Object).HostUrl);
 		}
 
 		#endregion

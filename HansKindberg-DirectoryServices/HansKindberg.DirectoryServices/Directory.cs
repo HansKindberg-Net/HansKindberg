@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
-using System.Globalization;
 using System.Linq;
 using HansKindberg.DirectoryServices.Connections;
 
@@ -12,379 +11,566 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Fields
 
-		private readonly IConnectionSettings _connectionSettings;
-		private readonly IDirectorySearcherOptions _directorySearcherOptions;
-		private readonly string _hostUrl;
-		private readonly string _rootPath;
+		private AuthenticationTypes _authenticationTypes;
+		private const Scheme _defaultScheme = Scheme.LDAP;
+		private readonly string _defaultSearchFilter;
+		private readonly SearchScope _defaultSearchScope;
+		private readonly IDirectoryUriParser _directoryUriParser;
+		private string _distinguishedName;
+		private string _host;
+		private string _password;
+		private int? _port;
+		private Scheme _scheme;
+		private readonly ISearchOptions _searchOptions;
+		private string _userName;
 
 		#endregion
 
 		#region Constructors
 
-		public Directory(IConnectionSettings connectionSettings) : this(connectionSettings, null) {}
+		public Directory() : this(new DirectoryConnection()) {}
+		public Directory(IDirectoryConnection directoryConnection) : this(directoryConnection, new SearchOptions(), new DirectoryUriParser()) {}
+		public Directory(ISearchOptions searchOptions) : this(new DirectoryConnection(), searchOptions, new DirectoryUriParser()) {}
+		public Directory(IDirectoryUriParser directoryUriParser) : this(new DirectoryConnection(), new SearchOptions(), directoryUriParser) {}
+		public Directory(IDirectoryConnection directoryConnection, ISearchOptions searchOptions) : this(directoryConnection, searchOptions, new DirectoryUriParser()) {}
+		public Directory(IDirectoryConnection directoryConnection, IDirectoryUriParser directoryUriParser) : this(directoryConnection, new SearchOptions(), directoryUriParser) {}
+		public Directory(ISearchOptions searchOptions, IDirectoryUriParser directoryUriParser) : this(new DirectoryConnection(), searchOptions, directoryUriParser) {}
 
-		public Directory(IConnectionSettings connectionSettings, IDirectorySearcherOptions directorySearcherOptions)
+		public Directory(IDirectoryConnection directoryConnection, ISearchOptions searchOptions, IDirectoryUriParser directoryUriParser)
 		{
-			if(connectionSettings == null)
-				throw new ArgumentNullException("connectionSettings");
+			if(directoryConnection == null)
+				throw new ArgumentNullException("directoryConnection");
 
-			this._connectionSettings = connectionSettings;
-			this._directorySearcherOptions = directorySearcherOptions;
+			if(searchOptions == null)
+				throw new ArgumentNullException("searchOptions");
 
-			string hostUrl = connectionSettings.Scheme.ToString() + "://" + connectionSettings.Host;
-			if(connectionSettings.Port != null)
-				hostUrl += ":" + connectionSettings.Port.Value.ToString(CultureInfo.InvariantCulture);
-			if(!hostUrl.EndsWith("/", StringComparison.Ordinal))
-				hostUrl += "/";
+			if(directoryUriParser == null)
+				throw new ArgumentNullException("directoryUriParser");
 
-			this._hostUrl = hostUrl;
-			this._rootPath = hostUrl + connectionSettings.DistinguishedName;
+			if(directoryConnection.AuthenticationTypes.HasValue)
+			{
+				this._authenticationTypes = directoryConnection.AuthenticationTypes.Value;
+			}
+			else
+			{
+				using(DirectoryEntry directoryEntry = new DirectoryEntry())
+				{
+					this._authenticationTypes = directoryEntry.AuthenticationType;
+				}
+			}
+
+			this._directoryUriParser = directoryUriParser;
+			this._distinguishedName = directoryConnection.DistinguishedName;
+			this._host = directoryConnection.Host;
+			this._password = directoryConnection.Password;
+			this._port = directoryConnection.Port;
+			this._scheme = directoryConnection.Scheme.HasValue ? directoryConnection.Scheme.Value : _defaultScheme;
+			this._searchOptions = searchOptions;
+			this._userName = directoryConnection.UserName;
+
+			using(var directorySearcher = new DirectorySearcher())
+			{
+				this._defaultSearchFilter = directorySearcher.Filter;
+				this._defaultSearchScope = directorySearcher.SearchScope;
+			}
 		}
 
 		#endregion
 
 		#region Properties
 
-		public virtual string HostUrl
+		public virtual AuthenticationTypes AuthenticationTypes
 		{
-			get { return this._hostUrl; }
+			get { return this._authenticationTypes; }
+			set { this._authenticationTypes = value; }
 		}
 
-		protected internal virtual string RootPath
+		protected internal virtual string DefaultSearchFilter
 		{
-			get { return this._rootPath; }
+			get { return this._defaultSearchFilter; }
+		}
+
+		protected internal virtual SearchScope DefaultSearchScope
+		{
+			get { return this._defaultSearchScope; }
+		}
+
+		protected internal virtual IDirectoryUriParser DirectoryUriParser
+		{
+			get { return this._directoryUriParser; }
+		}
+
+		public virtual string DistinguishedName
+		{
+			get { return this._distinguishedName; }
+			set { this._distinguishedName = value; }
+		}
+
+		public virtual string Host
+		{
+			get { return this._host; }
+			set { this._host = value; }
+		}
+
+		public virtual string Password
+		{
+			get { return this._password; }
+			set { this._password = value; }
+		}
+
+		public virtual int? Port
+		{
+			get { return this._port; }
+			set { this._port = value; }
+		}
+
+		public virtual IDirectoryNode Root
+		{
+			get { return this.Get(this.Url); }
+		}
+
+		public virtual Scheme Scheme
+		{
+			get { return this._scheme; }
+			set { this._scheme = value; }
+		}
+
+		protected internal virtual ISearchOptions SearchOptions
+		{
+			get { return this._searchOptions; }
+		}
+
+		public virtual IDirectoryUri Url
+		{
+			get { return this.CreateDirectoryUri(this.DistinguishedName); }
+		}
+
+		public virtual string UserName
+		{
+			get { return this._userName; }
+			set { this._userName = value; }
 		}
 
 		#endregion
 
 		#region Methods
 
-		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-		protected internal virtual DirectorySearcher CreateDirectorySearcher(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
+		public virtual IDirectoryNode Create(IDirectoryNode parent, string name, string schemaClassName)
 		{
-			DirectorySearcher directorySearcher = new DirectorySearcher();
+			throw new NotImplementedException();
+		}
 
-			if(searchRoot != null)
-				directorySearcher.SearchRoot = searchRoot.Value == null ? null : this.GetConcreteDirectoryEntry(searchRoot.Value.Path);
+		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+		protected internal virtual IDirectoryNode CreateDirectoryNode(DirectoryEntry directoryEntry)
+		{
+			if(directoryEntry == null)
+				return null;
 
-			if(filter != null)
-				directorySearcher.Filter = filter.Value;
-
-			if(propertiesToLoad != null)
+			var directoryNode = new DirectoryNode
 			{
-				directorySearcher.PropertiesToLoad.Clear();
+				Name = directoryEntry.Name,
+				Path = this.DirectoryUriParser.Parse(directoryEntry.Path),
+				SchemaClassName = directoryEntry.SchemaClassName
+			};
 
-				foreach(string propertyToLoad in propertiesToLoad.Value ?? new string[0])
+			// ReSharper disable EmptyGeneralCatchClause
+			try
+			{
+				directoryNode.Guid = directoryEntry.Guid;
+			}
+			catch {}
+
+			try
+			{
+				directoryNode.NativeGuid = directoryEntry.NativeGuid;
+			}
+			catch {}
+
+			try
+			{
+				var parent = directoryEntry.Parent;
+
+				// ReSharper disable ConditionIsAlwaysTrueOrFalse
+				if(parent != null) // ReSharper restore ConditionIsAlwaysTrueOrFalse
 				{
-					directorySearcher.PropertiesToLoad.Add(propertyToLoad);
+					using(parent)
+					{
+						directoryNode.ParentPath = this.DirectoryUriParser.Parse(parent.Path);
+					}
 				}
 			}
+			catch {}
+			// ReSharper restore EmptyGeneralCatchClause
 
-			if(scope != null)
-				directorySearcher.SearchScope = scope.Value;
+			foreach(string key in directoryEntry.Properties.PropertyNames)
+			{
+				directoryNode.Properties.Add(key, directoryEntry.Properties[key].Cast<object>().ToArray());
+			}
 
-			IDirectorySearcherOptions actualDirectorySearcherOptions = directorySearcherOptions != null ? directorySearcherOptions.Value : this._directorySearcherOptions;
+			return directoryNode;
+		}
 
-			this.SetDirectorySearcherOptions(directorySearcher, actualDirectorySearcherOptions, filter, propertiesToLoad, scope);
+		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should be disposed by the caller.")]
+		protected internal virtual DirectorySearcher CreateDirectorySearcher(DirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope? scope, ISearchOptions searchOptions)
+		{
+			searchOptions = searchOptions ?? this.SearchOptions;
+
+			filter = this.GetSearchFilter(filter, searchOptions);
+
+			propertiesToLoad = this.GetPropertiesToLoad(propertiesToLoad, searchOptions);
+
+			scope = this.GetSearchScope(scope, searchOptions);
+
+			// ReSharper disable PossibleMultipleEnumeration
+			var directorySearcher = new DirectorySearcher(searchRoot, filter, propertiesToLoad != null ? propertiesToLoad.ToArray() : null, scope.Value);
+			// ReSharper restore PossibleMultipleEnumeration
+
+			if(searchOptions != null)
+			{
+				if(searchOptions.Asynchronous != null)
+					directorySearcher.Asynchronous = searchOptions.Asynchronous.Value;
+
+				if(searchOptions.AttributeScopeQuery != null)
+					directorySearcher.AttributeScopeQuery = searchOptions.AttributeScopeQuery;
+
+				if(searchOptions.CacheResults != null)
+					directorySearcher.CacheResults = searchOptions.CacheResults.Value;
+
+				if(searchOptions.ClientTimeout != null)
+					directorySearcher.ClientTimeout = searchOptions.ClientTimeout.Value;
+
+				if(searchOptions.DereferenceAlias != null)
+					directorySearcher.DerefAlias = searchOptions.DereferenceAlias.Value;
+
+				if(searchOptions.DirectorySynchronization != null)
+					directorySearcher.DirectorySynchronization = searchOptions.DirectorySynchronization;
+
+				if(searchOptions.ExtendedDistinguishedName != null)
+					directorySearcher.ExtendedDN = searchOptions.ExtendedDistinguishedName.Value;
+
+				if(searchOptions.PageSize != null)
+					directorySearcher.PageSize = searchOptions.PageSize.Value;
+
+				if(searchOptions.PropertyNamesOnly != null)
+					directorySearcher.PropertyNamesOnly = searchOptions.PropertyNamesOnly.Value;
+
+				if(searchOptions.ReferralChasing != null)
+					directorySearcher.ReferralChasing = searchOptions.ReferralChasing.Value;
+
+				if(searchOptions.SecurityMasks != null)
+					directorySearcher.SecurityMasks = searchOptions.SecurityMasks.Value;
+
+				if(searchOptions.ServerPageTimeLimit != null)
+					directorySearcher.ServerPageTimeLimit = searchOptions.ServerPageTimeLimit.Value;
+
+				if(searchOptions.ServerTimeLimit != null)
+					directorySearcher.ServerTimeLimit = searchOptions.ServerTimeLimit.Value;
+
+				if(searchOptions.SizeLimit != null)
+					directorySearcher.SizeLimit = searchOptions.SizeLimit.Value;
+
+				if(searchOptions.Sort != null)
+					directorySearcher.Sort = searchOptions.Sort;
+
+				if(searchOptions.Tombstone != null)
+					directorySearcher.Tombstone = searchOptions.Tombstone.Value;
+
+				if(searchOptions.VirtualListView != null)
+					directorySearcher.VirtualListView = searchOptions.VirtualListView;
+			}
 
 			return directorySearcher;
 		}
 
-		public virtual IEnumerable<ISearchResult> FindAll()
+		protected internal virtual IDirectoryUri CreateDirectoryUri(string distinguishedName)
 		{
-			return this.FindAll(null, null, null, null, null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(null, null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(string filter)
-		{
-			return this.FindAll(null, new ValueContainer<string>(filter), null, null, null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(string filter, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(null, new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad)
-		{
-			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
-		{
-			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
-		}
-
-		public virtual IEnumerable<ISearchResult> FindAll(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindAll(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		protected internal virtual IEnumerable<ISearchResult> FindAll(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
-		{
-			List<ISearchResult> searchResultList = new List<ISearchResult>();
-
-			using(DirectorySearcher directorySearcher = this.CreateDirectorySearcher(searchRoot, filter, propertiesToLoad, scope, directorySearcherOptions))
+			return new DirectoryUri
 			{
-				searchResultList.AddRange((from SearchResult searchResult in directorySearcher.FindAll() select (SearchResultWrapper) searchResult).Cast<ISearchResult>());
-			}
-
-			return searchResultList.ToArray();
+				DistinguishedName = distinguishedName,
+				Host = this.Host,
+				Port = this.Port,
+				Scheme = this.Scheme
+			};
 		}
 
-		public virtual ISearchResult FindOne()
+		public virtual bool Delete(string distinguishedName)
 		{
-			return this.FindOne(null, null, null, null, null);
-		}
-
-		public virtual ISearchResult FindOne(IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(null, null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, null);
-		}
-
-		public virtual ISearchResult FindOne(string filter)
-		{
-			return this.FindOne(null, new ValueContainer<string>(filter), null, null, null);
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(string filter, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(null, new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, null);
-		}
-
-		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad)
-		{
-			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
-		}
-
-		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
-		{
-			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
-		}
-
-		public virtual ISearchResult FindOne(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
-		{
-			return this.FindOne(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
-		}
-
-		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		protected internal virtual ISearchResult FindOne(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
-		{
-			using(DirectorySearcher directorySearcher = this.CreateDirectorySearcher(searchRoot, filter, propertiesToLoad, scope, directorySearcherOptions))
+			using(var directoryEntry = this.GetDirectoryEntry(distinguishedName))
 			{
-				return (SearchResultWrapper) directorySearcher.FindOne();
+				directoryEntry.DeleteTree();
+				return true;
 			}
 		}
 
-		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
-		protected internal virtual DirectoryEntry GetConcreteDirectoryEntry(string path)
+		public virtual IEnumerable<IReadOnlyDirectoryNode> Find(string filter, IEnumerable<string> propertiesToLoad, SearchScope? scope, ISearchOptions searchOptions)
 		{
-			DirectoryEntry directoryEntry = new DirectoryEntry(path, this._connectionSettings.UserName, this._connectionSettings.Password);
-
-			if(this._connectionSettings.AuthenticationTypes.HasValue)
-				directoryEntry.AuthenticationType = this._connectionSettings.AuthenticationTypes.Value;
-
-			return directoryEntry;
+			throw new NotImplementedException();
 		}
 
-		[SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-		protected internal virtual DirectoryEntry GetConcreteRoot()
+		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+		protected internal virtual IDirectoryNode Get(IDirectoryUri directoryUri)
 		{
-			return this.GetConcreteDirectoryEntry(this.RootPath);
-		}
-
-		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
-		public virtual IDirectoryEntry GetDirectoryEntry(string path)
-		{
-			return new DirectoryEntryWrapper(this.GetConcreteDirectoryEntry(path));
-		}
-
-		public virtual string GetPath(string distinguishedName)
-		{
-			return this.HostUrl + distinguishedName;
-		}
-
-		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
-		public virtual IDirectoryEntry GetRoot()
-		{
-			return this.GetDirectoryEntry(this.RootPath);
-		}
-
-		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		[SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-		protected internal virtual void SetDirectorySearcherOptions(DirectorySearcher directorySearcher, IDirectorySearcherOptions directorySearcherOptions, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope)
-		{
-			if(directorySearcher == null)
-				throw new ArgumentNullException("directorySearcher");
-
-			if(directorySearcherOptions == null)
-				return;
-
-			if(filter == null && directorySearcherOptions.Filter != null)
-				directorySearcher.Filter = directorySearcherOptions.Filter.Value;
-
-			if(propertiesToLoad == null && directorySearcherOptions.PropertiesToLoad != null)
+			using(var directoryEntry = this.GetDirectoryEntry(directoryUri))
 			{
-				directorySearcher.PropertiesToLoad.Clear();
+				return this.CreateDirectoryNode(directoryEntry);
+			}
+		}
 
-				foreach(string propertyToLoad in directorySearcherOptions.PropertiesToLoad.Value ?? new string[0])
+		public virtual IDirectoryNode Get(string distinguishedName)
+		{
+			return this.Get(this.CreateDirectoryUri(distinguishedName));
+		}
+
+		public virtual IEnumerable<IDirectoryNode> GetChildren(string distinguishedName)
+		{
+			var children = new List<IDirectoryNode>();
+
+			using(var directoryEntry = this.GetDirectoryEntry(distinguishedName))
+			{
+				foreach(DirectoryEntry child in directoryEntry.Children)
 				{
-					directorySearcher.PropertiesToLoad.Add(propertyToLoad);
+					using(child)
+					{
+						children.Add(this.CreateDirectoryNode(directoryEntry));
+					}
 				}
 			}
 
-			if(scope == null && directorySearcherOptions.SearchScope.HasValue)
-				directorySearcher.SearchScope = directorySearcherOptions.SearchScope.Value;
+			return children.ToArray();
+		}
 
-			if(directorySearcherOptions.Asynchronous.HasValue)
-				directorySearcher.Asynchronous = directorySearcherOptions.Asynchronous.Value;
+		protected internal virtual DirectoryEntry GetDirectoryEntry(IDirectoryUri directoryUri)
+		{
+			if(directoryUri == null)
+				throw new ArgumentNullException("directoryUri");
 
-			if(directorySearcherOptions.AttributeScopeQuery != null)
-				directorySearcher.AttributeScopeQuery = directorySearcherOptions.AttributeScopeQuery.Value;
+			return new DirectoryEntry(directoryUri.ToString(), this.UserName, this.Password, this.AuthenticationTypes);
+		}
 
-			if(directorySearcherOptions.CacheResults.HasValue)
-				directorySearcher.CacheResults = directorySearcherOptions.CacheResults.Value;
+		protected internal virtual DirectoryEntry GetDirectoryEntry(string distinguishedName)
+		{
+			return this.GetDirectoryEntry(this.CreateDirectoryUri(distinguishedName));
+		}
 
-			if(directorySearcherOptions.ClientTimeout.HasValue)
-				directorySearcher.ClientTimeout = directorySearcherOptions.ClientTimeout.Value;
+		protected internal virtual IEnumerable<string> GetPropertiesToLoad(IEnumerable<string> propertiesToLoad, ISearchOptions searchOptions)
+		{
+			if(propertiesToLoad != null)
+				return propertiesToLoad;
 
-			if(directorySearcherOptions.DereferenceAlias.HasValue)
-				directorySearcher.DerefAlias = directorySearcherOptions.DereferenceAlias.Value;
+			if(searchOptions != null)
+				propertiesToLoad = searchOptions.PropertiesToLoad;
 
-			if(directorySearcherOptions.DirectorySynchronization != null)
-				directorySearcher.DirectorySynchronization = directorySearcherOptions.DirectorySynchronization.Value;
+			return propertiesToLoad;
+		}
 
-			if(directorySearcherOptions.ExtendedDistinguishedName.HasValue)
-				directorySearcher.ExtendedDN = directorySearcherOptions.ExtendedDistinguishedName.Value;
+		protected internal virtual string GetSearchFilter(string filter, ISearchOptions searchOptions)
+		{
+			if(filter != null)
+				return filter;
 
-			if(directorySearcherOptions.PageSize.HasValue)
-				directorySearcher.PageSize = directorySearcherOptions.PageSize.Value;
+			if(searchOptions != null)
+				filter = searchOptions.Filter;
 
-			if(directorySearcherOptions.PropertyNamesOnly.HasValue)
-				directorySearcher.PropertyNamesOnly = directorySearcherOptions.PropertyNamesOnly.Value;
+			if(filter != null)
+				return filter;
 
-			if(directorySearcherOptions.ReferralChasing.HasValue)
-				directorySearcher.ReferralChasing = directorySearcherOptions.ReferralChasing.Value;
+			return this.DefaultSearchFilter;
+		}
 
-			if(directorySearcherOptions.SecurityMasks.HasValue)
-				directorySearcher.SecurityMasks = directorySearcherOptions.SecurityMasks.Value;
+		protected internal virtual SearchScope GetSearchScope(SearchScope? searchScope, ISearchOptions searchOptions)
+		{
+			if(searchScope != null)
+				return searchScope.Value;
 
-			if(directorySearcherOptions.ServerPageTimeLimit.HasValue)
-				directorySearcher.ServerPageTimeLimit = directorySearcherOptions.ServerPageTimeLimit.Value;
+			if(searchOptions != null)
+				searchScope = searchOptions.SearchScope;
 
-			if(directorySearcherOptions.ServerTimeLimit.HasValue)
-				directorySearcher.ServerTimeLimit = directorySearcherOptions.ServerTimeLimit.Value;
+			if(searchScope != null)
+				return searchScope.Value;
 
-			if(directorySearcherOptions.SizeLimit.HasValue)
-				directorySearcher.SizeLimit = directorySearcherOptions.SizeLimit.Value;
+			return this.DefaultSearchScope;
+		}
 
-			if(directorySearcherOptions.Sort != null)
-				directorySearcher.Sort = directorySearcherOptions.Sort.Value;
+		public virtual object Invoke(IDirectoryNode directoryNode, string methodName, params object[] arguments)
+		{
+			throw new NotImplementedException();
+		}
 
-			if(directorySearcherOptions.Tombstone.HasValue)
-				directorySearcher.Tombstone = directorySearcherOptions.Tombstone.Value;
+		public virtual void Move(IDirectoryNode directoryNode, IDirectoryNode destination)
+		{
+			throw new NotImplementedException();
+		}
 
-			if(directorySearcherOptions.VirtualListView != null)
-				directorySearcher.VirtualListView = directorySearcherOptions.VirtualListView.Value;
+		public virtual void Rename(IDirectoryNode directoryNode, string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual void Save(IDirectoryNode directoryNode)
+		{
+			throw new NotImplementedException();
 		}
 
 		#endregion
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find()
+		//{
+		//	return this.Find(null, null, null, null, null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(null, null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(string filter)
+		//{
+		//	return this.Find(null, new ValueContainer<string>(filter), null, null, null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), null, null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(string filter, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(null, new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, string filter)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(string filter, IEnumerable<string> propertiesToLoad)
+		//{
+		//	return this.Find(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, string filter, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), null, null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
+		//{
+		//	return this.Find(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), null, new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(null, new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), null);
+		//}
+
+		//public virtual IDisposableEnumerable<ISearchResult> Find(IDirectoryEntry searchRoot, string filter, IEnumerable<string> propertiesToLoad, SearchScope scope, IDirectorySearcherOptions directorySearcherOptions)
+		//{
+		//	return this.Find(new ValueContainer<IDirectoryEntry>(searchRoot), new ValueContainer<string>(filter), new ValueContainer<IEnumerable<string>>(propertiesToLoad), new ValueContainer<SearchScope>(scope), new ValueContainer<IDirectorySearcherOptions>(directorySearcherOptions));
+		//}
+
+		//[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+		//protected internal virtual IDisposableEnumerable<ISearchResult> Find(ValueContainer<IDirectoryEntry> searchRoot, ValueContainer<string> filter, ValueContainer<IEnumerable<string>> propertiesToLoad, ValueContainer<SearchScope> scope, ValueContainer<IDirectorySearcherOptions> directorySearcherOptions)
+		//{
+		//	return null;
+
+		//	//List<ISearchResult> searchResultList = new List<ISearchResult>();
+
+		//	//using(DirectorySearcher directorySearcher = this.CreateDirectorySearcher(searchRoot, filter, propertiesToLoad, scope, directorySearcherOptions))
+		//	//{
+		//	//	searchResultList.AddRange((from SearchResult searchResult in directorySearcher.FindAll() select (SearchResultWrapper) searchResult).Cast<ISearchResult>());
+		//	//}
+
+		//	//return searchResultList.ToArray();
+		//}
+
+		//protected internal virtual DirectoryEntry GetConcreteDirectoryEntry(string distinguishedName)
+		//{
+		//	return this.GetConcreteDirectoryEntry(this.CreateDirectoryUri(this.Scheme, this.Host, this.Port, distinguishedName));
+		//}
+
+		//protected internal virtual DirectoryEntry GetConcreteDirectoryEntry(IDirectoryUri url)
+		//{
+		//	return this.GetConcreteDirectoryEntry(url, this.UserName, this.Password, this.AuthenticationTypes);
+		//}
+
+		//protected internal virtual DirectoryEntry GetConcreteDirectoryEntry(IDirectoryUri url, string userName, string password, AuthenticationTypes authenticationTypes)
+		//{
+		//	if(url == null)
+		//		throw new ArgumentNullException("url");
+
+		//	return new DirectoryEntry(url.ToString(), userName, password, authenticationTypes);
+		//}
+
+		//protected internal virtual DirectoryEntry GetConcreteDirectoryEntry(Scheme scheme, string host, int? port, string distinguishedName, string userName, string password, AuthenticationTypes authenticationTypes)
+		//{
+		//	return new DirectoryEntry(this.CreateDirectoryUri(scheme, host, port, distinguishedName).ToString(), userName, password, authenticationTypes);
+		//}
+
+		////[SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+		//protected internal virtual DirectoryEntry GetConcreteRoot()
+		//{
+		//	return this.GetConcreteDirectoryEntry(this.Url);
+		//}
+
+		////[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
+		//public virtual IDirectoryEntry GetDirectoryEntry(string path)
+		//{
+		//	return new DirectoryEntryWrapper(this.GetConcreteDirectoryEntry(path));
+		//}
+
+		//public virtual IDirectoryEntry GetDirectoryEntry(IDirectoryUri url)
+		//{
+		//	throw new NotImplementedException();
+		//}
+
+		//public virtual IDirectoryEntry GetDirectoryEntry(Scheme scheme, string host, int? port, string distinguishedName)
+		//{
+		//	throw new NotImplementedException();
+		//}
+
+		//public virtual IDirectoryEntry GetDirectoryEntry(IDirectoryUri url, AuthenticationTypes authenticationTypes, string userName, string password)
+		//{
+		//	throw new NotImplementedException();
+		//}
+
+		//public virtual IDirectoryEntry GetDirectoryEntry(Scheme scheme, string host, int? port, string distinguishedName, AuthenticationTypes authenticationTypes, string userName, string password)
+		//{
+		//	throw new NotImplementedException();
+		//}
+
+		////public virtual string GetPath(string distinguishedName)
+		////{
+		////	return this.HostUrl + distinguishedName;
+		////}
+		//[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Dispose must be handled by caller, IDirectoryEntry.Dispose().")]
+		//public virtual IDirectoryEntry GetRoot()
+		//{
+		//	return this.GetDirectoryEntry(this.RootPath);
+		//}
 	}
 }
