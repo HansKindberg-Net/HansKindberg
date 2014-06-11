@@ -26,7 +26,7 @@ namespace HansKindberg.DirectoryServices
 			if(name.Length == 0)
 				throw new ArgumentException("The name can not be empty.", "name");
 
-			if(value.Any(char.IsWhiteSpace))
+			if(name.Any(char.IsWhiteSpace))
 				throw new ArgumentException("The name can not contain white-spaces.", "name");
 
 			if(value == null)
