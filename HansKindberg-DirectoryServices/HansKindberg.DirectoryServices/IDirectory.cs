@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
-using HansKindberg.Collections.Generic;
 
 namespace HansKindberg.DirectoryServices
 {
