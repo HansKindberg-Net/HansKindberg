@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 
 namespace HansKindberg.DirectoryServices
 {
@@ -21,13 +22,23 @@ namespace HansKindberg.DirectoryServices
 
 				directoryUri.Scheme = (Scheme) Enum.Parse(typeof(Scheme), uri.Scheme, true);
 
-				directoryUri.Host = uri.Host;
-
-				if(uri.Authority.EndsWith(":" + uri.Port, StringComparison.OrdinalIgnoreCase))
-					directoryUri.Port = uri.Port;
-
 				if(uri.Segments.Length > 2)
 					throw new UriFormatException("The directory-uri can contain a maximum of two segments.");
+
+				if(uri.Segments.Length > 0)
+				{
+					var segments = value.Replace("://", "/").Split("/".ToCharArray()).Skip(1).ToArray();
+
+					if(segments.Length > 0)
+					{
+						var hostAndPort = segments[0].Split(":".ToCharArray(), 2);
+
+						directoryUri.Host = hostAndPort[0];
+
+						if(hostAndPort.Length > 1)
+							directoryUri.Port = int.Parse(hostAndPort[1], CultureInfo.InvariantCulture);
+					}
+				}
 
 				if(uri.Segments.Length == 2)
 					directoryUri.DistinguishedName = uri.Segments[1];

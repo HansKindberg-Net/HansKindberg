@@ -53,6 +53,22 @@ namespace HansKindberg.DirectoryServices.UnitTests
 			}
 		}
 
+		[TestMethod]
+		public void Parse_ShouldKeepDistinguishedNameCase()
+		{
+			const string distinguishedName = "Dc=Test,dC=neT";
+			Assert.AreNotEqual(distinguishedName, "dc=test,dc=net");
+			Assert.AreEqual(distinguishedName, new DirectoryUriParser().Parse("LDAP://test/" + distinguishedName).DistinguishedName);
+		}
+
+		[TestMethod]
+		public void Parse_ShouldKeepHostCase()
+		{
+			const string host = "TeSt";
+			Assert.AreNotEqual(host, "test");
+			Assert.AreEqual(host, new DirectoryUriParser().Parse("LDAP://" + host).Host);
+		}
+
 		#endregion
 	}
 }

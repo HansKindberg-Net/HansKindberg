@@ -66,9 +66,11 @@
     <Compile Include="Connections\IDirectoryConnection.cs" />
     <Compile Include="Connections\IDirectoryConnectionParser.cs" />
     <Compile Include="Directory.cs" />
+    <Compile Include="DistinguishedName.cs" />
     <Compile Include="DirectoryNode.cs" />
     <Compile Include="DirectoryUriParser.cs" />
     <Compile Include="IDirectoryUriParser.cs" />
+    <Compile Include="IDistinguishedName.cs" />
     <Compile Include="SearchOptions.cs" />
     <Compile Include="DirectoryUri.cs" />
     <Compile Include="IDirectory.cs" />
