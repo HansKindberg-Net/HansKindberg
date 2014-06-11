@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.DirectoryServices;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using HansKindberg.DirectoryServices.Connections;
+﻿using System.DirectoryServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HansKindberg.DirectoryServices.IntegrationTests
@@ -33,6 +27,20 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 
 		//	directory.Get("Hej=Hopp");
 		//}
+
+		#region Methods
+
+		private static void RootTest(IDirectoryNode rootNode, DirectoryEntry rootEntry)
+		{
+			const int expectedNumberOfProperties = 49;
+
+			Assert.IsNotNull(rootNode);
+
+			Assert.AreEqual(rootEntry.Guid, rootNode.Guid);
+			Assert.AreEqual(rootEntry.NativeGuid, rootNode.NativeGuid);
+			Assert.AreEqual(rootEntry.Properties.Count, rootNode.Properties.Count);
+			Assert.AreEqual(expectedNumberOfProperties, rootNode.Properties.Count);
+		}
 
 		[TestMethod]
 		public void Root_Test()
@@ -75,17 +83,6 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 			}
 		}
 
-		private static void RootTest(IDirectoryNode rootNode, DirectoryEntry rootEntry)
-		{
-			const int expectedNumberOfProperties = 49;
-
-			Assert.IsNotNull(rootNode);
-
-			Assert.AreEqual(rootEntry.Guid, rootNode.Guid);
-			Assert.AreEqual(rootEntry.NativeGuid, rootNode.NativeGuid);
-			Assert.AreEqual(rootEntry.Properties.Count, rootNode.Properties.Count);
-			Assert.AreEqual(expectedNumberOfProperties, rootNode.Properties.Count);
-			
-		}
+		#endregion
 	}
 }

@@ -7,8 +7,8 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Properties
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		IList<KeyValuePair<string, string>> Components { get; }
+		IList<IDistinguishedNameComponent> Components { get; }
+		IDistinguishedName Parent { get; }
 
 		#endregion
 	}

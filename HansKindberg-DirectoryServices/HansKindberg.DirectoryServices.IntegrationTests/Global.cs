@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HansKindberg.DirectoryServices.IntegrationTests
@@ -10,25 +9,23 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 	{
 		#region Fields
 
+		private const Scheme _defaultScheme = Scheme.LDAP;
 		private const string _domainDistinguishedName = "DC=local,DC=net";
 		private const string _domainName = "local.net";
 		private const string _netBiosDomainName = "LOCAL";
-		private const Scheme _defaultScheme = Scheme.LDAP;
-		
+
 		#endregion
 
 		#region Properties
 
-		public static string DomainDistinguishedName
-		{
-			get { return _domainDistinguishedName; }
-		}
-
-		
-
 		public static Scheme DefaultScheme
 		{
 			get { return _defaultScheme; }
+		}
+
+		public static string DomainDistinguishedName
+		{
+			get { return _domainDistinguishedName; }
 		}
 
 		public static string DomainName
