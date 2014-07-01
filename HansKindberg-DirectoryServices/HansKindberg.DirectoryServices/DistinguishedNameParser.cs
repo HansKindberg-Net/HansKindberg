@@ -8,6 +8,33 @@ namespace HansKindberg.DirectoryServices
 {
 	public class DistinguishedNameParser : IDistinguishedNameParser
 	{
+		#region Fields
+
+		private readonly IDistinguishedNameComponentValidator _distinguishedNameComponentValidator;
+
+		#endregion
+
+		#region Constructors
+
+		public DistinguishedNameParser(IDistinguishedNameComponentValidator distinguishedNameComponentValidator)
+		{
+			if(distinguishedNameComponentValidator == null)
+				throw new ArgumentNullException("distinguishedNameComponentValidator");
+
+			this._distinguishedNameComponentValidator = distinguishedNameComponentValidator;
+		}
+
+		#endregion
+
+		#region Properties
+
+		protected internal virtual IDistinguishedNameComponentValidator DistinguishedNameComponentValidator
+		{
+			get { return this._distinguishedNameComponentValidator; }
+		}
+
+		#endregion
+
 		#region Methods
 
 		public virtual IDistinguishedName Parse(string value)
@@ -29,7 +56,7 @@ namespace HansKindberg.DirectoryServices
 					if(componentParts.Length != 2)
 						throw new FormatException(string.Format(CultureInfo.InvariantCulture, "Each component in the distinguished name must consist of a name and a value separated by \"{0}\".", DistinguishedNameComponent.DefaultNameValueDelimiter));
 
-					distinguishedName.Components.Add(new DistinguishedNameComponent(componentParts[0].Trim(), componentParts[1]));
+					distinguishedName.Components.Add(new DistinguishedNameComponent(componentParts[0].Trim(), componentParts[1], this.DistinguishedNameComponentValidator));
 				}
 			}
 			catch(Exception exception)

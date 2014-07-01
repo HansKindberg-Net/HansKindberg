@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace HansKindberg.DirectoryServices.UnitTests
 {
@@ -8,13 +9,18 @@ namespace HansKindberg.DirectoryServices.UnitTests
 	{
 		#region Methods
 
+		private static DirectoryUriParser CreateDirectoryUriParser()
+		{
+			return new DirectoryUriParser(Mock.Of<IDistinguishedNameParser>());
+		}
+
 		[TestMethod]
 		[ExpectedException(typeof(FormatException))]
 		public void Parse_IfTheValueParameterIsEmpty_ShouldThrowAFormatException()
 		{
 			try
 			{
-				new DirectoryUriParser().Parse(string.Empty);
+				CreateDirectoryUriParser().Parse(string.Empty);
 			}
 			catch(FormatException formatException)
 			{
@@ -29,7 +35,7 @@ namespace HansKindberg.DirectoryServices.UnitTests
 		{
 			try
 			{
-				new DirectoryUriParser().Parse(null);
+				CreateDirectoryUriParser().Parse(null);
 			}
 			catch(ArgumentNullException argumentNullException)
 			{
@@ -44,7 +50,7 @@ namespace HansKindberg.DirectoryServices.UnitTests
 		{
 			try
 			{
-				new DirectoryUriParser().Parse("http://localhost");
+				CreateDirectoryUriParser().Parse("http://localhost");
 			}
 			catch(FormatException formatException)
 			{
@@ -54,19 +60,11 @@ namespace HansKindberg.DirectoryServices.UnitTests
 		}
 
 		[TestMethod]
-		public void Parse_ShouldKeepDistinguishedNameCase()
-		{
-			const string distinguishedName = "Dc=Test,dC=neT";
-			Assert.AreNotEqual(distinguishedName, "dc=test,dc=net");
-			Assert.AreEqual(distinguishedName, new DirectoryUriParser().Parse("LDAP://test/" + distinguishedName).DistinguishedName);
-		}
-
-		[TestMethod]
 		public void Parse_ShouldKeepHostCase()
 		{
 			const string host = "TeSt";
 			Assert.AreNotEqual(host, "test");
-			Assert.AreEqual(host, new DirectoryUriParser().Parse("LDAP://" + host).Host);
+			Assert.AreEqual(host, CreateDirectoryUriParser().Parse("LDAP://" + host).Host);
 		}
 
 		#endregion

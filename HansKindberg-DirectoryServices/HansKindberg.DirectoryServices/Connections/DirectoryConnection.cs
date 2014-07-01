@@ -1,6 +1,7 @@
 ﻿using System;
 using System.DirectoryServices;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace HansKindberg.DirectoryServices.Connections
@@ -17,7 +18,7 @@ namespace HansKindberg.DirectoryServices.Connections
 		#region Properties
 
 		public virtual AuthenticationTypes? AuthenticationTypes { get; set; }
-		public virtual string DistinguishedName { get; set; }
+		public virtual IDistinguishedName DistinguishedName { get; set; }
 		public virtual string Host { get; set; }
 
 		protected internal virtual char NameValueDelimiter
@@ -62,7 +63,7 @@ namespace HansKindberg.DirectoryServices.Connections
 			if(this.AuthenticationTypes.HasValue)
 				this.AddParameter(stringBuilder, "AuthenticationTypes", this.AuthenticationTypes.Value);
 
-			if(!string.IsNullOrEmpty(this.DistinguishedName))
+			if(this.DistinguishedName != null && this.DistinguishedName.Components.Any())
 				this.AddParameter(stringBuilder, "DistinguishedName", this.DistinguishedName);
 
 			if(!string.IsNullOrEmpty(this.Host))

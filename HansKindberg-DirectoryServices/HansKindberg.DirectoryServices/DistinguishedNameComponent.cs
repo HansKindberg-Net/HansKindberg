@@ -18,19 +18,20 @@ namespace HansKindberg.DirectoryServices
 
 		#region Constructors
 
-		public DistinguishedNameComponent(string name, string value)
+		public DistinguishedNameComponent(string name, string value, IDistinguishedNameComponentValidator distinguishedNameComponentValidator)
 		{
-			if(name == null)
-				throw new ArgumentNullException("name");
+			if(distinguishedNameComponentValidator == null)
+				throw new ArgumentNullException("distinguishedNameComponentValidator");
 
-			if(name.Length == 0)
-				throw new ArgumentException("The name can not be empty.", "name");
+			var validationResult = distinguishedNameComponentValidator.ValidateName(name);
 
-			if(name.Any(char.IsWhiteSpace))
-				throw new ArgumentException("The name can not contain white-spaces.", "name");
+			if(!validationResult.IsValid)
+				throw validationResult.Exceptions.First();
 
-			if(value == null)
-				throw new ArgumentNullException("value");
+			validationResult = distinguishedNameComponentValidator.ValidateValue(value);
+
+			if(!validationResult.IsValid)
+				throw validationResult.Exceptions.First();
 
 			this._name = name;
 			this._value = value;
@@ -95,15 +96,7 @@ namespace HansKindberg.DirectoryServices
 
 		public override int GetHashCode()
 		{
-			return this.GetHashCode(this.Name) + this.GetHashCode(this.Value);
-		}
-
-		protected internal virtual int GetHashCode(string value)
-		{
-			if(value == null)
-				throw new ArgumentNullException("value");
-
-			return value.ToUpperInvariant().GetHashCode();
+			return this.ToString().ToUpperInvariant().GetHashCode();
 		}
 
 		public override string ToString()

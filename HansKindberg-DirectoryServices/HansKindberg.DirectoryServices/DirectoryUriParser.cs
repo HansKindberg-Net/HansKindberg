@@ -7,6 +7,33 @@ namespace HansKindberg.DirectoryServices
 {
 	public class DirectoryUriParser : IDirectoryUriParser
 	{
+		#region Fields
+
+		private readonly IDistinguishedNameParser _distinguishedNameParser;
+
+		#endregion
+
+		#region Constructors
+
+		public DirectoryUriParser(IDistinguishedNameParser distinguishedNameParser)
+		{
+			if(distinguishedNameParser == null)
+				throw new ArgumentNullException("distinguishedNameParser");
+
+			this._distinguishedNameParser = distinguishedNameParser;
+		}
+
+		#endregion
+
+		#region Properties
+
+		protected internal virtual IDistinguishedNameParser DistinguishedNameParser
+		{
+			get { return this._distinguishedNameParser; }
+		}
+
+		#endregion
+
 		#region Methods
 
 		public virtual IDirectoryUri Parse(string value)
@@ -22,26 +49,38 @@ namespace HansKindberg.DirectoryServices
 
 				directoryUri.Scheme = (Scheme) Enum.Parse(typeof(Scheme), uri.Scheme, true);
 
-				if(uri.Segments.Length > 2)
-					throw new UriFormatException("The directory-uri can contain a maximum of two segments.");
+				var segments = value.Replace("://", "/").Split("/".ToCharArray()).Skip(1).ToArray();
 
-				if(uri.Segments.Length > 0)
+				if(segments.Length > 0)
 				{
-					var segments = value.Replace("://", "/").Split("/".ToCharArray()).Skip(1).ToArray();
+					var hostAndPort = segments[0].Split(":".ToCharArray(), 2);
 
-					if(segments.Length > 0)
-					{
-						var hostAndPort = segments[0].Split(":".ToCharArray(), 2);
+					directoryUri.Host = hostAndPort[0];
 
-						directoryUri.Host = hostAndPort[0];
-
-						if(hostAndPort.Length > 1)
-							directoryUri.Port = int.Parse(hostAndPort[1], CultureInfo.InvariantCulture);
-					}
+					if(hostAndPort.Length > 1)
+						directoryUri.Port = int.Parse(hostAndPort[1], CultureInfo.InvariantCulture);
 				}
 
-				if(uri.Segments.Length == 2)
-					directoryUri.DistinguishedName = uri.Segments[1];
+				if(uri.LocalPath.Length > 1)
+					directoryUri.DistinguishedName = this.DistinguishedNameParser.Parse(uri.LocalPath.TrimStart("/".ToCharArray()));
+
+				//if(uri.Segments.Length > 0)
+				//{
+				//	var segments = value.Replace("://", "/").Split("/".ToCharArray()).Skip(1).ToArray();
+
+				//	if(segments.Length > 0)
+				//	{
+				//		var hostAndPort = segments[0].Split(":".ToCharArray(), 2);
+
+				//		directoryUri.Host = hostAndPort[0];
+
+				//		if(hostAndPort.Length > 1)
+				//			directoryUri.Port = int.Parse(hostAndPort[1], CultureInfo.InvariantCulture);
+				//	}
+				//}
+
+				//if(uri.Segments.Length == 2)
+				//	directoryUri.DistinguishedName = this.DistinguishedNameParser.Parse(uri.LocalPath.TrimStart("/".ToCharArray()));
 			}
 			catch(Exception exception)
 			{

@@ -1,10 +1,12 @@
-﻿namespace HansKindberg.DirectoryServices
+﻿using System.Linq;
+
+namespace HansKindberg.DirectoryServices
 {
 	public class DirectoryUri : IDirectoryUri
 	{
 		#region Properties
 
-		public virtual string DistinguishedName { get; set; }
+		public virtual IDistinguishedName DistinguishedName { get; set; }
 		public virtual string Host { get; set; }
 		public virtual int? Port { get; set; }
 		public virtual Scheme Scheme { get; set; }
@@ -20,7 +22,7 @@
 			if(this.Port.HasValue)
 				directoryUri += (!string.IsNullOrEmpty(directoryUri) ? ":" : string.Empty) + this.Port.Value;
 
-			if(!string.IsNullOrEmpty(this.DistinguishedName))
+			if(this.DistinguishedName != null && this.DistinguishedName.Components.Any())
 				directoryUri += (!string.IsNullOrEmpty(directoryUri) ? "/" : string.Empty) + this.DistinguishedName;
 
 			directoryUri = this.Scheme + "://" + directoryUri;

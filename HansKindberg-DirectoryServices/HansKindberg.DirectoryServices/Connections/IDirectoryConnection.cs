@@ -7,7 +7,7 @@ namespace HansKindberg.DirectoryServices.Connections
 		#region Properties
 
 		AuthenticationTypes? AuthenticationTypes { get; }
-		string DistinguishedName { get; }
+		IDistinguishedName DistinguishedName { get; }
 		string Host { get; }
 		string Password { get; }
 		int? Port { get; }

@@ -7,24 +7,23 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Fields
 
-		private readonly IDictionary<string, IEnumerable<object>> _properties = new Dictionary<string, IEnumerable<object>>();
+		private IDictionary<string, object> _properties;
 
 		#endregion
 
 		#region Properties
 
-		public virtual Guid? Guid { get; set; }
-		public virtual string Name { get; set; }
-		public virtual string NativeGuid { get; set; }
-		public virtual IDirectoryUri ParentPath { get; set; }
-		public virtual IDirectoryUri Path { get; set; }
-
-		public virtual IDictionary<string, IEnumerable<object>> Properties
+		public virtual IDictionary<string, object> Properties
 		{
-			get { return this._properties; }
+			get { return this._properties ?? (this._properties = new Dictionary<string, object>(this.PropertyKeyComparer)); }
 		}
 
-		public virtual string SchemaClassName { get; set; }
+		protected internal virtual StringComparer PropertyKeyComparer
+		{
+			get { return StringComparer.OrdinalIgnoreCase; }
+		}
+
+		public virtual IDirectoryUri Url { get; set; }
 
 		#endregion
 	}

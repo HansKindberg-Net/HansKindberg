@@ -12,6 +12,7 @@ namespace HansKindberg.DirectoryServices.Connections
 		#region Fields
 
 		private static readonly IEqualityComparer<string> _defaultStringComparer = System.StringComparer.OrdinalIgnoreCase;
+		private readonly IDistinguishedNameParser _distinguishedNameParser;
 		private readonly char _nameValueDelimiter;
 		private readonly char _parameterDelimiter;
 		private readonly IEqualityComparer<string> _stringComparer;
@@ -20,13 +21,17 @@ namespace HansKindberg.DirectoryServices.Connections
 
 		#region Constructors
 
-		public DirectoryConnectionParser() : this(DirectoryConnection.DefaultParameterDelimiter, DirectoryConnection.DefaultNameValueDelimiter, _defaultStringComparer) {}
+		public DirectoryConnectionParser(IDistinguishedNameParser distinguishedNameParser) : this(DirectoryConnection.DefaultParameterDelimiter, DirectoryConnection.DefaultNameValueDelimiter, _defaultStringComparer, distinguishedNameParser) {}
 
-		public DirectoryConnectionParser(char parameterDelimiter, char nameValueDelimiter, IEqualityComparer<string> stringComparer)
+		public DirectoryConnectionParser(char parameterDelimiter, char nameValueDelimiter, IEqualityComparer<string> stringComparer, IDistinguishedNameParser distinguishedNameParser)
 		{
 			if(stringComparer == null)
 				throw new ArgumentNullException("stringComparer");
 
+			if(distinguishedNameParser == null)
+				throw new ArgumentNullException("distinguishedNameParser");
+
+			this._distinguishedNameParser = distinguishedNameParser;
 			this._nameValueDelimiter = nameValueDelimiter;
 			this._parameterDelimiter = parameterDelimiter;
 			this._stringComparer = stringComparer;
@@ -35,6 +40,11 @@ namespace HansKindberg.DirectoryServices.Connections
 		#endregion
 
 		#region Properties
+
+		protected internal virtual IDistinguishedNameParser DistinguishedNameParser
+		{
+			get { return this._distinguishedNameParser; }
+		}
 
 		public virtual char NameValueDelimiter
 		{
@@ -122,7 +132,7 @@ namespace HansKindberg.DirectoryServices.Connections
 				}
 				case "distinguishedname":
 				{
-					directoryConnection.DistinguishedName = keyValuePair.Value;
+					directoryConnection.DistinguishedName = this.DistinguishedNameParser.Parse(keyValuePair.Value);
 					break;
 				}
 				case "host":

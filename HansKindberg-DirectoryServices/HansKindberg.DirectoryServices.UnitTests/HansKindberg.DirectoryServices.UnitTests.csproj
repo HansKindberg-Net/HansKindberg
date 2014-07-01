@@ -83,6 +83,8 @@
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Connections\DirectoryConnectionTest.cs" />
     <Compile Include="DirectoryTest.cs" />
+    <Compile Include="DistinguishedNameComponentTest.cs" />
+    <Compile Include="DistinguishedNameComponentValidatorTest.cs" />
     <Compile Include="DistinguishedNameParserTest.cs" />
     <Compile Include="DirectoryUriParserTest.cs" />
     <Compile Include="DirectoryUriTest.cs" />
