@@ -94,7 +94,7 @@ namespace HansKindberg.DirectoryServices
 
 				var valuePart = temporaryValueParts[i];
 
-				if(valuePart.EndsWith(@"\", StringComparison.OrdinalIgnoreCase) && i < temporaryValueParts.Length - 1)
+				while(valuePart.EndsWith(@"\", StringComparison.OrdinalIgnoreCase) && i < temporaryValueParts.Length - 1)
 				{
 					valuePart += separator + temporaryValueParts[i + 1];
 					i++;

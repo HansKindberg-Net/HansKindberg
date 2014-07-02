@@ -46,9 +46,15 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 						AssertPropertyValuesAreEqual(propertyName, expectedPropertyValueAsArray.GetValue(i), actualPropertyValueAsArray.GetValue(i));
 					}
 				}
+				else
+				{
+					Assert.AreEqual(expectedPropertyValueAsArray, actualPropertyValue, "Property-name: \"{0}\". The value should be an array.", new object[] {propertyName});
+				}
 			}
-
-			Assert.AreEqual(expectedPropertyValue, actualPropertyValue, "Property-name: \"{0}\".", new object[] {propertyName});
+			else
+			{
+				Assert.AreEqual(expectedPropertyValue, actualPropertyValue, "Property-name: \"{0}\".", new object[] {propertyName});
+			}
 		}
 
 		private static void AssertSearchResultAndDirectoryNodeAreEqual(SearchResult searchResult, IDirectoryNode directoryNode)

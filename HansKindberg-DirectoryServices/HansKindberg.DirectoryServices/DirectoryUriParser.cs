@@ -63,24 +63,6 @@ namespace HansKindberg.DirectoryServices
 
 				if(uri.LocalPath.Length > 1)
 					directoryUri.DistinguishedName = this.DistinguishedNameParser.Parse(uri.LocalPath.TrimStart("/".ToCharArray()));
-
-				//if(uri.Segments.Length > 0)
-				//{
-				//	var segments = value.Replace("://", "/").Split("/".ToCharArray()).Skip(1).ToArray();
-
-				//	if(segments.Length > 0)
-				//	{
-				//		var hostAndPort = segments[0].Split(":".ToCharArray(), 2);
-
-				//		directoryUri.Host = hostAndPort[0];
-
-				//		if(hostAndPort.Length > 1)
-				//			directoryUri.Port = int.Parse(hostAndPort[1], CultureInfo.InvariantCulture);
-				//	}
-				//}
-
-				//if(uri.Segments.Length == 2)
-				//	directoryUri.DistinguishedName = this.DistinguishedNameParser.Parse(uri.LocalPath.TrimStart("/".ToCharArray()));
 			}
 			catch(Exception exception)
 			{
