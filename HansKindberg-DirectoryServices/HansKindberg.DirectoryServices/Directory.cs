@@ -331,6 +331,56 @@ namespace HansKindberg.DirectoryServices
 			return this.Find(this.DistinguishedName, filter, null, null, searchOptions);
 		}
 
+		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad)
+		{
+			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, null);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad)
+		{
+			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, null);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope)
+		{
+			return this.Find(searchRootDistinguishedName, filter, null, searchScope);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope)
+		{
+			return this.Find(searchRootDistinguishedName, filter, null, searchScope);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, ISearchOptions searchOptions)
+		{
+			return this.Find(searchRootDistinguishedName, filter, null, searchOptions);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, ISearchOptions searchOptions)
+		{
+			return this.Find(searchRootDistinguishedName, filter, null, searchOptions);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope)
+		{
+			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, searchScope, null);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope)
+		{
+			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, searchScope, null);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions)
+		{
+			return this.Find(searchRootDistinguishedName, filter, null, searchScope, searchOptions);
+		}
+
+		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions)
+		{
+			return this.Find(searchRootDistinguishedName, filter, null, searchScope, searchOptions);
+		}
+
 		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			return this.Find(this.DistinguishedNameParser.Parse(searchRootDistinguishedName), filter, propertiesToLoad, searchScope, searchOptions);
