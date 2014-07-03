@@ -11,11 +11,11 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 	{
 		#region Methods
 
-		private static void AssertDirectoryEntryAndDirectoryNodeAreEqual(DirectoryEntry directoryEntry, IDirectoryNode directoryNode)
+		private static void AssertDirectoryEntryAndDirectoryNodeAreEqual(DirectoryEntry directoryEntry, IDirectoryItem directoryItem)
 		{
-			Assert.AreEqual(directoryEntry.Path, directoryNode.Url.ToString());
+			Assert.AreEqual(directoryEntry.Path, directoryItem.Url.ToString());
 
-			Assert.AreEqual(directoryEntry.Properties.Count, directoryNode.Properties.Count);
+			Assert.AreEqual(directoryEntry.Properties.Count, directoryItem.Properties.Count);
 
 			for(int i = 0; i < directoryEntry.Properties.Count; i++)
 			{
@@ -23,9 +23,9 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 				var propertyName = directoryEntry.Properties.PropertyNames.Cast<string>().ElementAt(i);
 				// ReSharper restore AssignNullToNotNullAttribute
 
-				Assert.AreEqual(propertyName, directoryNode.Properties.Keys.ElementAt(i));
+				Assert.AreEqual(propertyName, directoryItem.Properties.Keys.ElementAt(i));
 
-				AssertPropertyValuesAreEqual(propertyName, directoryEntry.Properties[propertyName].Value, directoryNode.Properties[propertyName]);
+				AssertPropertyValuesAreEqual(propertyName, directoryEntry.Properties[propertyName].Value, directoryItem.Properties[propertyName]);
 			}
 		}
 
@@ -57,11 +57,11 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 			}
 		}
 
-		private static void AssertSearchResultAndDirectoryNodeAreEqual(SearchResult searchResult, IDirectoryNode directoryNode)
+		private static void AssertSearchResultAndDirectoryNodeAreEqual(SearchResult searchResult, IDirectoryItem directoryItem)
 		{
-			Assert.AreEqual(searchResult.Path, directoryNode.Url.ToString());
+			Assert.AreEqual(searchResult.Path, directoryItem.Url.ToString());
 
-			Assert.AreEqual(searchResult.Properties.Count, directoryNode.Properties.Count);
+			Assert.AreEqual(searchResult.Properties.Count, directoryItem.Properties.Count);
 
 			for(int i = 0; i < searchResult.Properties.Count; i++)
 			{
@@ -69,12 +69,12 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 				var propertyName = searchResult.Properties.PropertyNames.Cast<string>().ElementAt(i);
 				// ReSharper restore AssignNullToNotNullAttribute
 
-				Assert.AreEqual(propertyName, directoryNode.Properties.Keys.ElementAt(i));
+				Assert.AreEqual(propertyName, directoryItem.Properties.Keys.ElementAt(i));
 
 				var searchResultPropertyValueAsEnumerable = searchResult.Properties[propertyName].Cast<object>().ToArray();
 				var searchResultPropertyValue = searchResultPropertyValueAsEnumerable.Count() > 1 ? searchResultPropertyValueAsEnumerable : searchResultPropertyValueAsEnumerable[0];
 
-				AssertPropertyValuesAreEqual(propertyName, searchResultPropertyValue, directoryNode.Properties[propertyName]);
+				AssertPropertyValuesAreEqual(propertyName, searchResultPropertyValue, directoryItem.Properties[propertyName]);
 			}
 		}
 
@@ -181,7 +181,7 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 
 		//#region Methods
 
-		//private static void RootTest(IDirectoryNode rootNode, DirectoryEntry rootEntry)
+		//private static void RootTest(IDirectoryItem rootNode, DirectoryEntry rootEntry)
 		//{
 		//	const int expectedNumberOfProperties = 49;
 

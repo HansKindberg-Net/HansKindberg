@@ -88,7 +88,6 @@
     <Compile Include="DistinguishedNameParserTest.cs" />
     <Compile Include="DirectoryUriParserTest.cs" />
     <Compile Include="DirectoryUriTest.cs" />
-    <Compile Include="IDirectoryEntryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemeTest.cs" />
     <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />

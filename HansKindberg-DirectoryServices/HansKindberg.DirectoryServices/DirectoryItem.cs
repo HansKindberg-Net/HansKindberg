@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HansKindberg.DirectoryServices
 {
-	public class DirectoryNode : IDirectoryNode
+	public class DirectoryItem : IDirectoryItem
 	{
 		#region Fields
 

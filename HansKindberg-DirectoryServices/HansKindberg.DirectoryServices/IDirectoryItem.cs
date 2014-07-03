@@ -2,7 +2,7 @@
 
 namespace HansKindberg.DirectoryServices
 {
-	public interface IDirectoryNode
+	public interface IDirectoryItem
 	{
 		#region Properties
 

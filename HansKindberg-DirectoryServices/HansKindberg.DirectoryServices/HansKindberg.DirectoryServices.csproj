@@ -66,7 +66,7 @@
     <Compile Include="Connections\IDirectoryConnection.cs" />
     <Compile Include="Connections\IDirectoryConnectionParser.cs" />
     <Compile Include="Directory.cs" />
-    <Compile Include="DirectoryNode.cs" />
+    <Compile Include="DirectoryItem.cs" />
     <Compile Include="DistinguishedNameComponentValidator.cs" />
     <Compile Include="DistinguishedNameParser.cs" />
     <Compile Include="DistinguishedName.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="DistinguishedNameComponent.cs" />
     <Compile Include="IGlobalDirectory.cs" />
     <Compile Include="IDirectory.cs" />
-    <Compile Include="IDirectoryNode.cs" />
+    <Compile Include="IDirectoryItem.cs" />
     <Compile Include="IDirectoryUriParser.cs" />
     <Compile Include="IDistinguishedName.cs" />
     <Compile Include="IDistinguishedNameComponent.cs" />

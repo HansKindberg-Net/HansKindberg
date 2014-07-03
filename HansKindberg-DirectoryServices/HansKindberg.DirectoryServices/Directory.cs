@@ -138,7 +138,7 @@ namespace HansKindberg.DirectoryServices
 			set { this._port = value; }
 		}
 
-		public virtual IDirectoryNode Root
+		public virtual IDirectoryItem Root
 		{
 			get { return this.Get(this.Url); }
 		}
@@ -169,7 +169,7 @@ namespace HansKindberg.DirectoryServices
 
 		#region Methods
 
-		protected internal virtual IDirectoryNode CreateDirectoryNode(DirectoryEntry directoryEntry)
+		protected internal virtual IDirectoryItem CreateDirectoryNode(DirectoryEntry directoryEntry)
 		{
 			if(directoryEntry == null)
 				return null;
@@ -184,7 +184,7 @@ namespace HansKindberg.DirectoryServices
 			}
 			catch(NotSupportedException)
 			{
-				var directoryNode = new DirectoryNode
+				var directoryNode = new DirectoryItem
 				{
 					Url = this.DirectoryUriParser.Parse(directoryEntry.Path)
 				};
@@ -198,12 +198,12 @@ namespace HansKindberg.DirectoryServices
 			}
 		}
 
-		protected internal virtual IDirectoryNode CreateDirectoryNode(SearchResult searchResult)
+		protected internal virtual IDirectoryItem CreateDirectoryNode(SearchResult searchResult)
 		{
 			if(searchResult == null)
 				return null;
 
-			var directoryNode = new DirectoryNode
+			var directoryNode = new DirectoryItem
 			{
 				Url = this.CreateDirectoryUri(searchResult.Path)
 			};
@@ -311,82 +311,82 @@ namespace HansKindberg.DirectoryServices
 			return this.DirectoryUriParser.Parse(path);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find()
+		public virtual IEnumerable<IDirectoryItem> Find()
 		{
 			return this.Find((string) null);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string filter)
+		public virtual IEnumerable<IDirectoryItem> Find(string filter)
 		{
 			return this.Find(filter, null);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(ISearchOptions searchOptions)
 		{
 			return this.Find(null, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string filter, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(string filter, ISearchOptions searchOptions)
 		{
 			return this.Find(this.DistinguishedName, filter, null, null, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad)
 		{
 			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, null);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad)
+		public virtual IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad)
 		{
 			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, null);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope)
 		{
 			return this.Find(searchRootDistinguishedName, filter, null, searchScope);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope)
+		public virtual IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope)
 		{
 			return this.Find(searchRootDistinguishedName, filter, null, searchScope);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, ISearchOptions searchOptions)
 		{
 			return this.Find(searchRootDistinguishedName, filter, null, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, ISearchOptions searchOptions)
 		{
 			return this.Find(searchRootDistinguishedName, filter, null, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope)
 		{
 			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, searchScope, null);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope)
+		public virtual IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope)
 		{
 			return this.Find(searchRootDistinguishedName, filter, propertiesToLoad, searchScope, null);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			return this.Find(searchRootDistinguishedName, filter, null, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			return this.Find(searchRootDistinguishedName, filter, null, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			return this.Find(this.DistinguishedNameParser.Parse(searchRootDistinguishedName), filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			if(searchRootDistinguishedName == null)
 				throw new ArgumentNullException("searchRootDistinguishedName");
@@ -394,7 +394,7 @@ namespace HansKindberg.DirectoryServices
 			return this.Find(this.CreateDirectoryUri(searchRootDistinguishedName), filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDirectoryUri searchRootUrl, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			if(searchRootUrl == null)
 				throw new ArgumentNullException("searchRootUrl");
@@ -402,12 +402,12 @@ namespace HansKindberg.DirectoryServices
 			return ((IGlobalDirectory) this).Find(searchRootUrl.ToString(), filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		IEnumerable<IDirectoryNode> IGlobalDirectory.Find(string searchRootPath, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		IEnumerable<IDirectoryItem> IGlobalDirectory.Find(string searchRootPath, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			return this.Find(searchRootPath, this.UserName, this.Password, filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDirectoryUri searchRootUrl, string userName, string password, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, string userName, string password, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			if(searchRootUrl == null)
 				throw new ArgumentNullException("searchRootUrl");
@@ -415,12 +415,12 @@ namespace HansKindberg.DirectoryServices
 			return this.Find(searchRootUrl.ToString(), userName, password, filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootPath, string userName, string password, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootPath, string userName, string password, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			return this.Find(searchRootPath, userName, password, this.AuthenticationTypes, filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(IDirectoryUri searchRootUrl, string userName, string password, AuthenticationTypes authenticationTypes, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, string userName, string password, AuthenticationTypes authenticationTypes, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
 			if(searchRootUrl == null)
 				throw new ArgumentNullException("searchRootUrl");
@@ -428,9 +428,9 @@ namespace HansKindberg.DirectoryServices
 			return this.Find(searchRootUrl.ToString(), userName, password, authenticationTypes, filter, propertiesToLoad, searchScope, searchOptions);
 		}
 
-		public virtual IEnumerable<IDirectoryNode> Find(string searchRootPath, string userName, string password, AuthenticationTypes authenticationTypes, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
+		public virtual IEnumerable<IDirectoryItem> Find(string searchRootPath, string userName, string password, AuthenticationTypes authenticationTypes, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions)
 		{
-			var searchResultList = new List<IDirectoryNode>();
+			var searchResultList = new List<IDirectoryItem>();
 
 			using(var searchRoot = this.GetDirectoryEntry(searchRootPath, userName, password, authenticationTypes))
 			{
@@ -446,37 +446,37 @@ namespace HansKindberg.DirectoryServices
 			return searchResultList.ToArray();
 		}
 
-		public virtual IDirectoryNode Get(string distinguishedName)
+		public virtual IDirectoryItem Get(string distinguishedName)
 		{
 			return this.Get(this.DistinguishedNameParser.Parse(distinguishedName));
 		}
 
-		public virtual IDirectoryNode Get(IDistinguishedName distinguishedName)
+		public virtual IDirectoryItem Get(IDistinguishedName distinguishedName)
 		{
 			return this.Get(this.CreateDirectoryUri(distinguishedName), this.UserName, this.Password, this.AuthenticationTypes);
 		}
 
-		IDirectoryNode IGlobalDirectory.Get(string path)
+		IDirectoryItem IGlobalDirectory.Get(string path)
 		{
 			return this.Get(path, this.UserName, this.Password, this.AuthenticationTypes);
 		}
 
-		public virtual IDirectoryNode Get(IDirectoryUri url)
+		public virtual IDirectoryItem Get(IDirectoryUri url)
 		{
 			return this.Get(url, this.UserName, this.Password, this.AuthenticationTypes);
 		}
 
-		public virtual IDirectoryNode Get(string path, string userName, string password)
+		public virtual IDirectoryItem Get(string path, string userName, string password)
 		{
 			return this.Get(path, userName, password, this.AuthenticationTypes);
 		}
 
-		public virtual IDirectoryNode Get(IDirectoryUri url, string userName, string password)
+		public virtual IDirectoryItem Get(IDirectoryUri url, string userName, string password)
 		{
 			return this.Get(url, userName, password, this.AuthenticationTypes);
 		}
 
-		public virtual IDirectoryNode Get(string path, string userName, string password, AuthenticationTypes authenticationTypes)
+		public virtual IDirectoryItem Get(string path, string userName, string password, AuthenticationTypes authenticationTypes)
 		{
 			using(var directoryEntry = this.GetDirectoryEntry(path, userName, password, authenticationTypes))
 			{
@@ -484,7 +484,7 @@ namespace HansKindberg.DirectoryServices
 			}
 		}
 
-		public virtual IDirectoryNode Get(IDirectoryUri url, string userName, string password, AuthenticationTypes authenticationTypes)
+		public virtual IDirectoryItem Get(IDirectoryUri url, string userName, string password, AuthenticationTypes authenticationTypes)
 		{
 			if(url == null)
 				throw new ArgumentNullException("url");
@@ -538,7 +538,7 @@ namespace HansKindberg.DirectoryServices
 
 		#endregion
 
-		//public virtual IDirectoryNode Create(IDirectoryNode parent, string name, string schemaClassName)
+		//public virtual IDirectoryItem Create(IDirectoryItem parent, string name, string schemaClassName)
 		//{
 		//	throw new NotImplementedException();
 		//}
@@ -557,9 +557,9 @@ namespace HansKindberg.DirectoryServices
 		//	throw new NotImplementedException();
 		//}
 
-		//public virtual IEnumerable<IDirectoryNode> GetChildren(string distinguishedName)
+		//public virtual IEnumerable<IDirectoryItem> GetChildren(string distinguishedName)
 		//{
-		//	var children = new List<IDirectoryNode>();
+		//	var children = new List<IDirectoryItem>();
 
 		//	using (var directoryEntry = this.GetDirectoryEntry(distinguishedName))
 		//	{
@@ -588,22 +588,22 @@ namespace HansKindberg.DirectoryServices
 		//	return this.GetDirectoryEntry(this.CreateDirectoryUri(distinguishedName));
 		//}
 
-		//public virtual object Invoke(IDirectoryNode directoryNode, string methodName, params object[] arguments)
+		//public virtual object Invoke(IDirectoryItem DirectoryItem, string methodName, params object[] arguments)
 		//{
 		//	throw new NotImplementedException();
 		//}
 
-		//public virtual void Move(IDirectoryNode directoryNode, IDirectoryNode destination)
+		//public virtual void Move(IDirectoryItem DirectoryItem, IDirectoryItem destination)
 		//{
 		//	throw new NotImplementedException();
 		//}
 
-		//public virtual void Rename(IDirectoryNode directoryNode, string name)
+		//public virtual void Rename(IDirectoryItem DirectoryItem, string name)
 		//{
 		//	throw new NotImplementedException();
 		//}
 
-		//public virtual void Save(IDirectoryNode directoryNode)
+		//public virtual void Save(IDirectoryItem DirectoryItem)
 		//{
 		//	throw new NotImplementedException();
 		//}

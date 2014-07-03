@@ -8,25 +8,25 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Methods
 
-		IEnumerable<IDirectoryNode> Find(string searchRootPath, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions);
+		IEnumerable<IDirectoryItem> Find(string searchRootPath, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryNode Get(string path);
+		IDirectoryItem Get(string path);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryNode Get(IDirectoryUri url);
+		IDirectoryItem Get(IDirectoryUri url);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryNode Get(string path, string userName, string password);
+		IDirectoryItem Get(string path, string userName, string password);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryNode Get(IDirectoryUri url, string userName, string password);
+		IDirectoryItem Get(IDirectoryUri url, string userName, string password);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryNode Get(string path, string userName, string password, AuthenticationTypes authenticationTypes);
+		IDirectoryItem Get(string path, string userName, string password, AuthenticationTypes authenticationTypes);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryNode Get(IDirectoryUri url, string userName, string password, AuthenticationTypes authenticationTypes);
+		IDirectoryItem Get(IDirectoryUri url, string userName, string password, AuthenticationTypes authenticationTypes);
 
 		#endregion
 	}
