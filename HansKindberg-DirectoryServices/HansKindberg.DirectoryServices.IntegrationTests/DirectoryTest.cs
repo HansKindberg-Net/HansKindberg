@@ -1,5 +1,4 @@
-﻿using System;
-using System.DirectoryServices;
+﻿using System.DirectoryServices;
 using System.Linq;
 using HansKindberg.DirectoryServices.Connections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,53 +10,7 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 	{
 		#region Methods
 
-		private static void AssertDirectoryEntryAndDirectoryNodeAreEqual(DirectoryEntry directoryEntry, IDirectoryItem directoryItem)
-		{
-			Assert.AreEqual(directoryEntry.Path, directoryItem.Url.ToString());
-
-			Assert.AreEqual(directoryEntry.Properties.Count, directoryItem.Properties.Count);
-
-			for(int i = 0; i < directoryEntry.Properties.Count; i++)
-			{
-				// ReSharper disable AssignNullToNotNullAttribute
-				var propertyName = directoryEntry.Properties.PropertyNames.Cast<string>().ElementAt(i);
-				// ReSharper restore AssignNullToNotNullAttribute
-
-				Assert.AreEqual(propertyName, directoryItem.Properties.Keys.ElementAt(i));
-
-				AssertPropertyValuesAreEqual(propertyName, directoryEntry.Properties[propertyName].Value, directoryItem.Properties[propertyName]);
-			}
-		}
-
-		private static void AssertPropertyValuesAreEqual(string propertyName, object expectedPropertyValue, object actualPropertyValue)
-		{
-			var expectedPropertyValueAsArray = expectedPropertyValue as Array;
-
-			if(expectedPropertyValueAsArray != null)
-			{
-				var actualPropertyValueAsArray = actualPropertyValue as Array;
-
-				if(actualPropertyValueAsArray != null)
-				{
-					Assert.AreEqual(expectedPropertyValueAsArray.Length, actualPropertyValueAsArray.Length, "Property-name: \"{0}\". The length of the arrays are not equal.", new object[] {propertyName});
-
-					for(int i = 0; i < expectedPropertyValueAsArray.Length; i++)
-					{
-						AssertPropertyValuesAreEqual(propertyName, expectedPropertyValueAsArray.GetValue(i), actualPropertyValueAsArray.GetValue(i));
-					}
-				}
-				else
-				{
-					Assert.AreEqual(expectedPropertyValueAsArray, actualPropertyValue, "Property-name: \"{0}\". The value should be an array.", new object[] {propertyName});
-				}
-			}
-			else
-			{
-				Assert.AreEqual(expectedPropertyValue, actualPropertyValue, "Property-name: \"{0}\".", new object[] {propertyName});
-			}
-		}
-
-		private static void AssertSearchResultAndDirectoryNodeAreEqual(SearchResult searchResult, IDirectoryItem directoryItem)
+		private static void AssertSearchResultAndDirectoryItemAreEqual(SearchResult searchResult, IDirectoryItem directoryItem)
 		{
 			Assert.AreEqual(searchResult.Path, directoryItem.Url.ToString());
 
@@ -74,7 +27,7 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 				var searchResultPropertyValueAsEnumerable = searchResult.Properties[propertyName].Cast<object>().ToArray();
 				var searchResultPropertyValue = searchResultPropertyValueAsEnumerable.Count() > 1 ? searchResultPropertyValueAsEnumerable : searchResultPropertyValueAsEnumerable[0];
 
-				AssertPropertyValuesAreEqual(propertyName, searchResultPropertyValue, directoryItem.Properties[propertyName]);
+				GeneralDirectoryTest.AssertPropertyValuesAreEqual(propertyName, searchResultPropertyValue, directoryItem.Properties[propertyName]);
 			}
 		}
 
@@ -85,21 +38,21 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 
 		private static IDirectoryConnection CreateDefaultDomainDirectoryConnection()
 		{
-			return new DirectoryConnection
-			{
-				DistinguishedName = CreateDistinguishedNameParser().Parse("OU=Tests,DC=local,DC=net"),
-				Host = "LOCAL",
-				Scheme = Scheme.LDAP
-			};
+			var connection = new DirectoryConnection();
+
+			connection.Url.DistinguishedName = CreateDistinguishedNameParser().Parse("OU=Tests,DC=local,DC=net");
+			connection.Url.Host = "LOCAL";
+			connection.Url.Scheme = Scheme.LDAP;
+
+			return connection;
 		}
 
-		private static Directory CreateDirectory()
-		{
-			var distinguishedNameParser = CreateDistinguishedNameParser();
+		//private static Directory CreateDirectory()
+		//{
+		//	var distinguishedNameParser = CreateDistinguishedNameParser();
 
-			return new Directory(CreateDirectoryUriParser(distinguishedNameParser), distinguishedNameParser);
-		}
-
+		//	return new Directory(CreateDirectoryUriParser(distinguishedNameParser), distinguishedNameParser);
+		//}
 		private static Directory CreateDirectory(IDirectoryConnection directoryConnection)
 		{
 			var distinguishedNameParser = CreateDistinguishedNameParser();
@@ -126,41 +79,23 @@ namespace HansKindberg.DirectoryServices.IntegrationTests
 			return new DistinguishedNameParser(CreateDistinguishedNameComponentValidator());
 		}
 
-		private static DirectoryEntry CreateLocalMachineEntry()
-		{
-			return new DirectoryEntry("WinNT://" + Environment.MachineName);
-		}
-
 		[TestMethod]
 		public void Find_Test()
 		{
 			var directory = CreateDefaultDomainDirectory();
 
-			foreach(var directoryNode in directory.Find())
+			foreach(var directoryItem in directory.Find())
 			{
-				using(var directoryEntry = new DirectoryEntry(directoryNode.Url.ToString()))
+				using(var directoryEntry = new DirectoryEntry(directoryItem.Url.ToString()))
 				{
 					using(var directorySearcher = new DirectorySearcher(directoryEntry))
 					{
 						directorySearcher.SearchScope = SearchScope.Base;
 						var searchResult = directorySearcher.FindOne();
 
-						AssertSearchResultAndDirectoryNodeAreEqual(searchResult, directoryNode);
+						AssertSearchResultAndDirectoryItemAreEqual(searchResult, directoryItem);
 					}
 				}
-			}
-		}
-
-		[TestMethod]
-		public void Get_WithPathParameter_IfTheConnectingToTheLocalMachine_ShouldReturnTheCorrectProperties()
-		{
-			using(var directoryEntry = CreateLocalMachineEntry())
-			{
-				var directory = (IGlobalDirectory) CreateDirectory();
-
-				var directoryNode = directory.Get(directoryEntry.Path);
-
-				AssertDirectoryEntryAndDirectoryNodeAreEqual(directoryEntry, directoryNode);
 			}
 		}
 

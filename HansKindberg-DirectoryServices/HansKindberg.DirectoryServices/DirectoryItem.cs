@@ -1,26 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HansKindberg.DirectoryServices
+﻿namespace HansKindberg.DirectoryServices
 {
-	public class DirectoryItem : IDirectoryItem
+	public class DirectoryItem : GeneralDirectoryItem, IDirectoryItem
 	{
-		#region Fields
-
-		private IDictionary<string, object> _properties;
-
-		#endregion
-
 		#region Properties
 
-		public virtual IDictionary<string, object> Properties
+		public override string Path
 		{
-			get { return this._properties ?? (this._properties = new Dictionary<string, object>(this.PropertyKeyComparer)); }
-		}
-
-		protected internal virtual StringComparer PropertyKeyComparer
-		{
-			get { return StringComparer.OrdinalIgnoreCase; }
+			get { return this.Url != null ? this.Url.ToString() : null; }
 		}
 
 		public virtual IDirectoryUri Url { get; set; }

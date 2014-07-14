@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HansKindberg.DirectoryServices.UnitTests
 {
@@ -7,18 +6,6 @@ namespace HansKindberg.DirectoryServices.UnitTests
 	public class SchemeTest
 	{
 		#region Methods
-
-		[TestMethod]
-		public void IIS_ShouldBeEqualToThree()
-		{
-			Assert.AreEqual(3, (int) Scheme.IIS);
-		}
-
-		[TestMethod]
-		public void IIS_ToString_ShouldReturnAStringCasedCorrectly()
-		{
-			Assert.AreEqual("IIS", Scheme.IIS.ToString());
-		}
 
 		[TestMethod]
 		public void LDAPS_ShouldBeEqualToOne()
@@ -42,18 +29,6 @@ namespace HansKindberg.DirectoryServices.UnitTests
 		public void LDAP_ToString_ShouldReturnAStringCasedCorrectly()
 		{
 			Assert.AreEqual("LDAP", Scheme.LDAP.ToString());
-		}
-
-		[TestMethod]
-		public void WinNT_ShouldBeEqualToTwo()
-		{
-			Assert.AreEqual(2, (int) Scheme.WinNT);
-		}
-
-		[SuppressMessage("Microsoft.Globalization", "CA1302:DoNotHardcodeLocaleSpecificStrings", MessageId = "WinNT"), TestMethod]
-		public void WinNT_ToString_ShouldReturnAStringCasedCorrectly()
-		{
-			Assert.AreEqual("WinNT", Scheme.WinNT.ToString());
 		}
 
 		#endregion

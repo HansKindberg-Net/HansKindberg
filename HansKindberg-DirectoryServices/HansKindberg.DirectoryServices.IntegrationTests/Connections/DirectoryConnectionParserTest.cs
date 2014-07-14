@@ -22,7 +22,7 @@ namespace HansKindberg.DirectoryServices.IntegrationTests.Connections
 
 			var directoryConnection = directoryConnectionParser.Parse("DistinguishedName=" + distinguishedName);
 
-			Assert.AreEqual(distinguishedName, directoryConnection.DistinguishedName.ToString());
+			Assert.AreEqual(distinguishedName, directoryConnection.Url.DistinguishedName.ToString());
 		}
 
 		#endregion

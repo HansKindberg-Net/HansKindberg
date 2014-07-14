@@ -4,9 +4,7 @@
 	{
 		// ReSharper disable InconsistentNaming
 		LDAP,
-		LDAPS,
-		WinNT,
-		IIS
+		LDAPS
 		// ReSharper restore InconsistentNaming
 	}
 }

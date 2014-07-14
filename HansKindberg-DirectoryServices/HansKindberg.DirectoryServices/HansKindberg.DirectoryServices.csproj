@@ -60,18 +60,25 @@
     <Compile Include="..\..\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Connections\GeneralDirectoryConnectionParser.cs" />
+    <Compile Include="Connections\GeneralDirectoryConnection.cs" />
+    <Compile Include="DirectoryAuthentication.cs" />
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Connections\DirectoryConnection.cs" />
     <Compile Include="Connections\DirectoryConnectionParser.cs" />
     <Compile Include="Connections\IDirectoryConnection.cs" />
     <Compile Include="Connections\IDirectoryConnectionParser.cs" />
     <Compile Include="Directory.cs" />
+    <Compile Include="GeneralDirectory.cs" />
     <Compile Include="DirectoryItem.cs" />
     <Compile Include="DistinguishedNameComponentValidator.cs" />
     <Compile Include="DistinguishedNameParser.cs" />
     <Compile Include="DistinguishedName.cs" />
     <Compile Include="DirectoryUriParser.cs" />
     <Compile Include="DistinguishedNameComponent.cs" />
+    <Compile Include="GeneralDirectoryItem.cs" />
+    <Compile Include="IDirectoryAuthentication.cs" />
+    <Compile Include="IGeneralDirectoryItem.cs" />
     <Compile Include="IGlobalDirectory.cs" />
     <Compile Include="IDirectory.cs" />
     <Compile Include="IDirectoryItem.cs" />
@@ -90,6 +97,22 @@
       <Link>CodeAnalysis\SolutionDictionary.xml</Link>
     </CodeAnalysisDictionary>
     <Compile Include="SearchOptions.cs" />
+    <Compile Include="Windows\Connections\WindowsDirectoryConnection.cs" />
+    <Compile Include="Windows\Connections\WindowsDirectoryConnectionParser.cs" />
+    <Compile Include="Windows\Connections\IWindowsDirectoryConnection.cs" />
+    <Compile Include="Windows\Connections\IWindowsDirectoryConnectionParser.cs" />
+    <Compile Include="Windows\ILocalPathParser.cs" />
+    <Compile Include="Windows\IWindowsDirectory.cs" />
+    <Compile Include="Windows\IGlobalWindowsDirectory.cs" />
+    <Compile Include="Windows\IWindowsDirectoryItem.cs" />
+    <Compile Include="Windows\IWindowsDirectoryUriParser.cs" />
+    <Compile Include="Windows\LocalPathParser.cs" />
+    <Compile Include="Windows\WindowsDirectoryItem.cs" />
+    <Compile Include="Windows\WindowsDirectoryUriParser.cs" />
+    <Compile Include="Windows\IWindowsDirectoryUri.cs" />
+    <Compile Include="Windows\WindowsDirectoryUri.cs" />
+    <Compile Include="Windows\WindowsDirectory.cs" />
+    <Compile Include="Windows\WindowsScheme.cs" />
     <None Include="..\..\Signing\HansKindberg.snk">
       <Link>HansKindberg.snk</Link>
     </None>

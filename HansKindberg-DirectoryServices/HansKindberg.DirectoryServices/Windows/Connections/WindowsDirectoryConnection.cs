@@ -1,29 +1,36 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Text;
+using HansKindberg.DirectoryServices.Connections;
 
-namespace HansKindberg.DirectoryServices.Connections
+namespace HansKindberg.DirectoryServices.Windows.Connections
 {
-	public class DirectoryConnection : GeneralDirectoryConnection, IDirectoryConnection
+	public class WindowsDirectoryConnection : GeneralDirectoryConnection, IWindowsDirectoryConnection
 	{
 		#region Fields
 
-		private readonly DirectoryUri _url = new DirectoryUri();
+		private readonly WindowsDirectoryUri _url = new WindowsDirectoryUri();
 
 		#endregion
 
 		#region Properties
 
-		IDirectoryAuthentication IDirectoryConnection.Authentication
+		IDirectoryAuthentication IWindowsDirectoryConnection.Authentication
 		{
 			get { return this.Authentication; }
 		}
 
-		IDirectoryUri IDirectoryConnection.Url
+		protected internal virtual string LocalPathDelimiter
+		{
+			get { return WindowsDirectoryUri.DefaultLocalPathDelimiter.ToString(CultureInfo.InvariantCulture); }
+		}
+
+		IWindowsDirectoryUri IWindowsDirectoryConnection.Url
 		{
 			get { return this.Url; }
 		}
 
-		public virtual DirectoryUri Url
+		public virtual WindowsDirectoryUri Url
 		{
 			get { return this._url; }
 		}
@@ -39,11 +46,11 @@ namespace HansKindberg.DirectoryServices.Connections
 			if(this.Authentication.AuthenticationTypes.HasValue)
 				this.AddParameter(stringBuilder, "AuthenticationTypes", this.Authentication.AuthenticationTypes.Value);
 
-			if(this.Url.DistinguishedName != null && this.Url.DistinguishedName.Components.Any())
-				this.AddParameter(stringBuilder, "DistinguishedName", this.Url.DistinguishedName);
-
 			if(!string.IsNullOrEmpty(this.Url.Host))
 				this.AddParameter(stringBuilder, "Host", this.Url.Host);
+
+			if(this.Url.LocalPath != null && this.Url.LocalPath.Any())
+				this.AddParameter(stringBuilder, "LocalPath", this.LocalPathDelimiter + string.Join(this.LocalPathDelimiter, this.Url.LocalPath.ToArray()));
 
 			if(!string.IsNullOrEmpty(this.Authentication.Password))
 				this.AddParameter(stringBuilder, "Password", this.Authentication.Password);

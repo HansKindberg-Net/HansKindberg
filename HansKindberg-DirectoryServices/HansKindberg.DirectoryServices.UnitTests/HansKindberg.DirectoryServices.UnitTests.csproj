@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Connections\DirectoryConnectionTest.cs" />
+    <Compile Include="DirectoryAuthenticationTest.cs" />
     <Compile Include="DirectoryTest.cs" />
     <Compile Include="DistinguishedNameComponentTest.cs" />
     <Compile Include="DistinguishedNameComponentValidatorTest.cs" />
@@ -94,6 +95,7 @@
     <CodeAnalysisDictionary Include="..\..\CodeAnalysis\SolutionDictionary.xml">
       <Link>CodeAnalysis\SolutionDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <Compile Include="Windows\WindowsSchemeTest.cs" />
     <None Include="..\..\Signing\HansKindberg.snk">
       <Link>HansKindberg.snk</Link>
     </None>

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.DirectoryServices;
 
 namespace HansKindberg.DirectoryServices
 {
@@ -8,7 +7,14 @@ namespace HansKindberg.DirectoryServices
 	{
 		#region Methods
 
-		IEnumerable<IDirectoryItem> Find(string searchRootPath, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions);
+		IEnumerable<IDirectoryItem> Find(string searchRootPath);
+		IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl);
+		IEnumerable<IDirectoryItem> Find(string searchRootPath, ISearchOptions searchOptions);
+		IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, ISearchOptions searchOptions);
+		IEnumerable<IDirectoryItem> Find(string searchRootPath, IDirectoryAuthentication authentication);
+		IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, IDirectoryAuthentication authentication);
+		IEnumerable<IDirectoryItem> Find(string searchRootPath, ISearchOptions searchOptions, IDirectoryAuthentication authentication);
+		IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, ISearchOptions searchOptions, IDirectoryAuthentication authentication);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
 		IDirectoryItem Get(string path);
@@ -17,16 +23,10 @@ namespace HansKindberg.DirectoryServices
 		IDirectoryItem Get(IDirectoryUri url);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryItem Get(string path, string userName, string password);
+		IDirectoryItem Get(string path, IDirectoryAuthentication authentication);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryItem Get(IDirectoryUri url, string userName, string password);
-
-		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryItem Get(string path, string userName, string password, AuthenticationTypes authenticationTypes);
-
-		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-		IDirectoryItem Get(IDirectoryUri url, string userName, string password, AuthenticationTypes authenticationTypes);
+		IDirectoryItem Get(IDirectoryUri url, IDirectoryAuthentication authentication);
 
 		#endregion
 	}

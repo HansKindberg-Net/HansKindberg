@@ -73,8 +73,10 @@
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Connections\DirectoryConnectionParserTest.cs" />
     <Compile Include="DirectoryTest.cs" />
+    <Compile Include="GeneralDirectoryTest.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\WindowsDirectoryTest.cs" />
     <None Include="..\..\Signing\HansKindberg.snk">
       <Link>HansKindberg.snk</Link>
     </None>

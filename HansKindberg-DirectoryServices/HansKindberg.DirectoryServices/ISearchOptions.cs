@@ -30,5 +30,12 @@ namespace HansKindberg.DirectoryServices
 		DirectoryVirtualListView VirtualListView { get; }
 
 		#endregion
+
+		#region Methods
+
+		ISearchOptions Copy();
+		ISearchOptions Copy(ISearchOptions searchOptionsToOverrideWith);
+
+		#endregion
 	}
 }

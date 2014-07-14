@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace HansKindberg.DirectoryServices
+﻿namespace HansKindberg.DirectoryServices
 {
-	public interface IDirectoryItem
+	public interface IDirectoryItem : IGeneralDirectoryItem
 	{
 		#region Properties
 
-		IDictionary<string, object> Properties { get; }
 		IDirectoryUri Url { get; }
 
 		#endregion

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.DirectoryServices;
 
 namespace HansKindberg.DirectoryServices
 {
@@ -9,27 +8,18 @@ namespace HansKindberg.DirectoryServices
 		#region Properties
 
 		IDirectoryItem Root { get; }
+		ISearchOptions SearchOptions { get; }
 
 		#endregion
 
 		#region Methods
 
 		IEnumerable<IDirectoryItem> Find();
-		IEnumerable<IDirectoryItem> Find(string filter);
+		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName);
+		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName);
 		IEnumerable<IDirectoryItem> Find(ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(string filter, ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad);
-		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad);
-		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope);
-		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope);
-		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope);
-		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope);
-		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, SearchScope? searchScope, ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions);
-		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, string filter, IEnumerable<string> propertiesToLoad, SearchScope? searchScope, ISearchOptions searchOptions);
+		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName, ISearchOptions searchOptions);
+		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName, ISearchOptions searchOptions);
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
 		IDirectoryItem Get(string distinguishedName);

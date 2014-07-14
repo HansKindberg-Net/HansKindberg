@@ -30,5 +30,103 @@ namespace HansKindberg.DirectoryServices
 		public virtual DirectoryVirtualListView VirtualListView { get; set; }
 
 		#endregion
+
+		#region Methods
+
+		ISearchOptions ISearchOptions.Copy()
+		{
+			return this.Copy();
+		}
+
+		public virtual SearchOptions Copy()
+		{
+			var searchOptions = new SearchOptions();
+
+			searchOptions.OverrideWith(this);
+
+			return searchOptions;
+		}
+
+		ISearchOptions ISearchOptions.Copy(ISearchOptions searchOptionsToOverrideWith)
+		{
+			return this.Copy(searchOptionsToOverrideWith);
+		}
+
+		public virtual SearchOptions Copy(ISearchOptions searchOptionsToOverrideWith)
+		{
+			var searchOptions = this.Copy();
+
+			searchOptions.OverrideWith(searchOptionsToOverrideWith);
+
+			return searchOptions;
+		}
+
+		protected internal virtual void OverrideWith(ISearchOptions searchOptions)
+		{
+			if(searchOptions == null)
+				throw new ArgumentNullException("searchOptions");
+
+			if(searchOptions.Asynchronous != null)
+				this.Asynchronous = searchOptions.Asynchronous;
+
+			if(searchOptions.AttributeScopeQuery != null)
+				this.AttributeScopeQuery = searchOptions.AttributeScopeQuery;
+
+			if(searchOptions.CacheResults != null)
+				this.CacheResults = searchOptions.CacheResults;
+
+			if(searchOptions.ClientTimeout != null)
+				this.ClientTimeout = searchOptions.ClientTimeout;
+
+			if(searchOptions.DereferenceAlias != null)
+				this.DereferenceAlias = searchOptions.DereferenceAlias;
+
+			if(searchOptions.DirectorySynchronization != null)
+				this.DirectorySynchronization = searchOptions.DirectorySynchronization;
+
+			if(searchOptions.ExtendedDistinguishedName != null)
+				this.ExtendedDistinguishedName = searchOptions.ExtendedDistinguishedName;
+
+			if(searchOptions.Filter != null)
+				this.Filter = searchOptions.Filter;
+
+			if(searchOptions.PageSize != null)
+				this.PageSize = searchOptions.PageSize;
+
+			if(searchOptions.PropertiesToLoad != null)
+				this.PropertiesToLoad = searchOptions.PropertiesToLoad;
+
+			if(searchOptions.PropertyNamesOnly != null)
+				this.PropertyNamesOnly = searchOptions.PropertyNamesOnly;
+
+			if(searchOptions.ReferralChasing != null)
+				this.ReferralChasing = searchOptions.ReferralChasing;
+
+			if(searchOptions.SearchScope != null)
+				this.SearchScope = searchOptions.SearchScope;
+
+			if(searchOptions.SecurityMasks != null)
+				this.SecurityMasks = searchOptions.SecurityMasks;
+
+			if(searchOptions.ServerPageTimeLimit != null)
+				this.ServerPageTimeLimit = searchOptions.ServerPageTimeLimit;
+
+			if(searchOptions.ServerTimeLimit != null)
+				this.ServerTimeLimit = searchOptions.ServerTimeLimit;
+
+			if(searchOptions.SizeLimit != null)
+				this.SizeLimit = searchOptions.SizeLimit;
+
+			if(searchOptions.Sort != null)
+				this.Sort = searchOptions.Sort;
+
+			if(searchOptions.Tombstone != null)
+				this.Tombstone = searchOptions.Tombstone;
+
+			if(searchOptions.VirtualListView != null)
+				this.VirtualListView = searchOptions.VirtualListView;
+		}
+
+		#endregion
 	}
 }
