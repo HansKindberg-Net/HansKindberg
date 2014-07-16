@@ -69,6 +69,7 @@
     <Compile Include="Connections\IDirectoryConnection.cs" />
     <Compile Include="Connections\IDirectoryConnectionParser.cs" />
     <Compile Include="Directory.cs" />
+    <Compile Include="DirectoryServicesException.cs" />
     <Compile Include="GeneralDirectory.cs" />
     <Compile Include="DirectoryItem.cs" />
     <Compile Include="DistinguishedNameComponentValidator.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="IDistinguishedNameParser.cs" />
     <Compile Include="DirectoryUri.cs" />
     <Compile Include="IDirectoryUri.cs" />
+    <Compile Include="IGeneralSearchOptions.cs" />
+    <Compile Include="ISingleSearchOptions.cs" />
     <Compile Include="ISearchOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheme.cs" />
@@ -96,6 +99,8 @@
     <CodeAnalysisDictionary Include="..\..\CodeAnalysis\SolutionDictionary.xml">
       <Link>CodeAnalysis\SolutionDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <Compile Include="GeneralSearchOptions.cs" />
+    <Compile Include="SingleSearchOptions.cs" />
     <Compile Include="SearchOptions.cs" />
     <Compile Include="Windows\Connections\WindowsDirectoryConnection.cs" />
     <Compile Include="Windows\Connections\WindowsDirectoryConnectionParser.cs" />

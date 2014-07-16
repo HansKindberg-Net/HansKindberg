@@ -9,11 +9,14 @@ namespace HansKindberg.DirectoryServices
 
 		IDirectoryItem Root { get; }
 		ISearchOptions SearchOptions { get; }
+		ISingleSearchOptions SingleSearchOptions { get; }
 
 		#endregion
 
 		#region Methods
 
+		bool Exists(string distinguishedName);
+		bool Exists(IDistinguishedName distinguishedName);
 		IEnumerable<IDirectoryItem> Find();
 		IEnumerable<IDirectoryItem> Find(string searchRootDistinguishedName);
 		IEnumerable<IDirectoryItem> Find(IDistinguishedName searchRootDistinguishedName);
@@ -26,6 +29,12 @@ namespace HansKindberg.DirectoryServices
 
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
 		IDirectoryItem Get(IDistinguishedName distinguishedName);
+
+		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+		IDirectoryItem Get(string distinguishedName, ISingleSearchOptions singleSearchOptions);
+
+		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+		IDirectoryItem Get(IDistinguishedName distinguishedName, ISingleSearchOptions singleSearchOptions);
 
 		#endregion
 	}

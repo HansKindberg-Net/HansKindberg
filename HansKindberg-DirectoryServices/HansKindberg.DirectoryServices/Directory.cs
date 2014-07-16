@@ -15,16 +15,17 @@ namespace HansKindberg.DirectoryServices
 		private readonly IDirectoryUriParser _directoryUriParser;
 		private readonly IDistinguishedNameParser _distinguishedNameParser;
 		private readonly ISearchOptions _searchOptions;
+		private readonly ISingleSearchOptions _singleSearchOptions;
 
 		#endregion
 
 		#region Constructors
 
 		public Directory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser) {}
-		public Directory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser) : this(connection, directoryUriParser, distinguishedNameParser, new SearchOptions()) {}
-		public Directory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser, searchOptions) {}
+		public Directory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser) : this(connection, directoryUriParser, distinguishedNameParser, new SearchOptions(), new SingleSearchOptions()) {}
+		public Directory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions, ISingleSearchOptions singleSearchOptions) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser, searchOptions, singleSearchOptions) {}
 
-		public Directory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions)
+		public Directory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions, ISingleSearchOptions singleSearchOptions)
 		{
 			if(connection == null)
 				throw new ArgumentNullException("connection");
@@ -37,6 +38,9 @@ namespace HansKindberg.DirectoryServices
 
 			if(searchOptions == null)
 				throw new ArgumentNullException("searchOptions");
+
+			if(singleSearchOptions == null)
+				throw new ArgumentNullException("singleSearchOptions");
 
 			this._connection = new DirectoryConnection();
 			this._connection.Authentication.AuthenticationTypes = connection.Authentication.AuthenticationTypes;
@@ -52,6 +56,7 @@ namespace HansKindberg.DirectoryServices
 			this._directoryUriParser = directoryUriParser;
 			this._distinguishedNameParser = distinguishedNameParser;
 			this._searchOptions = searchOptions;
+			this._singleSearchOptions = singleSearchOptions;
 		}
 
 		#endregion
@@ -124,6 +129,11 @@ namespace HansKindberg.DirectoryServices
 			get { return this._searchOptions; }
 		}
 
+		public virtual ISingleSearchOptions SingleSearchOptions
+		{
+			get { return this._singleSearchOptions; }
+		}
+
 		protected internal virtual IDirectoryUri Url
 		{
 			get { return this.Connection.Url; }
@@ -138,35 +148,6 @@ namespace HansKindberg.DirectoryServices
 		#endregion
 
 		#region Methods
-
-		protected internal virtual IDirectoryItem CreateDirectoryItem(DirectoryEntry directoryEntry)
-		{
-			if(directoryEntry == null)
-				return null;
-
-			try
-			{
-				using(var directorySearcher = new DirectorySearcher(directoryEntry))
-				{
-					directorySearcher.SearchScope = SearchScope.Base;
-					return this.CreateDirectoryItem(directorySearcher.FindOne());
-				}
-			}
-			catch(NotSupportedException)
-			{
-				var directoryItem = new DirectoryItem
-				{
-					Url = this.DirectoryUriParser.Parse(directoryEntry.Path)
-				};
-
-				foreach(string propertyName in directoryEntry.Properties.PropertyNames)
-				{
-					directoryItem.Properties.Add(propertyName, directoryEntry.Properties[propertyName].Value);
-				}
-
-				return directoryItem;
-			}
-		}
 
 		protected internal virtual IDirectoryItem CreateDirectoryItem(SearchResult searchResult)
 		{
@@ -193,69 +174,29 @@ namespace HansKindberg.DirectoryServices
 			return directoryItem;
 		}
 
-		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should be disposed by the caller.")]
 		protected internal virtual DirectorySearcher CreateDirectorySearcher(DirectoryEntry searchRoot, ISearchOptions searchOptions)
 		{
 			if(searchOptions == null)
 				throw new ArgumentNullException("searchOptions");
 
-			var directorySearcher = new DirectorySearcher(searchRoot, searchOptions.Filter, searchOptions.PropertiesToLoad == null ? null : searchOptions.PropertiesToLoad.ToArray());
-
-			if(searchOptions.Asynchronous != null)
-				directorySearcher.Asynchronous = searchOptions.Asynchronous.Value;
-
-			if(searchOptions.AttributeScopeQuery != null)
-				directorySearcher.AttributeScopeQuery = searchOptions.AttributeScopeQuery;
-
-			if(searchOptions.CacheResults != null)
-				directorySearcher.CacheResults = searchOptions.CacheResults.Value;
-
-			if(searchOptions.ClientTimeout != null)
-				directorySearcher.ClientTimeout = searchOptions.ClientTimeout.Value;
-
-			if(searchOptions.DereferenceAlias != null)
-				directorySearcher.DerefAlias = searchOptions.DereferenceAlias.Value;
-
-			if(searchOptions.DirectorySynchronization != null)
-				directorySearcher.DirectorySynchronization = searchOptions.DirectorySynchronization;
-
-			if(searchOptions.ExtendedDistinguishedName != null)
-				directorySearcher.ExtendedDN = searchOptions.ExtendedDistinguishedName.Value;
+			var directorySearcher = this.CreateGeneralDirectorySearcher(searchRoot, searchOptions);
 
 			if(searchOptions.PageSize != null)
 				directorySearcher.PageSize = searchOptions.PageSize.Value;
 
-			if(searchOptions.PropertyNamesOnly != null)
-				directorySearcher.PropertyNamesOnly = searchOptions.PropertyNamesOnly.Value;
-
-			if(searchOptions.ReferralChasing != null)
-				directorySearcher.ReferralChasing = searchOptions.ReferralChasing.Value;
-
 			if(searchOptions.SearchScope != null)
 				directorySearcher.SearchScope = searchOptions.SearchScope.Value;
 
-			if(searchOptions.SecurityMasks != null)
-				directorySearcher.SecurityMasks = searchOptions.SecurityMasks.Value;
-
-			if(searchOptions.ServerPageTimeLimit != null)
-				directorySearcher.ServerPageTimeLimit = searchOptions.ServerPageTimeLimit.Value;
-
-			if(searchOptions.ServerTimeLimit != null)
-				directorySearcher.ServerTimeLimit = searchOptions.ServerTimeLimit.Value;
-
-			if(searchOptions.SizeLimit != null)
-				directorySearcher.SizeLimit = searchOptions.SizeLimit.Value;
-
-			if(searchOptions.Sort != null)
-				directorySearcher.Sort = searchOptions.Sort;
-
-			if(searchOptions.Tombstone != null)
-				directorySearcher.Tombstone = searchOptions.Tombstone.Value;
-
-			if(searchOptions.VirtualListView != null)
-				directorySearcher.VirtualListView = searchOptions.VirtualListView;
-
 			return directorySearcher;
+		}
+
+		protected internal virtual DirectorySearcher CreateDirectorySingleSearcher(DirectoryEntry searchRoot, ISingleSearchOptions singleSearchOptions)
+		{
+			var directorySingleSearcher = this.CreateGeneralDirectorySearcher(searchRoot, singleSearchOptions);
+
+			directorySingleSearcher.SearchScope = SearchScope.Base;
+
+			return directorySingleSearcher;
 		}
 
 		protected internal virtual IDirectoryUri CreateDirectoryUri(IDistinguishedName distinguishedName)
@@ -272,6 +213,93 @@ namespace HansKindberg.DirectoryServices
 		protected internal virtual IDirectoryUri CreateDirectoryUri(string path)
 		{
 			return this.DirectoryUriParser.Parse(path);
+		}
+
+		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should be disposed by the caller.")]
+		protected internal virtual DirectorySearcher CreateGeneralDirectorySearcher(DirectoryEntry searchRoot, IGeneralSearchOptions generalSearchOptions)
+		{
+			if(generalSearchOptions == null)
+				throw new ArgumentNullException("generalSearchOptions");
+
+			var generalDirectorySearcher = new DirectorySearcher(searchRoot, generalSearchOptions.Filter, generalSearchOptions.PropertiesToLoad == null ? null : generalSearchOptions.PropertiesToLoad.ToArray());
+
+			if(generalSearchOptions.Asynchronous != null)
+				generalDirectorySearcher.Asynchronous = generalSearchOptions.Asynchronous.Value;
+
+			if(generalSearchOptions.AttributeScopeQuery != null)
+				generalDirectorySearcher.AttributeScopeQuery = generalSearchOptions.AttributeScopeQuery;
+
+			if(generalSearchOptions.CacheResults != null)
+				generalDirectorySearcher.CacheResults = generalSearchOptions.CacheResults.Value;
+
+			if(generalSearchOptions.ClientTimeout != null)
+				generalDirectorySearcher.ClientTimeout = generalSearchOptions.ClientTimeout.Value;
+
+			if(generalSearchOptions.DereferenceAlias != null)
+				generalDirectorySearcher.DerefAlias = generalSearchOptions.DereferenceAlias.Value;
+
+			if(generalSearchOptions.DirectorySynchronization != null)
+				generalDirectorySearcher.DirectorySynchronization = generalSearchOptions.DirectorySynchronization;
+
+			if(generalSearchOptions.ExtendedDistinguishedName != null)
+				generalDirectorySearcher.ExtendedDN = generalSearchOptions.ExtendedDistinguishedName.Value;
+
+			if(generalSearchOptions.PropertyNamesOnly != null)
+				generalDirectorySearcher.PropertyNamesOnly = generalSearchOptions.PropertyNamesOnly.Value;
+
+			if(generalSearchOptions.ReferralChasing != null)
+				generalDirectorySearcher.ReferralChasing = generalSearchOptions.ReferralChasing.Value;
+
+			if(generalSearchOptions.SecurityMasks != null)
+				generalDirectorySearcher.SecurityMasks = generalSearchOptions.SecurityMasks.Value;
+
+			if(generalSearchOptions.ServerPageTimeLimit != null)
+				generalDirectorySearcher.ServerPageTimeLimit = generalSearchOptions.ServerPageTimeLimit.Value;
+
+			if(generalSearchOptions.ServerTimeLimit != null)
+				generalDirectorySearcher.ServerTimeLimit = generalSearchOptions.ServerTimeLimit.Value;
+
+			if(generalSearchOptions.SizeLimit != null)
+				generalDirectorySearcher.SizeLimit = generalSearchOptions.SizeLimit.Value;
+
+			if(generalSearchOptions.Sort != null)
+				generalDirectorySearcher.Sort = generalSearchOptions.Sort;
+
+			if(generalSearchOptions.Tombstone != null)
+				generalDirectorySearcher.Tombstone = generalSearchOptions.Tombstone.Value;
+
+			if(generalSearchOptions.VirtualListView != null)
+				generalDirectorySearcher.VirtualListView = generalSearchOptions.VirtualListView;
+
+			return generalDirectorySearcher;
+		}
+
+		bool IDirectory.Exists(string distinguishedName)
+		{
+			return this.Exists(this.DistinguishedNameParser.Parse(distinguishedName));
+		}
+
+		public virtual bool Exists(IDistinguishedName distinguishedName)
+		{
+			return this.Exists(this.CreateDirectoryUri(distinguishedName), this.Authentication);
+		}
+
+		bool IGlobalDirectory.Exists(string path)
+		{
+			return this.Exists(path, null);
+		}
+
+		public virtual bool Exists(IDirectoryUri url)
+		{
+			return this.Exists(url, null);
+		}
+
+		public virtual bool Exists(IDirectoryUri url, IDirectoryAuthentication authentication)
+		{
+			if(url == null)
+				throw new ArgumentNullException("url");
+
+			return this.Exists(url.ToString(), authentication);
 		}
 
 		public virtual IEnumerable<IDirectoryItem> Find()
@@ -338,15 +366,22 @@ namespace HansKindberg.DirectoryServices
 		{
 			var searchResultList = new List<IDirectoryItem>();
 
-			using(var searchRoot = this.GetDirectoryEntry(searchRootPath, authentication))
+			try
 			{
-				using(var directorySearcher = this.CreateDirectorySearcher(searchRoot, searchOptions))
+				using(var searchRoot = this.GetDirectoryEntry(searchRootPath, authentication))
 				{
-					using(var searchResults = directorySearcher.FindAll())
+					using(var directorySearcher = this.CreateDirectorySearcher(searchRoot, searchOptions))
 					{
-						searchResultList.AddRange(from SearchResult searchResult in searchResults select this.CreateDirectoryItem(searchResult));
+						using(var searchResults = directorySearcher.FindAll())
+						{
+							searchResultList.AddRange(from SearchResult searchResult in searchResults select this.CreateDirectoryItem(searchResult));
+						}
 					}
 				}
+			}
+			catch(DirectoryServicesCOMException directoryServicesComException)
+			{
+				throw new DirectoryServicesException(directoryServicesComException);
 			}
 
 			return searchResultList.ToArray();
@@ -362,38 +397,78 @@ namespace HansKindberg.DirectoryServices
 
 		IDirectoryItem IDirectory.Get(string distinguishedName)
 		{
-			return this.Get(this.DistinguishedNameParser.Parse(distinguishedName));
+			return this.Get(distinguishedName, this.SingleSearchOptions);
 		}
 
 		public virtual IDirectoryItem Get(IDistinguishedName distinguishedName)
 		{
-			return this.Get(this.CreateDirectoryUri(distinguishedName), this.Authentication);
+			return this.Get(distinguishedName, this.SingleSearchOptions);
 		}
 
 		IDirectoryItem IGlobalDirectory.Get(string path)
 		{
-			return this.Get(path, null);
+			return this.Get(path, null, null);
 		}
 
 		public virtual IDirectoryItem Get(IDirectoryUri url)
 		{
-			return this.Get(url, null);
+			return this.Get(url, null, null);
+		}
+
+		IDirectoryItem IDirectory.Get(string distinguishedName, ISingleSearchOptions singleSearchOptions)
+		{
+			return this.Get(this.DistinguishedNameParser.Parse(distinguishedName), singleSearchOptions);
+		}
+
+		public virtual IDirectoryItem Get(IDistinguishedName distinguishedName, ISingleSearchOptions singleSearchOptions)
+		{
+			return this.Get(this.CreateDirectoryUri(distinguishedName), singleSearchOptions, this.Authentication);
+		}
+
+		public virtual IDirectoryItem Get(string path, ISingleSearchOptions singleSearchOptions)
+		{
+			return this.Get(path, singleSearchOptions, null);
+		}
+
+		public virtual IDirectoryItem Get(IDirectoryUri url, ISingleSearchOptions singleSearchOptions)
+		{
+			return this.Get(url, singleSearchOptions, null);
 		}
 
 		public virtual IDirectoryItem Get(string path, IDirectoryAuthentication authentication)
 		{
-			using(var directoryEntry = this.GetDirectoryEntry(path, authentication))
-			{
-				return this.CreateDirectoryItem(directoryEntry);
-			}
+			return this.Get(path, null, authentication);
 		}
 
 		public virtual IDirectoryItem Get(IDirectoryUri url, IDirectoryAuthentication authentication)
 		{
+			return this.Get(url, null, authentication);
+		}
+
+		public virtual IDirectoryItem Get(string path, ISingleSearchOptions singleSearchOptions, IDirectoryAuthentication authentication)
+		{
+			try
+			{
+				using(var searchRoot = this.GetDirectoryEntry(path, authentication))
+				{
+					using(var directorySingleSearcher = this.CreateDirectorySingleSearcher(searchRoot, singleSearchOptions))
+					{
+						return this.CreateDirectoryItem(directorySingleSearcher.FindOne());
+					}
+				}
+			}
+			catch(DirectoryServicesCOMException directoryServicesComException)
+			{
+				throw new DirectoryServicesException(directoryServicesComException);
+			}
+		}
+
+		public virtual IDirectoryItem Get(IDirectoryUri url, ISingleSearchOptions singleSearchOptions, IDirectoryAuthentication authentication)
+		{
 			if(url == null)
 				throw new ArgumentNullException("url");
 
-			return this.Get(url.ToString(), authentication);
+			return this.Get(url.ToString(), singleSearchOptions, authentication);
 		}
 
 		#endregion
