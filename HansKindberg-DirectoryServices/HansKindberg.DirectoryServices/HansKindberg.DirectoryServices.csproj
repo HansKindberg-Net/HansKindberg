@@ -82,7 +82,6 @@
     <Compile Include="ICachedDirectory.cs" />
     <Compile Include="IDirectoryAuthentication.cs" />
     <Compile Include="IDirectoryCache.cs" />
-    <Compile Include="IDirectoryCacheFactory.cs" />
     <Compile Include="IGeneralDirectoryItem.cs" />
     <Compile Include="IGlobalDirectory.cs" />
     <Compile Include="IDirectory.cs" />

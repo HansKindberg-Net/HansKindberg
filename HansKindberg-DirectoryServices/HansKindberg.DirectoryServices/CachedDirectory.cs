@@ -15,23 +15,22 @@ namespace HansKindberg.DirectoryServices
 		private const char _cacheKeyComponentDelimiter = '&';
 		private static readonly string _cacheKeyPrefix = typeof(CachedDirectory).FullName;
 		private const char _cacheKeyValueDelimiter = '=';
-		private IDirectoryCache _directoryCache;
-		private readonly IDirectoryCacheFactory _directoryCacheFactory;
+		private readonly IDirectoryCache _directoryCache;
 
 		#endregion
 
 		#region Constructors
 
-		public CachedDirectory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, IDirectoryCacheFactory directoryCacheFactory) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser, directoryCacheFactory) {}
-		public CachedDirectory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, IDirectoryCacheFactory directoryCacheFactory) : this(connection, directoryUriParser, distinguishedNameParser, new SearchOptions(), new SingleSearchOptions(), directoryCacheFactory) {}
-		public CachedDirectory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions, ISingleSearchOptions singleSearchOptions, IDirectoryCacheFactory directoryCacheFactory) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser, searchOptions, singleSearchOptions, directoryCacheFactory) {}
+		public CachedDirectory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, IDirectoryCache directoryCache) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser, directoryCache) {}
+		public CachedDirectory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, IDirectoryCache directoryCache) : this(connection, directoryUriParser, distinguishedNameParser, new SearchOptions(), new SingleSearchOptions(), directoryCache) {}
+		public CachedDirectory(IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions, ISingleSearchOptions singleSearchOptions, IDirectoryCache directoryCache) : this(new DirectoryConnection(), directoryUriParser, distinguishedNameParser, searchOptions, singleSearchOptions, directoryCache) {}
 
-		public CachedDirectory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions, ISingleSearchOptions singleSearchOptions, IDirectoryCacheFactory directoryCacheFactory) : base(connection, directoryUriParser, distinguishedNameParser, searchOptions, singleSearchOptions)
+		public CachedDirectory(IDirectoryConnection connection, IDirectoryUriParser directoryUriParser, IDistinguishedNameParser distinguishedNameParser, ISearchOptions searchOptions, ISingleSearchOptions singleSearchOptions, IDirectoryCache directoryCache) : base(connection, directoryUriParser, distinguishedNameParser, searchOptions, singleSearchOptions)
 		{
-			if(directoryCacheFactory == null)
-				throw new ArgumentNullException("directoryCacheFactory");
+			if(directoryCache == null)
+				throw new ArgumentNullException("directoryCache");
 
-			this._directoryCacheFactory = directoryCacheFactory;
+			this._directoryCache = directoryCache;
 		}
 
 		#endregion
@@ -40,7 +39,7 @@ namespace HansKindberg.DirectoryServices
 
 		public virtual IDirectoryCache Cache
 		{
-			get { return this._directoryCache ?? (this._directoryCache = this.DirectoryCacheFactory.Create(this.CacheKeyPrefix)); }
+			get { return this._directoryCache; }
 		}
 
 		protected internal virtual char CacheKeyComponentDelimiter
@@ -56,11 +55,6 @@ namespace HansKindberg.DirectoryServices
 		protected internal virtual char CacheKeyValueDelimiter
 		{
 			get { return _cacheKeyValueDelimiter; }
-		}
-
-		protected internal virtual IDirectoryCacheFactory DirectoryCacheFactory
-		{
-			get { return this._directoryCacheFactory; }
 		}
 
 		#endregion

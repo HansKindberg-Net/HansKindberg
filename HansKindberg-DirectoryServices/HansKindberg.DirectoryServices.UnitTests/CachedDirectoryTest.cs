@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Linq;
 using HansKindberg.DirectoryServices.Connections;
-using HansKindberg.DirectoryServices.UnitTests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -11,21 +11,6 @@ namespace HansKindberg.DirectoryServices.UnitTests
 	[TestClass]
 	public class CachedDirectoryTest
 	{
-		#region Fields
-
-		private static readonly IDirectoryCacheFactory _directoryCacheFactory = new FakedDirectoryCacheFactory();
-
-		#endregion
-
-		#region Properties
-
-		private static IDirectoryCacheFactory DirectoryCacheFactory
-		{
-			get { return _directoryCacheFactory; }
-		}
-
-		#endregion
-
 		#region Methods
 
 		[TestMethod]
@@ -36,10 +21,7 @@ namespace HansKindberg.DirectoryServices.UnitTests
 			var directoryCacheMock = new Mock<IDirectoryCache>();
 			directoryCacheMock.Setup(directoryCache => directoryCache.Clear()).Callback(() => cleared = true);
 
-			var directoryCacheFactoryMock = new Mock<IDirectoryCacheFactory>();
-			directoryCacheFactoryMock.Setup(directoryCacheFactory => directoryCacheFactory.Create(It.IsAny<string>())).Returns(directoryCacheMock.Object);
-
-			var cachedDirectory = CreateCachedDirectoryMock(directoryCacheFactoryMock.Object).Object;
+			var cachedDirectory = CreateCachedDirectoryMock(directoryCacheMock.Object).Object;
 
 			Assert.IsFalse(cleared);
 
@@ -50,18 +32,57 @@ namespace HansKindberg.DirectoryServices.UnitTests
 
 		private static Mock<CachedDirectory> CreateCachedDirectoryMock()
 		{
-			return CreateCachedDirectoryMock(DirectoryCacheFactory);
+			return CreateCachedDirectoryMock(CreateDirectoryCache());
 		}
 
-		private static Mock<CachedDirectory> CreateCachedDirectoryMock(IDirectoryCacheFactory directoryCacheFactory)
+		private static Mock<CachedDirectory> CreateCachedDirectoryMock(IDirectoryCache directoryCache)
 		{
 			var directoryConnectionMock = new Mock<IDirectoryConnection>();
 			directoryConnectionMock.Setup(directoryConnection => directoryConnection.Authentication).Returns(new DirectoryAuthentication());
 			directoryConnectionMock.Setup(directoryConnection => directoryConnection.Url).Returns(new DirectoryUri {Host = "localhost", Scheme = Scheme.LDAP});
 
-			var cachedDirectoryMock = new Mock<CachedDirectory>(new object[] {directoryConnectionMock.Object, Mock.Of<IDirectoryUriParser>(), Mock.Of<IDistinguishedNameParser>(), directoryCacheFactory}) {CallBase = true};
+			var cachedDirectoryMock = new Mock<CachedDirectory>(new object[] {directoryConnectionMock.Object, Mock.Of<IDirectoryUriParser>(), Mock.Of<IDistinguishedNameParser>(), directoryCache}) {CallBase = true};
 
 			return cachedDirectoryMock;
+		}
+
+		private static IDirectoryCache CreateDirectoryCache()
+		{
+			return CreateDirectoryCacheMock().Object;
+		}
+
+		private static Mock<IDirectoryCache> CreateDirectoryCacheMock()
+		{
+			var items = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+			var directoryCacheMock = new Mock<IDirectoryCache>();
+
+			directoryCacheMock.Setup(directoryCache => directoryCache.Items).Returns(items);
+
+			directoryCacheMock.Setup(directoryCache => directoryCache.Clear()).Callback(items.Clear);
+			directoryCacheMock.Setup(directoryCache => directoryCache.Get(It.IsAny<string>())).Returns((string key) => items.ContainsKey(key) ? items[key] : null);
+			directoryCacheMock.Setup(directoryCache => directoryCache.Remove(It.IsAny<string>())).Returns((string key) =>
+			{
+				if(items.ContainsKey(key))
+				{
+					items.Remove(key);
+					return true;
+				}
+
+				return false;
+			});
+			directoryCacheMock.Setup(directoryCache => directoryCache.Set(It.IsAny<string>(), It.IsAny<object>())).Callback((string key, object value) =>
+			{
+				if(value == null)
+					throw new ArgumentNullException("value");
+
+				if(items.ContainsKey(key))
+					items[key] = value;
+
+				items.Add(key, value);
+			});
+
+			return directoryCacheMock;
 		}
 
 		[TestMethod]
