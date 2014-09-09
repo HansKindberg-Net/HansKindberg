@@ -63,7 +63,7 @@ internal static class SolutionInfo
 	#region Fields
 
 	internal const string AssemblyFileVersion = _assemblyBaseVersion + "." + _fileVersionRevision;
-	internal const string AssemblyInformationalVersion = _assemblyBaseVersion + "-alpha-" + _revision;
+	internal const string AssemblyInformationalVersion = _assemblyBaseVersion + "-alpha-9" + _revision;
 	internal const string AssemblyVersion = _assemblyBaseVersion + "." + _revision;
 	private const string _assemblyBaseVersion = _majorVersion + "." + _minorVersion + "." + _buildNumber;
 	private const string _buildNumber = "0";
