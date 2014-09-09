@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Connections\GeneralDirectoryConnectionParser.cs" />
     <Compile Include="Connections\GeneralDirectoryConnection.cs" />
+    <Compile Include="CachedDirectory.cs" />
     <Compile Include="DirectoryAuthentication.cs" />
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="Connections\DirectoryConnection.cs" />
@@ -78,7 +79,10 @@
     <Compile Include="DirectoryUriParser.cs" />
     <Compile Include="DistinguishedNameComponent.cs" />
     <Compile Include="GeneralDirectoryItem.cs" />
+    <Compile Include="ICachedDirectory.cs" />
     <Compile Include="IDirectoryAuthentication.cs" />
+    <Compile Include="IDirectoryCache.cs" />
+    <Compile Include="IDirectoryCacheFactory.cs" />
     <Compile Include="IGeneralDirectoryItem.cs" />
     <Compile Include="IGlobalDirectory.cs" />
     <Compile Include="IDirectory.cs" />
