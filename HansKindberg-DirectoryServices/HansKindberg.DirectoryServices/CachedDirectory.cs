@@ -194,6 +194,9 @@ namespace HansKindberg.DirectoryServices
 
 		protected internal virtual string CreateSingleSearchOptionsCacheKey(ISingleSearchOptions singleSearchOptions)
 		{
+			if(singleSearchOptions == null)
+				throw new ArgumentNullException("singleSearchOptions");
+
 			return this.CreateGeneralSearchOptionsCacheKey(singleSearchOptions, SearchScope.Base, null);
 		}
 

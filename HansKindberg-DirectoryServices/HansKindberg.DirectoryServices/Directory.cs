@@ -14,6 +14,8 @@ namespace HansKindberg.DirectoryServices
 		private readonly DirectoryConnection _connection;
 		private readonly IDirectoryUriParser _directoryUriParser;
 		private readonly IDistinguishedNameParser _distinguishedNameParser;
+		private static readonly ISearchOptions _emptySearchOptions = new SearchOptions();
+		private static readonly ISingleSearchOptions _emptySingleSearchOptions = new SingleSearchOptions();
 		private readonly ISearchOptions _searchOptions;
 		private readonly ISingleSearchOptions _singleSearchOptions;
 
@@ -93,6 +95,16 @@ namespace HansKindberg.DirectoryServices
 		protected internal virtual IDistinguishedNameParser DistinguishedNameParser
 		{
 			get { return this._distinguishedNameParser; }
+		}
+
+		protected internal virtual ISearchOptions EmptySearchOptions
+		{
+			get { return _emptySearchOptions; }
+		}
+
+		protected internal virtual ISingleSearchOptions EmptySingleSearchOptions
+		{
+			get { return _emptySingleSearchOptions; }
 		}
 
 		public virtual string Host
@@ -192,6 +204,9 @@ namespace HansKindberg.DirectoryServices
 
 		protected internal virtual DirectorySearcher CreateDirectorySingleSearcher(DirectoryEntry searchRoot, ISingleSearchOptions singleSearchOptions)
 		{
+			if(singleSearchOptions == null)
+				throw new ArgumentNullException("singleSearchOptions");
+
 			var directorySingleSearcher = this.CreateGeneralDirectorySearcher(searchRoot, singleSearchOptions);
 
 			directorySingleSearcher.SearchScope = SearchScope.Base;
@@ -324,12 +339,12 @@ namespace HansKindberg.DirectoryServices
 
 		IEnumerable<IDirectoryItem> IGlobalDirectory.Find(string searchRootPath)
 		{
-			return this.Find(searchRootPath, null, null);
+			return this.Find(searchRootPath, this.EmptySearchOptions, null);
 		}
 
 		public virtual IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl)
 		{
-			return this.Find(searchRootUrl, null, null);
+			return this.Find(searchRootUrl, this.EmptySearchOptions, null);
 		}
 
 		IEnumerable<IDirectoryItem> IDirectory.Find(string searchRootDistinguishedName, ISearchOptions searchOptions)
@@ -354,12 +369,12 @@ namespace HansKindberg.DirectoryServices
 
 		public virtual IEnumerable<IDirectoryItem> Find(string searchRootPath, IDirectoryAuthentication authentication)
 		{
-			return this.Find(searchRootPath, null, authentication);
+			return this.Find(searchRootPath, this.EmptySearchOptions, authentication);
 		}
 
 		public virtual IEnumerable<IDirectoryItem> Find(IDirectoryUri searchRootUrl, IDirectoryAuthentication authentication)
 		{
-			return this.Find(searchRootUrl, null, authentication);
+			return this.Find(searchRootUrl, this.EmptySearchOptions, authentication);
 		}
 
 		public virtual IEnumerable<IDirectoryItem> Find(string searchRootPath, ISearchOptions searchOptions, IDirectoryAuthentication authentication)
@@ -407,12 +422,12 @@ namespace HansKindberg.DirectoryServices
 
 		IDirectoryItem IGlobalDirectory.Get(string path)
 		{
-			return this.Get(path, null, null);
+			return this.Get(path, this.EmptySingleSearchOptions, null);
 		}
 
 		public virtual IDirectoryItem Get(IDirectoryUri url)
 		{
-			return this.Get(url, null, null);
+			return this.Get(url, this.EmptySingleSearchOptions, null);
 		}
 
 		IDirectoryItem IDirectory.Get(string distinguishedName, ISingleSearchOptions singleSearchOptions)
@@ -437,12 +452,12 @@ namespace HansKindberg.DirectoryServices
 
 		public virtual IDirectoryItem Get(string path, IDirectoryAuthentication authentication)
 		{
-			return this.Get(path, null, authentication);
+			return this.Get(path, this.EmptySingleSearchOptions, authentication);
 		}
 
 		public virtual IDirectoryItem Get(IDirectoryUri url, IDirectoryAuthentication authentication)
 		{
-			return this.Get(url, null, authentication);
+			return this.Get(url, this.EmptySingleSearchOptions, authentication);
 		}
 
 		public virtual IDirectoryItem Get(string path, ISingleSearchOptions singleSearchOptions, IDirectoryAuthentication authentication)
