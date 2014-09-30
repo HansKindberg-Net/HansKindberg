@@ -71,7 +71,7 @@ namespace HansKindberg.DirectoryServices
 
 		public override int GetHashCode()
 		{
-			return this.Components.Sum(component => component.GetHashCode());
+			return this.ToString().ToUpperInvariant().GetHashCode();
 		}
 
 		public override string ToString()
